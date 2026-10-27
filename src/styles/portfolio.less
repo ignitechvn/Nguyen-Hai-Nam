@@ -1,0 +1,271 @@
+@ink: #fefefe;
+@muted: #b8b8b8;
+@bg: #111111;
+
+button {
+    font-family: inherit;
+}
+
+.loading-sublabel {
+    display: block;
+    margin-top: 16px;
+    color: @muted;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+// Top bar: name, contact, sections, language
+#top-bar {
+    position: absolute;
+    z-index: 8;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 24px 0;
+    color: @ink;
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+
+    &.closed {
+        top: -200px;
+    }
+
+    #profile,
+    #lang-toggle,
+    #category-nav {
+        pointer-events: auto;
+    }
+}
+
+#profile-name {
+    font-size: 26px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#profile-meta {
+    margin-top: 4px;
+    font-size: 13px;
+    color: @muted;
+
+    a {
+        color: @ink;
+    }
+}
+
+#lang-toggle {
+    position: absolute;
+    top: 22px;
+    right: 24px;
+    padding: 8px 14px;
+    background: transparent;
+    border: 2px solid @ink;
+    color: @muted;
+    font-size: 13px;
+    cursor: pointer;
+
+    b {
+        color: @ink;
+    }
+
+    &:hover {
+        background: @ink;
+        color: @bg;
+
+        b {
+            color: @bg;
+        }
+    }
+}
+
+#category-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+    max-width: 640px;
+
+    button {
+        padding: 6px 12px;
+        background: rgba(17, 17, 17, 0.6);
+        border: 1px solid rgba(254, 254, 254, 0.35);
+        color: @ink;
+        font-size: 12px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.15s ease-in-out;
+
+        &:hover {
+            background: @ink;
+            color: @bg;
+        }
+    }
+}
+
+// Info panel: a readable article instead of the original centered title + cover
+#cratedigger-info {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    -webkit-user-select: text;
+    user-select: text;
+    background-color: rgba(17, 17, 17, 0.94);
+}
+
+#info-close {
+    position: fixed;
+    z-index: 6;
+    top: 16px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    background: transparent;
+    border: 2px solid @ink;
+    color: @ink;
+    font-size: 30px;
+    line-height: 40px;
+    cursor: pointer;
+
+    &:hover {
+        background: @ink;
+        color: @bg;
+    }
+}
+
+#info-article {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 80px 24px 100px;
+    color: @muted;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+#cratedigger-record-category {
+    color: @muted;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+}
+
+#cratedigger-record-artist {
+    font-size: 20px;
+    margin-bottom: 6px;
+}
+
+#cratedigger-record-title {
+    margin: 0;
+    font-size: 40px;
+    line-height: 1.15;
+}
+
+#cratedigger-record-subtitle {
+    margin-top: 14px;
+    font-style: italic;
+}
+
+#cratedigger-record-links {
+    margin-top: 20px;
+
+    a {
+        display: inline-block;
+        margin: 0 10px 10px 0;
+        padding: 8px 18px;
+        border: 2px solid @ink;
+        color: @ink;
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-decoration: none;
+
+        &:hover {
+            background: @ink;
+            color: @bg;
+        }
+    }
+}
+
+#cratedigger-record-cover {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    margin: 32px 0 8px;
+}
+
+#cratedigger-record-content {
+    margin-top: 32px;
+
+    p {
+        margin: 0 0 1.2em;
+    }
+
+    strong {
+        color: @ink;
+    }
+}
+
+#cratedigger-record-contact {
+    h2 {
+        color: @ink;
+        font-size: 14px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        margin: 40px 0 12px;
+    }
+
+    a {
+        display: block;
+        color: @ink;
+    }
+}
+
+@media (max-width: 600px) {
+    #top-bar {
+        padding: 14px 16px 0;
+    }
+
+    #profile-name {
+        font-size: 18px;
+    }
+
+    #lang-toggle {
+        top: 14px;
+        right: 16px;
+    }
+
+    #category-nav {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        margin-right: -16px;
+        padding-right: 16px;
+
+        button {
+            flex: none;
+        }
+    }
+
+    #info-article {
+        padding: 72px 16px 80px;
+        font-size: 16px;
+    }
+
+    #cratedigger-record-title {
+        font-size: 28px;
+    }
+
+    #info-close {
+        top: 12px;
+        right: 12px;
+    }
+
+    .loading-label {
+        font-size: 28px;
+    }
+
+    #bottom-bar .bottom-bar-item {
+        font-size: 18px;
+    }
+}

@@ -15,28 +15,21 @@ Screenshots
 ![cratedigger.js screenshot #2](https://github.com/risq/cratedigger/blob/master/src/images/screenshot2.png?raw=true)
 
 
-Nội dung từ Google Sheet
+Portfolio Nguyễn Hải Nam
 -----------
 
-Dữ liệu đĩa được tải trực tiếp (trong trình duyệt) từ Google Sheet:
-https://docs.google.com/spreadsheets/d/1MhcQlLpq3R2AkJyeuELQd2zKKj9xx3BiY7i2gf-7RF0
+Mỗi mục trong file `content/Website_Layout_Hai_Nam.xlsx` là một đĩa trong thùng: chọn đĩa (cuộn chuột, kéo, phím mũi tên, menu chuyên mục) rồi bấm SHOW / click lần nữa để lật đĩa và đọc nội dung. Nút EN / VI chuyển ngôn ngữ (cột Content [ENG] / Content [VIET]).
 
-* Sheet phải được chia sẻ **"Bất kỳ ai có đường liên kết đều có thể xem"**, nếu không trang sẽ hiển thị dữ liệu mẫu.
-* Đổi sheet: sửa `SHEET_ID` trong `src/index.js`, hoặc thêm `?id=<sheetId>`, `?sheet=<tên tab>`, `?gid=<gid>` vào URL.
-* Dòng đầu tiên là tiêu đề cột. Các cột được nhận diện tự động (tiếng Việt hoặc tiếng Anh, có dấu hay không dấu):
+Cập nhật nội dung:
 
-| Trường | Tên cột chấp nhận (ví dụ) |
-|---|---|
-| Tiêu đề | `Title`, `Tên`, `Tên bài hát`, `Album` |
-| Nghệ sĩ | `Artist`, `Ca sĩ`, `Nghệ sĩ`, `Tác giả` |
-| Ảnh bìa | `Cover`, `Ảnh`, `Ảnh bìa`, `Hình ảnh`, `Image` (link ảnh, link Google Drive hoặc YouTube) |
-| Năm | `Year`, `Năm` |
-| Mô tả | `Description`, `Mô tả`, `Ghi chú` |
-| Link | `Link`, `URL`, `YouTube`, `Spotify` |
+    pip install openpyxl
+    python3 tools/xlsx_to_json.py      # xlsx -> src/content.json
+    npm run build
 
-  Các cột khác vẫn được hiển thị trong bảng thông tin khi lật đĩa. Không có ảnh bìa → bìa được tạo tự động từ tiêu đề/nghệ sĩ.
-* Mỗi thùng chứa 24 đĩa, số thùng tăng theo số dòng (tối đa 6 thùng = 144 đĩa).
-* Ảnh bìa dùng làm texture WebGL nên máy chủ ảnh phải cho phép CORS (Google Drive, imgur, i.ytimg.com đều được); ảnh không cho phép CORS vẫn hiện trong bảng thông tin nhưng trên đĩa 3D sẽ dùng bìa tự tạo.
+* Tiêu đề lấy từ cột Breakdown (`Vai trò | Tên dự án`, dòng sau là mô tả ngắn), chuyên mục lấy từ các dòng `... Page: ...`.
+* Các dòng ghi chú cho người thiết kế như `[Insert ảnh ...]` được tự động bỏ qua.
+* Link trong cột "Yêu cầu hình ảnh" (nền tảng, bài nghiên cứu, fanpage, công ty) thành nút bấm cạnh tiêu đề.
+* Ảnh: chỉ link **file** Google Drive (không phải thư mục) được dùng làm ảnh, và file phải chia sẻ công khai. Bìa đĩa được tạo tự động theo màu chuyên mục.
 
 Chạy & build
 -----------

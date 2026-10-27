@@ -1,34 +1,78 @@
 import cratedigger from './scripts/cratedigger';
-import { loadSheet } from './scripts/sheet';
 import Constants from './scripts/constants';
-import demoData from './demo-data.json';
+import content from './content.json';
 
-// Content source: Google Sheet (must be shared as "Anyone with the link can view")
-const SHEET_ID = '1MhcQlLpq3R2AkJyeuELQd2zKKj9xx3BiY7i2gf-7RF0';
-const RECORDS_PER_CRATE = 24;
-const MAX_CRATES = 6;
-const defaultScene = Constants.scene;
-const DEMO_DATA = demoData.map((d, i) => ({
-  id: i,
-  title: d.title,
-  artist: d.artist,
-  year: d.year,
-  cover: '',
-  link: '',
-  description: '',
-  extra: [],
+// Content source: content/Website_Layout_Hai_Nam.xlsx -> src/content.json (tools/xlsx_to_json.py)
+const { profile } = content;
+
+const CATEGORY_COLORS = {
+  'Personal Background': ['#1d3557', '#e9c46a'],
+  'VEX Competition & Robotics Journey': ['#9b2226', '#f4f1de'],
+  'Rural Education & Digital Inclusion': ['#2d6a4f', '#f1faee'],
+  'Dedication to Digitalized Sound': ['#3c1642', '#f6bd60'],
+  'STEM Activities & Social Impacts': ['#0b6e8a', '#f8f9fa'],
+  'Miles & Milestones': ['#bc6c25', '#fefae0'],
+};
+
+const LABELS = {
+  en: {
+    platform: 'Visit platform',
+    research: 'Read the research',
+    fanpage: 'Fanpage',
+    company: 'Company website',
+    contact: 'Contact',
+  },
+  vi: {
+    platform: 'Xem nền tảng',
+    research: 'Đọc bài nghiên cứu',
+    fanpage: 'Fanpage',
+    company: 'Website công ty',
+    contact: 'Liên hệ',
+  },
+};
+
+// The first item of the spreadsheet is placed at the front of the crate
+const data = content.records.slice().reverse().map((record, i) => Object.assign({}, record, {
+  artist: record.role || record.category,
+  cover: record.image,
   hasSleeve: false,
+  index: content.records.length - 1 - i,
 }));
 
+let lang = 'en';
+try {
+  lang = localStorage.getItem('lang') === 'vi' ? 'vi' : 'en';
+} catch (e) {
+  // storage unavailable
+}
+
 const bottomBar = document.getElementById('bottom-bar');
+const topBar = document.getElementById('top-bar');
 const buttonPrev = document.getElementById('button-prev');
 const buttonShow = document.getElementById('button-show');
 const buttonNext = document.getElementById('button-next');
-const titleContainer = document.getElementById('cratedigger-record-title');
-const artistContainer = document.getElementById('cratedigger-record-artist');
-const coverContainer = document.getElementById('cratedigger-record-cover');
-const metaContainer = document.getElementById('cratedigger-record-meta');
-const noticeContainer = document.getElementById('sheet-notice');
+const infoContainer = document.getElementById('cratedigger-info');
+const closeButton = document.getElementById('info-close');
+const langToggle = document.getElementById('lang-toggle');
+const categoryNav = document.getElementById('category-nav');
+
+const el = (id) => document.getElementById(id);
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', '\'': '&#39;',
+  })[c]);
+}
+
+function formatParagraph(text) {
+  return escapeHtml(text)
+    .replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*\*/g, '');
+}
+
+function recordId(index) {
+  return content.records.length - 1 - index;
+}
 
 function bindEvents() {
   buttonPrev.addEventListener('click', (e) => {
@@ -49,141 +93,205 @@ function bindEvents() {
     e.preventDefault();
     cratedigger.selectNextRecord();
   }, false);
-}
 
-function escapeHtml(str) {
-  return String(str).replace(/[&<>"']/g, (c) => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', '\'': '&#39;',
-  })[c]);
-}
+  closeButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    cratedigger.flipBackSelectedRecord();
+  }, false);
 
-function formatValue(value) {
-  const safe = escapeHtml(value);
-  return /^https?:\/\//i.test(value) ? `<a href="${safe}" target="_blank" rel="noopener">${safe}</a>` : safe;
+  // Keep clicks & touches inside the article from reaching the 3D scene
+  ['mousedown', 'mouseup', 'touchstart', 'touchend'].forEach((type) => {
+    infoContainer.addEventListener(type, (e) => e.stopPropagation(), false);
+  });
 }
 
 function fillInfoPanel(record) {
-  const data = record.data;
-  const meta = [];
+  const item = record.data;
+  const labels = LABELS[lang];
 
-  titleContainer.innerHTML = escapeHtml(data.title || '');
-  artistContainer.innerHTML = escapeHtml(data.artist || '');
-  coverContainer.style.backgroundImage = data.cover ? 'url("' + data.cover + '")' : 'none';
-  coverContainer.style.display = data.cover ? '' : 'none';
+  el('cratedigger-record-category').textContent = item.category;
+  el('cratedigger-record-artist').textContent = item.role;
+  el('cratedigger-record-title').textContent = item.title;
+  el('cratedigger-record-subtitle').textContent = item.subtitle;
 
-  if (data.year) {
-    meta.push(`<div class="meta-year">${escapeHtml(data.year)}</div>`);
-  }
+  el('cratedigger-record-links').innerHTML = item.links.map((link) =>
+    `<a href="${escapeHtml(link.url)}" target="_blank" rel="noopener">${labels[link.type] || link.type} &#8599;</a>`
+  ).join('');
 
-  if (data.description) {
-    meta.push(`<div class="meta-description">${escapeHtml(data.description)}</div>`);
-  }
+  const cover = el('cratedigger-record-cover');
+  cover.style.display = item.image ? '' : 'none';
+  cover.style.backgroundImage = item.image ? 'url("' + item.image + '")' : 'none';
 
-  data.extra.forEach((item) => {
-    meta.push(`<div class="meta-item"><span>${escapeHtml(item.label)}</span> ${formatValue(item.value)}</div>`);
-  });
+  el('cratedigger-record-content').innerHTML = item[lang]
+    .map((p) => `<p>${formatParagraph(p)}</p>`)
+    .join('');
 
-  if (data.link) {
-    meta.push(`<a class="meta-link" href="${escapeHtml(data.link)}" target="_blank" rel="noopener">Open link</a>`);
-  }
+  el('cratedigger-record-contact').innerHTML = item.index === 0 ?
+    `<h2>${labels.contact}</h2>
+     <a href="mailto:${escapeHtml(profile.email)}">${escapeHtml(profile.email)}</a>
+     <a href="tel:${escapeHtml(profile.phone.replace(/[^\d+]/g, ''))}">${escapeHtml(profile.phone)}</a>
+     <a href="https://${escapeHtml(profile.domain)}" target="_blank" rel="noopener">${escapeHtml(profile.domain)}</a>` : '';
 
-  metaContainer.innerHTML = meta.join('');
+  infoContainer.scrollTop = 0;
 }
 
-function hashColor(str) {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = (hash * 31 + str.charCodeAt(i)) | 0;
-  }
-  return 'hsl(' + (Math.abs(hash) % 360) + ', 45%, 32%)';
-}
-
-function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines) {
+function wrapText(ctx, text, maxWidth) {
   const words = String(text).split(/\s+/);
+  const lines = [];
   let line = '';
-  let lines = 0;
 
-  for (let i = 0; i < words.length && lines < maxLines; i++) {
-    const test = line ? line + ' ' + words[i] : words[i];
+  words.forEach((word) => {
+    const test = line ? line + ' ' + word : word;
     if (ctx.measureText(test).width > maxWidth && line) {
-      ctx.fillText(line, x, y + lines * lineHeight);
-      lines++;
-      line = words[i];
+      lines.push(line);
+      line = word;
     } else {
       line = test;
     }
+  });
+
+  if (line) {
+    lines.push(line);
   }
 
-  if (line && lines < maxLines) {
-    ctx.fillText(line, x, y + lines * lineHeight);
-  }
+  return lines;
 }
 
-// Generated cover, shown until the real cover loads (or when the sheet row has no image)
-function drawPlaceholderCover(ctx, size, data) {
-  ctx.fillStyle = hashColor((data.title || '') + (data.artist || ''));
+// Sleeve design generated from the spreadsheet (shown until / instead of a photo)
+function drawPlaceholderCover(ctx, size, item) {
+  const colors = CATEGORY_COLORS[item.category] || ['#222222', '#fefefe'];
+  const pad = 28;
+  const title = (item.title || '').replace(/^The Research:\s*/, '');
+  let fontSize = 40;
+  let lines;
+
+  ctx.fillStyle = colors[0];
   ctx.fillRect(0, 0, size, size);
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+
+  // Vinyl grooves peeking out of the sleeve
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
   ctx.lineWidth = 2;
-  for (let r = 40; r < size * 0.7; r += 14) {
+  for (let r = 30; r < size * 0.62; r += 10) {
     ctx.beginPath();
     ctx.arc(size, size, r, Math.PI, Math.PI * 1.5);
     ctx.stroke();
   }
-  ctx.fillStyle = '#fefefe';
+  ctx.fillStyle = colors[1];
+  ctx.beginPath();
+  ctx.arc(size, size, 26, Math.PI, Math.PI * 1.5);
+  ctx.lineTo(size, size);
+  ctx.fill();
+
   ctx.textBaseline = 'top';
-  ctx.font = '700 34px Montserrat, sans-serif';
-  wrapText(ctx, (data.title || '').toUpperCase(), 28, 32, size - 56, 40, 4);
-  ctx.font = '400 22px Montserrat, sans-serif';
-  wrapText(ctx, data.artist || '', 28, size - 70, size - 56, 26, 2);
-}
+  ctx.fillStyle = colors[1];
+  ctx.font = '700 13px Montserrat, sans-serif';
+  ctx.fillText((item.category || '').toUpperCase(), pad, pad);
 
-function showNotice(message) {
-  noticeContainer.textContent = message;
-  noticeContainer.style.display = 'block';
-}
+  do {
+    ctx.font = '700 ' + fontSize + 'px Montserrat, sans-serif';
+    lines = wrapText(ctx, title.toUpperCase(), size - pad * 2);
+    fontSize -= 2;
+  } while (lines.length * fontSize * 1.15 > size * 0.52 && fontSize > 14);
 
-function start(data) {
-  const nbCrates = Math.min(MAX_CRATES, Math.max(1, Math.ceil(data.length / RECORDS_PER_CRATE)));
-  const zoom = Math.max(1, Math.pow(nbCrates / 2, 0.75));
-
-  if (data.length > nbCrates * RECORDS_PER_CRATE) {
-    showNotice('Showing ' + nbCrates * RECORDS_PER_CRATE + ' / ' + data.length + ' records');
-  }
-
-  cratedigger.init({
-    debug: false,
-    nbCrates,
-    recordsPerCrate: RECORDS_PER_CRATE,
-    drawPlaceholderCover,
-    scene: Object.assign({}, defaultScene, {
-      cameraBasePosition: { x: 280 * zoom, y: 200 * zoom, z: 180 * zoom },
-    }),
-    elements: {
-      rootContainer: document.getElementById('cratedigger'),
-      canvasContainer: document.getElementById('cratedigger-canvas'),
-      loadingContainer: document.getElementById('cratedigger-loading'),
-      infoContainer: document.getElementById('cratedigger-info'),
-    },
-    onInfoPanelOpened() {
-      bottomBar.classList.add('closed');
-      fillInfoPanel(cratedigger.getSelectedRecord());
-    },
-
-    onInfoPanelClosed() {
-      bottomBar.classList.remove('closed');
-    },
+  ctx.fillStyle = '#fefefe';
+  lines.forEach((line, i) => {
+    ctx.fillText(line, pad, pad + 32 + i * (fontSize + 2) * 1.15);
   });
 
+  ctx.fillStyle = colors[1];
+  ctx.font = '400 18px Montserrat, sans-serif';
+  ctx.fillText(item.role || '', pad, size - pad - 46);
+  ctx.font = '700 14px Montserrat, sans-serif';
+  ctx.fillText(profile.name.toUpperCase(), pad, size - pad - 18);
+}
+
+function renderChrome() {
+  document.documentElement.lang = lang;
+  el('profile-name').textContent = profile.name;
+  el('profile-meta').innerHTML = `${escapeHtml(profile.major)} &middot; ` +
+    `<a href="https://${escapeHtml(profile.domain)}" target="_blank" rel="noopener">${escapeHtml(profile.domain)}</a>`;
+  langToggle.innerHTML = lang === 'en' ? '<b>EN</b> / VI' : 'EN / <b>VI</b>';
+
+  const categories = [];
+  content.records.forEach((record, index) => {
+    if (!categories.some((c) => c.name === record.category)) {
+      categories.push({ name: record.category, index });
+    }
+  });
+
+  categoryNav.innerHTML = categories.map((c) =>
+    `<button type="button" data-index="${c.index}">${escapeHtml(c.name)}</button>`
+  ).join('');
+}
+
+function bindChromeEvents() {
+  langToggle.addEventListener('click', () => {
+    lang = lang === 'en' ? 'vi' : 'en';
+    try {
+      localStorage.setItem('lang', lang);
+    } catch (e) {
+      // storage unavailable
+    }
+    renderChrome();
+    if (cratedigger.getSelectedRecord() && bottomBar.classList.contains('closed')) {
+      fillInfoPanel(cratedigger.getSelectedRecord());
+    }
+  });
+
+  categoryNav.addEventListener('click', (e) => {
+    const button = e.target.closest('button');
+    if (button) {
+      cratedigger.selectRecord(recordId(Number(button.dataset.index)));
+    }
+  });
+}
+
+// Pull the camera back on portrait screens (the original scene is framed for landscape)
+function sceneForViewport() {
+  const aspect = window.innerWidth / window.innerHeight;
+  const k = aspect < 1 ? Math.min(1.8, 0.75 / aspect) : 1;
+  const scale = (pos) => ({ x: pos.x * k, y: pos.y * k, z: pos.z * k });
+
+  return Object.assign({}, Constants.scene, {
+    cameraBasePosition: scale(Constants.scene.cameraBasePosition),
+    cameraFocusPosition: scale(Constants.scene.cameraFocusPosition),
+  });
+}
+
+renderChrome();
+bindChromeEvents();
+
+cratedigger.init({
+  debug: false,
+  nbCrates: 1,
+  recordsPerCrate: data.length,
+  closeInfoPanelOnClick: false,
+  closeInfoPanelOnScroll: false,
+  drawPlaceholderCover,
+  scene: sceneForViewport(),
+  elements: {
+    rootContainer: document.getElementById('cratedigger'),
+    canvasContainer: document.getElementById('cratedigger-canvas'),
+    loadingContainer: document.getElementById('cratedigger-loading'),
+    infoContainer,
+  },
+  onInfoPanelOpened() {
+    bottomBar.classList.add('closed');
+    topBar.classList.add('closed');
+    fillInfoPanel(cratedigger.getSelectedRecord());
+  },
+
+  onInfoPanelClosed() {
+    bottomBar.classList.remove('closed');
+    topBar.classList.remove('closed');
+  },
+});
+
+// Wait for the web font so that the generated sleeves use it
+const fontsReady = document.fonts ? document.fonts.load('700 40px Montserrat').catch(() => {}) : Promise.resolve();
+
+fontsReady.then(() => {
   cratedigger.loadRecords(data, false, () => {
     bindEvents();
   });
-}
-
-loadSheet({ sheetId: SHEET_ID })
-  .then(start)
-  .catch((err) => {
-    console.error('Google Sheet error:', err);
-    showNotice('Cannot load Google Sheet (' + err.message + ') — showing demo records. Share the sheet as "Anyone with the link can view".');
-    start(DEMO_DATA);
-  });
+});

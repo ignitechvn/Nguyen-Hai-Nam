@@ -375,7 +375,7 @@ function onTouchMoveEvent(e) {
     do {
       ePosx += _this.offsetLeft;
       ePosy += _this.offsetTop;
-    } while (_this = obj.offsetParent); // jshint ignore:line
+    } while (_this = _this.offsetParent); // jshint ignore:line
   }
 
   // mouse position minus elm position is mouseposition relative to element:

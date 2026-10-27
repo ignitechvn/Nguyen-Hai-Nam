@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <title>cratedigger</title>
+    <title>Nguyễn Hải Nam</title>
+    <meta name="description" content="Nguyễn Hải Nam — Computer Science portfolio: robotics, AI, digital inclusion and digitalized sound.">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
     <link rel="stylesheet" href="vendor.css" />
@@ -19,22 +20,35 @@
         <div id="cratedigger-loading">
             <div class="info-container">
                 <div class="vertical-center">
-                    <span class="loading-label">Loading records...</span>
+                    <span class="loading-label">Nguyễn Hải Nam</span>
+                    <span class="loading-sublabel">Loading records...</span>
                 </div>
             </div>
         </div>
         <div id="cratedigger-info">
-            <div class="info-container">
-                <div class="vertical-center">
-                    <div id="cratedigger-record-artist"></div>
-                    <div id="cratedigger-record-title"></div>
-                    <div id="cratedigger-record-cover"></div>
-                    <div id="cratedigger-record-meta"></div>
-                </div>
-            </div>
+            <button id="info-close" type="button" aria-label="Close">&times;</button>
+            <article id="info-article">
+                <div id="cratedigger-record-category"></div>
+                <div id="cratedigger-record-artist"></div>
+                <h1 id="cratedigger-record-title"></h1>
+                <div id="cratedigger-record-subtitle"></div>
+                <div id="cratedigger-record-links"></div>
+                <div id="cratedigger-record-cover"></div>
+                <div id="cratedigger-record-content"></div>
+                <div id="cratedigger-record-contact"></div>
+            </article>
         </div>
     </div>
-    <div id="sheet-notice"></div>
+
+    <header id="top-bar" class="noselect">
+        <div id="profile">
+            <div id="profile-name"></div>
+            <div id="profile-meta"></div>
+        </div>
+        <button id="lang-toggle" type="button"></button>
+        <nav id="category-nav"></nav>
+    </header>
+
     <div id="bottom-bar" class="noselect">
         <div id="button-prev" class="bottom-bar-item">
             PREVIOUS
