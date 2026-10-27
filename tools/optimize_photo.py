@@ -3,11 +3,17 @@
 Usage:
   python3 tools/optimize_photo.py <input> <output.jpg>            # max 1600px, JPEG
   python3 tools/optimize_photo.py <input> <cover.jpg> --cover     # 512x512 square crop
-Requires: pip install pillow
+Requires: pip install pillow (and pillow-heif for .HEIC)
 """
 import sys
 
 from PIL import Image, ImageOps
+
+try:
+    from pillow_heif import register_heif_opener  # iPhone .HEIC photos: pip install pillow-heif
+    register_heif_opener()
+except ImportError:
+    pass
 
 MAX_SIZE = 1600
 COVER_SIZE = 512

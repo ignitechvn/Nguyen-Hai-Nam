@@ -389,5 +389,57 @@
         ]
       }
     ]
+  },
+  "Humanitas": {
+    "layout": "groups",
+    "cover": "images/photos/humanitas/cover.jpg",
+    "groups": [
+      {
+        "after": 0,
+        "photos": [
+          {
+            "src": "images/photos/humanitas/01.jpg",
+            "caption": "",
+            "width": 1600,
+            "height": 1067
+          },
+          {
+            "src": "images/photos/humanitas/02.jpg",
+            "caption": "",
+            "width": 1600,
+            "height": 1200
+          },
+          {
+            "src": "images/photos/humanitas/03.jpg",
+            "caption": "",
+            "width": 960,
+            "height": 1280
+          }
+        ]
+      },
+      {
+        "after": 1,
+        "photos": [
+          {
+            "src": "images/photos/humanitas/04.jpg",
+            "caption": "",
+            "width": 1280,
+            "height": 960
+          },
+          {
+            "src": "images/photos/humanitas/05.jpg",
+            "caption": "",
+            "width": 1600,
+            "height": 1067
+          },
+          {
+            "src": "images/photos/humanitas/06.jpg",
+            "caption": "",
+            "width": 1600,
+            "height": 1067
+          }
+        ]
+      }
+    ]
   }
 }

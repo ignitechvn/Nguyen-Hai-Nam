@@ -406,7 +406,57 @@
         "Tôi vẫn nhớ những ánh mắt háo hức của các em nhỏ vùng cao khi lần đầu được làm quen với máy tính, hay niềm vui giản dị của người dân khi tự mình sử dụng công nghệ để giải quyết những công việc thường ngày. Chính những khoảnh khắc ấy đã khiến hành trình cùng Humanitas trở nên đặc biệt với tôi. Khởi nguồn từ mong muốn thu hẹp khoảng cách số, tôi sáng lập dự án và quy tụ 50+ thành viên cùng chung khát vọng mang tri thức đến với cộng đồng dân tộc thiểu số tại Bản Liền, Lào Cai. Chúng tôi tổ chức các lớp tiếng Anh và kỹ năng số cho 80+ học viên, huy động 90 triệu VNĐ, trao tặng 20+ thiết bị công nghệ và lắp đặt hệ thống đèn năng lượng mặt trời, giúp các em có thêm điều kiện học tập ngay cả khi đêm xuống.",
         "Hành trình ấy còn mở rộng đến những buổi hướng dẫn 40+ người dân ứng dụng công nghệ vào kinh doanh du lịch, chương trình chăm sóc sức khỏe miễn phí cho 100+ người và chiến dịch truyền thông lan tỏa câu chuyện Bản Liền đến hàng nghìn người. Nhưng hơn cả những con số, điều đọng lại trong tôi là những cuộc gặp gỡ, những nụ cười và sự gắn kết giữa những con người đến từ các hoàn cảnh khác nhau. Humanitas giúp tôi hiểu rằng đôi khi, một thay đổi lớn có thể bắt đầu từ điều rất nhỏ: một chiếc máy tính, một bài học đầu tiên hay một cơ hội được trao đúng lúc."
       ],
-      "links": []
+      "links": [],
+      "layout": "groups",
+      "cover": "images/photos/humanitas/cover.jpg",
+      "groups": [
+        {
+          "after": 0,
+          "photos": [
+            {
+              "src": "images/photos/humanitas/01.jpg",
+              "caption": "",
+              "width": 1600,
+              "height": 1067
+            },
+            {
+              "src": "images/photos/humanitas/02.jpg",
+              "caption": "",
+              "width": 1600,
+              "height": 1200
+            },
+            {
+              "src": "images/photos/humanitas/03.jpg",
+              "caption": "",
+              "width": 960,
+              "height": 1280
+            }
+          ]
+        },
+        {
+          "after": 1,
+          "photos": [
+            {
+              "src": "images/photos/humanitas/04.jpg",
+              "caption": "",
+              "width": 1280,
+              "height": 960
+            },
+            {
+              "src": "images/photos/humanitas/05.jpg",
+              "caption": "",
+              "width": 1600,
+              "height": 1067
+            },
+            {
+              "src": "images/photos/humanitas/06.jpg",
+              "caption": "",
+              "width": 1600,
+              "height": 1067
+            }
+          ]
+        }
+      ]
     },
     {
       "category": "Rural Education & Digital Inclusion",
