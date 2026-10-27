@@ -86,7 +86,41 @@
       "vi": [
         "Hành trình cùng VEX Robotics tiếp thêm cho tôi sự tự tin để thử sức tại những sân chơi công nghệ quốc tế tại Hongkong. Tham gia MECKUP Quest International AI & Robotics Competition, tôi có cơ hội mở rộng kiến thức về AI, lập trình và Robotics, đồng thời gặp gỡ, trao đổi ý tưởng với những người bạn chung đam mê. Những trải nghiệm ấy giúp tôi trân trọng hơn tinh thần hợp tác và học hỏi"
       ],
-      "links": []
+      "links": [],
+      "layout": "end",
+      "cover": "images/photos/meckup/cover.jpg",
+      "photos": [
+        {
+          "src": "images/photos/meckup/01.jpg",
+          "caption": "Silver Award — MeckUP Quest 2025–2026, The University of Hong Kong",
+          "width": 1600,
+          "height": 1066
+        },
+        {
+          "src": "images/photos/meckup/02.jpg",
+          "caption": "",
+          "width": 1280,
+          "height": 853
+        },
+        {
+          "src": "images/photos/meckup/03.jpg",
+          "caption": "",
+          "width": 1280,
+          "height": 853
+        },
+        {
+          "src": "images/photos/meckup/04.jpg",
+          "caption": "Visiting the Faculty of Engineering, HKU",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "images/photos/meckup/05.jpg",
+          "caption": "Certificate of Participation — MeckUP Quest 2025–2026",
+          "width": 1084,
+          "height": 1600
+        }
+      ]
     },
     {
       "category": "VEX Competition & Robotics Journey",
