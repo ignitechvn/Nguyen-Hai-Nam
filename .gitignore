@@ -13,3 +13,4 @@ Desktop.ini
 *.sublime-workspace
 npm-debug.log
 coverage
+content/*.xlsx

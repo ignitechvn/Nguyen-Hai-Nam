@@ -18,7 +18,7 @@ Screenshots
 Portfolio Nguyễn Hải Nam
 -----------
 
-Mỗi mục trong file `content/Website_Layout_Hai_Nam.xlsx` là một đĩa trong thùng: chọn đĩa (cuộn chuột, kéo, phím mũi tên, menu chuyên mục) rồi bấm SHOW / click lần nữa để lật đĩa và đọc nội dung. Nút EN / VI chuyển ngôn ngữ (cột Content [ENG] / Content [VIET]).
+Mỗi mục trong file nội dung `content/Website_Layout_Hai_Nam.xlsx` (không đưa lên GitHub vì có link Drive nội bộ — đặt file vào đúng đường dẫn này để cập nhật) là một đĩa trong thùng: chọn đĩa (cuộn chuột, kéo, phím mũi tên, menu chuyên mục) rồi bấm SHOW / click lần nữa để lật đĩa và đọc nội dung. Nút EN / VI chuyển ngôn ngữ (cột Content [ENG] / Content [VIET]).
 
 Cập nhật nội dung:
 
