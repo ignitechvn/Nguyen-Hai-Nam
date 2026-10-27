@@ -8,7 +8,7 @@
   },
   "records": [
     {
-      "category": "Personal Background",
+      "category": "About Me",
       "title": "Personal Statement",
       "role": "",
       "subtitle": "",
@@ -20,7 +20,6 @@
       ],
       "links": [],
       "layout": "interleave",
-      "cover": "images/photos/personal-statement/cover.jpg",
       "photos": [
         {
           "src": "images/photos/personal-statement/01.jpg",
@@ -31,7 +30,7 @@
       ]
     },
     {
-      "category": "Personal Background",
+      "category": "About Me",
       "title": "About Me",
       "role": "",
       "subtitle": "",
@@ -70,7 +69,6 @@
       ],
       "links": [],
       "layout": "groups",
-      "cover": "images/photos/vex/cover.jpg",
       "groups": [
         {
           "after": 0,
@@ -232,7 +230,6 @@
       ],
       "links": [],
       "layout": "end",
-      "cover": "images/photos/meckup/cover.jpg",
       "photos": [
         {
           "src": "images/photos/meckup/01.jpg",
@@ -294,7 +291,6 @@
       ],
       "links": [],
       "layout": "interleave",
-      "cover": "images/photos/kid-engineer/cover.jpg",
       "photos": [
         {
           "src": "images/photos/kid-engineer/01.jpg",
@@ -350,7 +346,6 @@
         }
       ],
       "layout": "end",
-      "cover": "images/photos/taytranslator/cover.jpg",
       "photos": [
         {
           "src": "images/photos/taytranslator/01.jpg",
@@ -408,7 +403,6 @@
       ],
       "links": [],
       "layout": "groups",
-      "cover": "images/photos/humanitas/cover.jpg",
       "groups": [
         {
           "after": 0,
@@ -517,7 +511,6 @@
         }
       ],
       "layout": "interleave",
-      "cover": "images/photos/vinyl-vietnam-heritage/cover.jpg",
       "photos": [
         {
           "src": "images/photos/vinyl-vietnam-heritage/01.jpg",
@@ -653,7 +646,6 @@
       ],
       "links": [],
       "layout": "end",
-      "cover": "images/photos/ntu-singapore/cover.jpg",
       "photos": [
         {
           "src": "images/photos/ntu-singapore/01.jpg",
@@ -703,7 +695,6 @@
       ],
       "links": [],
       "layout": "interleave",
-      "cover": "images/photos/miles-and-milestones/cover.jpg",
       "photos": [
         {
           "src": "images/photos/miles-and-milestones/01.jpg",
@@ -764,6 +755,96 @@
           "caption": "Empower Run 2025 — charity run supporting cancer patients",
           "width": 1600,
           "height": 1200
+        }
+      ]
+    },
+    {
+      "category": "Honors & Awards",
+      "title": "Robotics Awards",
+      "role": "",
+      "subtitle": "",
+      "en": [],
+      "vi": [],
+      "links": [],
+      "layout": "end",
+      "photos": [
+        {
+          "src": "images/photos/vex/16.jpg",
+          "caption": "VEX Robotics World Championship Qualifier (Missouri, USA)",
+          "width": 1600,
+          "height": 1236
+        },
+        {
+          "src": "images/photos/vex/17.jpg",
+          "caption": "Robot Skills Champion & Innovate Award (Main Coder), Vietnam VEX V5 Robotics Competition (V5RC) — National Qualification",
+          "width": 1600,
+          "height": 1132
+        },
+        {
+          "src": "images/photos/vex/18.jpg",
+          "caption": "Create Award, New Year’s Mayhem Signature Event — Vietnam VEX V5 Robotics Competition",
+          "width": 894,
+          "height": 634
+        },
+        {
+          "src": "images/photos/vex/19.jpg",
+          "caption": "Tournament Champion & Energy Award, Vietnam VEX V5 Robotics Competition (V5RC) — Northern Qualification",
+          "width": 1600,
+          "height": 1132
+        },
+        {
+          "src": "images/photos/vex/20.jpg",
+          "caption": "First Honor, VEX Asia Open Signature Event V5RC HS",
+          "width": 750,
+          "height": 1049
+        },
+        {
+          "src": "images/photos/vex/21.jpg",
+          "caption": "Talent Award, VEX Asia Open Signature Event V5RC HS",
+          "width": 750,
+          "height": 1023
+        },
+        {
+          "src": "images/photos/meckup/01.jpg",
+          "caption": "Silver Award — MeckUP Quest 2025–2026, The University of Hong Kong",
+          "width": 1600,
+          "height": 1066
+        },
+        {
+          "src": "images/photos/meckup/05.jpg",
+          "caption": "Certificate of Participation — MeckUP Quest 2025–2026",
+          "width": 1084,
+          "height": 1600
+        }
+      ]
+    },
+    {
+      "category": "Honors & Awards",
+      "title": "Athletics & Endurance Sports Awards",
+      "role": "",
+      "subtitle": "",
+      "en": [],
+      "vi": [],
+      "links": [],
+      "layout": "end",
+      "photos": [
+        {
+          "src": "images/photos/miles-and-milestones/03.jpg",
+          "caption": "Half Marathon Finisher, Standard Chartered Hanoi Marathon Heritage Race 2025",
+          "width": 854,
+          "height": 613
+        },
+        {
+          "src": "images/photos/miles-and-milestones/06.jpg",
+          "caption": "21KM Half Marathon Finisher, Tay Ho Half Marathon 2025",
+          "width": 1179,
+          "height": 835
+        },
+        {
+          "src": "images/photos/miles-and-milestones/08.jpg",
+          "caption": "11KM Road Race Finisher, Ecopark City Trail 2025",
+          "width": 1179,
+          "height": 884
         }
       ]
     }

@@ -19,6 +19,7 @@ PHOTOS = 'content/photos.json'
 VI_CHARS = re.compile(r'[ăâđêôơưàảãáạằẳẵắặầẩẫấậèẻẽéẹềểễếệìỉĩíịòỏõóọồổỗốộờởỡớợùủũúụừửữứựỳỷỹýỵ]', re.I)
 SMALL_WORDS = {'a', 'an', 'and', 'the', 'to', 'of', 'in', 'on', 'for', 'with'}
 ACRONYMS = {'VEX', 'AI', 'STEM', 'IOT', 'HKU', 'NTU'}
+CATEGORY_NAMES = {'Home': 'About Me'}  # page name in the sheet -> menu name on the site
 
 
 def is_vietnamese(text):
@@ -86,6 +87,9 @@ def main():
         'domain': contact.get('Domain', '').strip(),
     }
 
+    with open(PHOTOS, encoding='utf-8') as fp:
+        photos = json.load(fp)
+
     records = []
     category = ''
     pending_title = ''
@@ -95,6 +99,7 @@ def main():
 
         if isinstance(a.value, str) and 'Page:' in a.value:
             category = title_case(a.value.split(':', 1)[1])
+            category = CATEGORY_NAMES.get(category, category)
             pending_title = ''
             continue
 
@@ -102,11 +107,13 @@ def main():
             continue
 
         if 'Không cần content' in str(d.value or ''):
-            continue  # designer note, not page content
+            vi, en = [], []  # designer note, not page content
+        else:
+            vi = clean_text(d.value)
+            en = clean_text(e.value)
 
-        vi = clean_text(d.value)
-        en = clean_text(e.value)
-        if not vi and not en:
+        has_photos = any(c.value.startswith(key) for key in photos)
+        if not vi and not en and not has_photos:
             # Section heading without content, used as title for the next row
             pending_title = c.value.split('\n')[0].strip()
             continue
@@ -128,9 +135,6 @@ def main():
             role, title = '', heading
 
         links = []
-        if b.value and not any(r['category'] == category for r in records):
-            category = title_case(b.value)  # e.g. Home -> Personal Background
-
         if hyperlink(g):
             links.append({'type': link_label(g.value), 'url': hyperlink(g)})
 
@@ -145,8 +149,6 @@ def main():
         })
         pending_title = ''
 
-    with open(PHOTOS, encoding='utf-8') as fp:
-        photos = json.load(fp)
     for key, entry in photos.items():
         matches = [r for r in records if r['title'].startswith(key)]
         if not matches:

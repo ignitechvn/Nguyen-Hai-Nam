@@ -18,7 +18,7 @@ Screenshots
 Portfolio Nguyễn Hải Nam
 -----------
 
-Mỗi mục trong file nội dung `content/Website_Layout_Hai_Nam.xlsx` (không đưa lên GitHub vì có link Drive nội bộ — đặt file vào đúng đường dẫn này để cập nhật) là một đĩa trong thùng: chọn đĩa (cuộn chuột, kéo, phím mũi tên, menu chuyên mục) rồi bấm SHOW / click lần nữa để lật đĩa và đọc nội dung. Nút EN / VI chuyển ngôn ngữ (cột Content [ENG] / Content [VIET]).
+Thùng có 7 đĩa, mỗi đĩa là một mục menu (một "Page" trong file nội dung; trang HOME hiển thị là About Me). Bìa đĩa là chữ: tên mục và danh sách các phần như tracklist; lật đĩa mở trang của cả mục. Mỗi dòng trong file nội dung `content/Website_Layout_Hai_Nam.xlsx` (không đưa lên GitHub vì có link Drive nội bộ — đặt file vào đúng đường dẫn này để cập nhật) là một phần trong trang của mục đó. Chọn đĩa (cuộn chuột, kéo, phím mũi tên, menu chuyên mục) rồi bấm SHOW / click lần nữa để lật đĩa và đọc nội dung. Nút EN / VI chuyển ngôn ngữ (cột Content [ENG] / Content [VIET]).
 
 Cập nhật nội dung:
 
@@ -29,7 +29,7 @@ Cập nhật nội dung:
 * Tiêu đề lấy từ cột Breakdown (`Vai trò | Tên dự án`, dòng sau là mô tả ngắn), chuyên mục lấy từ các dòng `... Page: ...`.
 * Các dòng ghi chú cho người thiết kế như `[Insert ảnh ...]` được tự động bỏ qua.
 * Link trong cột "Yêu cầu hình ảnh" (nền tảng, bài nghiên cứu, fanpage, công ty) thành nút bấm cạnh tiêu đề.
-* Ảnh: lưu trong `src/images/photos/<mục>/` và khai báo trong `content/photos.json` (khoá = phần đầu tiêu đề mục, `layout`: `interleave` xếp xen kẽ với đoạn văn / `end` đặt sau nội dung, `caption` là chú thích). Nén ảnh trước khi thêm: `python3 tools/optimize_photo.py anh-goc.jpg src/images/photos/<mục>/06.jpg` (thêm `--cover` để tạo `cover.jpg` vuông cho bìa đĩa). Mục không có ảnh dùng bìa tự tạo theo màu chuyên mục.
+* Ảnh: lưu trong `src/images/photos/<mục>/` và khai báo trong `content/photos.json` (khoá = phần đầu tiêu đề mục, `layout`: `interleave` xếp xen kẽ với đoạn văn / `end` đặt sau nội dung, `caption` là chú thích). Nén ảnh trước khi thêm: `python3 tools/optimize_photo.py anh-goc.jpg src/images/photos/<mục>/06.jpg`. Mục Honors & Awards dùng lại ảnh chứng nhận đã có (khai báo trong `content/photos.json`).
 
 Chạy & build
 -----------

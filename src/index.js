@@ -6,12 +6,13 @@ import content from './content.json';
 const { profile } = content;
 
 const CATEGORY_COLORS = {
-  'Personal Background': ['#1d3557', '#e9c46a'],
+  'About Me': ['#1d3557', '#e9c46a'],
   'VEX Competition & Robotics Journey': ['#9b2226', '#f4f1de'],
   'Rural Education & Digital Inclusion': ['#2d6a4f', '#f1faee'],
   'Dedication to Digitalized Sound': ['#3c1642', '#f6bd60'],
   'STEM Activities & Social Impacts': ['#0b6e8a', '#f8f9fa'],
   'Miles & Milestones': ['#bc6c25', '#fefae0'],
+  'Honors & Awards': ['#2b2d42', '#ffd166'],
 };
 
 const LABELS = {
@@ -31,15 +32,21 @@ const LABELS = {
   },
 };
 
-// The first item of the spreadsheet is placed at the front of the crate
-const data = content.records.slice().reverse().map((record, i) => Object.assign({}, record, {
-  artist: record.role || record.category,
+// One record per menu item (spreadsheet page), holding all of its entries
+const sections = [];
+content.records.forEach((record) => {
+  let section = sections.find((s) => s.title === record.category);
+  if (!section) {
+    section = { title: record.category, entries: [], index: sections.length };
+    sections.push(section);
+  }
+  section.entries.push(Object.assign({ photos: [], groups: [] }, record));
+});
+
+// The first section is placed at the front of the crate
+const data = sections.slice().reverse().map((section) => Object.assign({}, section, {
   cover: '',
-  coverPath: record.cover || '',
-  photos: record.photos || [],
-  groups: record.groups || [],
   hasSleeve: false,
-  index: content.records.length - 1 - i,
 }));
 
 let lang = 'en';
@@ -74,7 +81,15 @@ function formatParagraph(text) {
 }
 
 function recordId(index) {
-  return content.records.length - 1 - index;
+  return sections.length - 1 - index;
+}
+
+function trackNumber(i) {
+  return String.fromCharCode(65 + Math.floor(i / 4)) + (i % 4 + 1); // A1..A4, B1..
+}
+
+function shortTitle(title) {
+  return title.replace(/^The Research:\s*/, '').replace(/[“”"]/g, '');
 }
 
 function bindEvents() {
@@ -105,6 +120,13 @@ function bindEvents() {
   // Keep clicks & touches inside the article from reaching the 3D scene
   ['mousedown', 'mouseup', 'touchstart', 'touchend'].forEach((type) => {
     infoContainer.addEventListener(type, (e) => e.stopPropagation(), false);
+  });
+
+  el('cratedigger-record-toc').addEventListener('click', (e) => {
+    const button = e.target.closest('button');
+    if (button) {
+      el('entry-' + button.dataset.entry).scrollIntoView({ behavior: 'smooth' });
+    }
   });
 }
 
@@ -149,22 +171,40 @@ function renderBody(paragraphs, photos, layout, groups) {
   }).join('');
 }
 
-function fillInfoPanel(record) {
-  const item = record.data;
+function renderEntry(entry, i, section) {
   const labels = LABELS[lang];
-
-  el('cratedigger-record-category').textContent = item.category;
-  el('cratedigger-record-artist').textContent = item.role;
-  el('cratedigger-record-title').textContent = item.title;
-  el('cratedigger-record-subtitle').textContent = item.subtitle;
-
-  el('cratedigger-record-links').innerHTML = item.links.map((link) =>
+  // An entry named like its section (e.g. "Miles & Milestones") needs no second heading
+  const header = entry.title === section.title ? '' :
+    `${entry.role ? `<div class="entry-role">${escapeHtml(entry.role)}</div>` : ''}
+     <h2 class="entry-title">${escapeHtml(entry.title)}</h2>
+     ${entry.subtitle ? `<div class="entry-subtitle">${escapeHtml(entry.subtitle)}</div>` : ''}`;
+  const links = entry.links.map((link) =>
     `<a href="${escapeHtml(link.url)}" target="_blank" rel="noopener">${labels[link.type] || link.type} &#8599;</a>`
   ).join('');
 
-  el('cratedigger-record-content').innerHTML = renderBody(item[lang], item.photos, item.layout, item.groups);
+  return `<section class="entry" id="entry-${i}">
+    ${header}
+    ${links ? `<div class="entry-links">${links}</div>` : ''}
+    ${renderBody(entry[lang], entry.photos, entry.layout, entry.groups)}
+  </section>`;
+}
 
-  el('cratedigger-record-contact').innerHTML = item.index === 0 ?
+function fillInfoPanel(record) {
+  const section = record.data;
+  const labels = LABELS[lang];
+
+  el('cratedigger-record-category').textContent = 'No. ' + String(section.index + 1).padStart(2, '0');
+  el('cratedigger-record-title').textContent = section.title;
+
+  el('cratedigger-record-toc').innerHTML = section.entries.length < 2 ? '' : section.entries.map((entry, i) =>
+    `<button type="button" data-entry="${i}"><span>${trackNumber(i)}</span>${escapeHtml(shortTitle(entry.title))}</button>`
+  ).join('');
+
+  el('cratedigger-record-content').innerHTML = section.entries
+    .map((entry, i) => renderEntry(entry, i, section))
+    .join('');
+
+  el('cratedigger-record-contact').innerHTML = section.index === 0 ?
     `<h2>${labels.contact}</h2>
      <a href="mailto:${escapeHtml(profile.email)}">${escapeHtml(profile.email)}</a>
      <a href="tel:${escapeHtml(profile.phone.replace(/[^\d+]/g, ''))}">${escapeHtml(profile.phone)}</a>
@@ -195,90 +235,75 @@ function wrapText(ctx, text, maxWidth) {
   return lines;
 }
 
-// Sleeve design generated from the spreadsheet (shown until / instead of a photo)
-function drawPhotoCover(ctx, size, item, colors) {
-  const pad = 24;
-  const band = size * 0.4;
-  const title = (item.title || '').replace(/^The Research:\s*/, '');
-  let fontSize = 30;
-  let lines;
-
-  ctx.drawImage(item.coverImage, 0, 0, size, size);
-  ctx.fillStyle = colors[0];
-  ctx.fillRect(0, size - band, size, band);
-
-  ctx.textBaseline = 'top';
-  ctx.fillStyle = colors[1];
-  ctx.font = '700 12px Montserrat, sans-serif';
-  ctx.fillText((item.category || '').toUpperCase(), pad, size - band + 18);
-
-  do {
-    ctx.font = '700 ' + fontSize + 'px Montserrat, sans-serif';
-    lines = wrapText(ctx, title.toUpperCase(), size - pad * 2);
-    fontSize -= 2;
-  } while (lines.length > 2 && fontSize > 14);
-
-  ctx.fillStyle = '#fefefe';
-  lines.slice(0, 2).forEach((line, i) => {
-    ctx.fillText(line, pad, size - band + 42 + i * (fontSize + 2) * 1.15);
-  });
-
-  ctx.fillStyle = colors[1];
-  ctx.font = '400 15px Montserrat, sans-serif';
-  ctx.fillText(item.role || profile.name, pad, size - pad - 15);
+function ellipsize(ctx, text, maxWidth) {
+  if (ctx.measureText(text).width <= maxWidth) {
+    return text;
+  }
+  let cut = text;
+  while (cut.length > 1 && ctx.measureText(cut + '…').width > maxWidth) {
+    cut = cut.slice(0, -1);
+  }
+  return cut.trim() + '…';
 }
 
-function drawPlaceholderCover(ctx, size, item) {
-  const colors = CATEGORY_COLORS[item.category] || ['#222222', '#fefefe'];
-
-  if (item.coverImage) {
-    drawPhotoCover(ctx, size, item, colors);
-    return;
-  }
-
-  const pad = 28;
-  const title = (item.title || '').replace(/^The Research:\s*/, '');
-  let fontSize = 40;
+// Text-only sleeve: catalogue number, section title and its entries as a tracklist
+function drawPlaceholderCover(ctx, size, section) {
+  const colors = CATEGORY_COLORS[section.title] || ['#222222', '#fefefe'];
+  const pad = 30;
+  let fontSize = 46;
   let lines;
 
   ctx.fillStyle = colors[0];
   ctx.fillRect(0, 0, size, size);
 
   // Vinyl grooves peeking out of the sleeve
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
   ctx.lineWidth = 2;
-  for (let r = 30; r < size * 0.62; r += 10) {
+  for (let r = 30; r < size * 0.5; r += 9) {
     ctx.beginPath();
-    ctx.arc(size, size, r, Math.PI, Math.PI * 1.5);
+    ctx.arc(size, 0, r, Math.PI / 2, Math.PI);
     ctx.stroke();
   }
-  ctx.fillStyle = colors[1];
-  ctx.beginPath();
-  ctx.arc(size, size, 26, Math.PI, Math.PI * 1.5);
-  ctx.lineTo(size, size);
-  ctx.fill();
 
   ctx.textBaseline = 'top';
   ctx.fillStyle = colors[1];
-  ctx.font = '700 13px Montserrat, sans-serif';
-  ctx.fillText((item.category || '').toUpperCase(), pad, pad);
+  ctx.font = '700 14px Montserrat, sans-serif';
+  ctx.fillText('NO. ' + String(section.index + 1).padStart(2, '0'), pad, pad);
+  ctx.font = '400 14px Montserrat, sans-serif';
+  ctx.fillText(profile.name.toUpperCase(), pad, pad + 20);
 
   do {
     ctx.font = '700 ' + fontSize + 'px Montserrat, sans-serif';
-    lines = wrapText(ctx, title.toUpperCase(), size - pad * 2);
+    lines = wrapText(ctx, section.title.toUpperCase(), size - pad * 2);
     fontSize -= 2;
-  } while (lines.length * fontSize * 1.15 > size * 0.52 && fontSize > 14);
+  } while (lines.length * fontSize * 1.1 > size * 0.36 && fontSize > 20);
 
   ctx.fillStyle = '#fefefe';
   lines.forEach((line, i) => {
-    ctx.fillText(line, pad, pad + 32 + i * (fontSize + 2) * 1.15);
+    ctx.fillText(line, pad, pad + 70 + i * (fontSize + 2) * 1.1);
   });
 
-  ctx.fillStyle = colors[1];
-  ctx.font = '400 18px Montserrat, sans-serif';
-  ctx.fillText(item.role || '', pad, size - pad - 46);
-  ctx.font = '700 14px Montserrat, sans-serif';
-  ctx.fillText(profile.name.toUpperCase(), pad, size - pad - 18);
+  // Tracklist
+  const tracks = section.entries.length > 1 ? section.entries : [];
+  const lineHeight = 22;
+  const top = size - pad - tracks.length * lineHeight;
+  ctx.strokeStyle = colors[1];
+  ctx.lineWidth = 1;
+  if (tracks.length) {
+    ctx.beginPath();
+    ctx.moveTo(pad, top - 14);
+    ctx.lineTo(size - pad, top - 14);
+    ctx.stroke();
+  }
+  tracks.forEach((entry, i) => {
+    const y = top + i * lineHeight;
+    ctx.fillStyle = colors[1];
+    ctx.font = '700 14px Montserrat, sans-serif';
+    ctx.fillText(trackNumber(i), pad, y);
+    ctx.fillStyle = '#fefefe';
+    ctx.font = '400 15px Montserrat, sans-serif';
+    ctx.fillText(ellipsize(ctx, shortTitle(entry.title), size - pad * 2 - 34), pad + 34, y);
+  });
 }
 
 function renderChrome() {
@@ -288,15 +313,8 @@ function renderChrome() {
     `<a href="https://${escapeHtml(profile.domain)}" target="_blank" rel="noopener">${escapeHtml(profile.domain)}</a>`;
   langToggle.innerHTML = lang === 'en' ? '<b>EN</b> / VI' : 'EN / <b>VI</b>';
 
-  const categories = [];
-  content.records.forEach((record, index) => {
-    if (!categories.some((c) => c.name === record.category)) {
-      categories.push({ name: record.category, index });
-    }
-  });
-
-  categoryNav.innerHTML = categories.map((c) =>
-    `<button type="button" data-index="${c.index}">${escapeHtml(c.name)}</button>`
+  categoryNav.innerHTML = sections.map((section) =>
+    `<button type="button" data-index="${section.index}">${escapeHtml(section.title)}</button>`
   ).join('');
 }
 
@@ -314,10 +332,20 @@ function bindChromeEvents() {
     }
   });
 
+  // Menu: pull the record out of the crate, then flip it open
+  let openTimeout;
   categoryNav.addEventListener('click', (e) => {
     const button = e.target.closest('button');
     if (button) {
-      cratedigger.selectRecord(recordId(Number(button.dataset.index)));
+      const id = recordId(Number(button.dataset.index));
+      clearTimeout(openTimeout);
+      cratedigger.selectRecord(id);
+      openTimeout = setTimeout(() => {
+        const selected = cratedigger.getSelectedRecord();
+        if (selected && selected.id === id) {
+          cratedigger.flipSelectedRecord();
+        }
+      }, 900);
     }
   });
 }
@@ -366,22 +394,7 @@ cratedigger.init({
 // Wait for the web font so that the generated sleeves use it
 const fontsReady = document.fonts ? document.fonts.load('700 40px Montserrat').catch(() => {}) : Promise.resolve();
 
-function loadImage(src) {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => resolve(img);
-    img.onerror = () => resolve(null);
-    img.src = src;
-  });
-}
-
-const coversReady = Promise.all(data.filter((item) => item.coverPath).map((item) =>
-  loadImage(item.coverPath).then((img) => {
-    item.coverImage = img;
-  })
-));
-
-Promise.all([fontsReady, coversReady]).then(() => {
+fontsReady.then(() => {
   cratedigger.loadRecords(data, false, () => {
     bindEvents();
   });
