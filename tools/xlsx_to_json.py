@@ -50,6 +50,8 @@ def clean_text(text):
         if not line or re.fullmatch(r'\[[^\]]*\]', line):
             continue
         line = re.sub(r'\s*\[Insert[^\]]*\]\s*', ' ', line).strip()
+        if line.endswith('| Certificate'):
+            continue  # certificate list, shown as captioned images instead
         if line:
             paragraphs.append(line)
     return paragraphs

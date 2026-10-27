@@ -37,6 +37,7 @@ const data = content.records.slice().reverse().map((record, i) => Object.assign(
   cover: '',
   coverPath: record.cover || '',
   photos: record.photos || [],
+  groups: record.groups || [],
   hasSleeve: false,
   index: content.records.length - 1 - i,
 }));
@@ -124,19 +125,24 @@ function renderPhotos(photos) {
   ).join('') + '</div>';
 }
 
-// Photos are spread between paragraphs ("xen kẽ"), or all placed after the text
-function renderBody(paragraphs, photos, layout) {
+// Photos are spread between paragraphs ("xen kẽ"), placed after given paragraphs, or all after the text
+function renderBody(paragraphs, photos, layout, groups) {
   const html = paragraphs.map((p) => `<p>${formatParagraph(p)}</p>`);
+
+  if (layout === 'groups') {
+    const after = (key) => groups.filter((group) => group.after === key)
+      .map((group) => renderPhotos(group.photos)).join('');
+    return html.map((p, i) => p + after(i)).join('') + after('end');
+  }
 
   if (layout === 'end' || paragraphs.length < 2) {
     return html.join('') + renderPhotos(photos);
   }
 
-  const groups = paragraphs.length;
   let start = 0;
 
   return html.map((p, i) => {
-    const end = Math.round(photos.length * (i + 1) / groups);
+    const end = Math.round(photos.length * (i + 1) / paragraphs.length);
     const group = photos.slice(start, end);
     start = end;
     return p + renderPhotos(group);
@@ -156,7 +162,7 @@ function fillInfoPanel(record) {
     `<a href="${escapeHtml(link.url)}" target="_blank" rel="noopener">${labels[link.type] || link.type} &#8599;</a>`
   ).join('');
 
-  el('cratedigger-record-content').innerHTML = renderBody(item[lang], item.photos, item.layout);
+  el('cratedigger-record-content').innerHTML = renderBody(item[lang], item.photos, item.layout, item.groups);
 
   el('cratedigger-record-contact').innerHTML = item.index === 0 ?
     `<h2>${labels.contact}</h2>

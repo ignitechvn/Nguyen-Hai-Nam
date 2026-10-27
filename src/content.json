@@ -59,12 +59,7 @@
         "Behind every competition were countless hours in the lab, late nights spent assembling, programming, and testing our robot. There were moments when the robot repeatedly malfunctioned or our strategies failed to work as expected, forcing us to start over. Yet, those setbacks taught us patience, trust, and the importance of standing together to find solutions.",
         "Our first major breakthrough came when we won Tournament Champion and the Energy Award at the 2025 VEX V5 Northern Qualification Tournament. We then ventured into international Signature Events, earning First Honor and the Talent Award at VEX Asia Open, followed by the Create Award at New Year's Mayhem 2025**. Each competition brought new challenges and opportunities to grow, both as engineers and as a team.",
         "In 2026, our persistence paid off when we earned Robot Skills Champion and the Innovate Award, ranked **No. 1 nationwide**, and secured a place at the **VEX Robotics World Championship in Missouri, USA.",
-        "Looking back, I realize that the most valuable rewards were never just the trophies. They were the friendships we built, the setbacks we overcame together, and the moments when our hard work finally came to life. From an unexpected invitation to a dream of competing on the world stage, VEX Robotics has become a chapter of my youth that I will always cherish.",
-        "VEX Robotics World Championship Qualifier (Missouri, USA) | Certificate",
-        "Robot Skills Champion & Innovate Award (Main Coder), Vietnam VEX V5 Robotics Competition (V5RC) (National Qualification) | Certificate",
-        "Create Award, New Year’s Mayhem Signature Event - Vietnam VEX V5 Robotics Competition | Certificate",
-        "Tournament Champion & Energy Award, Vietnam VEX V5 Robotics Competition (Northern Qualification) | Certificate",
-        "First Honor & Talent Award, VEX Asia Open Signature Event V5RC HS | Certificate"
+        "Looking back, I realize that the most valuable rewards were never just the trophies. They were the friendships we built, the setbacks we overcame together, and the moments when our hard work finally came to life. From an unexpected invitation to a dream of competing on the world stage, VEX Robotics has become a chapter of my youth that I will always cherish."
       ],
       "vi": [
         "Hành trình của tôi với VEX Robotics bắt đầu từ một lời mời đầy bất ngờ, khi thầy cô và bạn bè nhận thấy tiềm năng lập trình và khuyến khích tôi tham gia đội tuyển. Khi ấy, tôi chưa từng nghĩ rằng quyết định thử sức này sẽ mở ra một trong những hành trình đáng nhớ nhất của tuổi học trò. Từ những bỡ ngỡ ban đầu, tôi dần đảm nhận vai trò lập trình chính (Main Coder), cùng đồng đội nuôi dưỡng giấc mơ chinh phục những sân chơi Robotics lớn hơn.",
@@ -73,7 +68,156 @@
         "Năm 2026, những nỗ lực bền bỉ được đền đáp bằng Robot Skills Champion và Innovate Award, Top 1 toàn quốc, cùng tấm vé tham dự VEX Robotics World Championship tại Missouri, Hoa Kỳ.",
         "Nhìn lại chặng đường ấy, tôi nhận ra điều quý giá nhất không chỉ là những chiếc cúp, mà là những người đồng đội, những lần cùng nhau vượt qua thất bại và khoảnh khắc chứng kiến nỗ lực trở thành hiện thực. Từ một lời mời giản dị đến giấc mơ vươn ra thế giới, VEX đã trở thành một phần thanh xuân mà tôi sẽ luôn trân trọng."
       ],
-      "links": []
+      "links": [],
+      "layout": "groups",
+      "cover": "images/photos/vex/cover.jpg",
+      "groups": [
+        {
+          "after": 0,
+          "photos": [
+            {
+              "src": "images/photos/vex/01.jpg",
+              "caption": "",
+              "width": 1066,
+              "height": 1600
+            },
+            {
+              "src": "images/photos/vex/03.jpg",
+              "caption": "",
+              "width": 1200,
+              "height": 1600
+            },
+            {
+              "src": "images/photos/vex/04.jpg",
+              "caption": "",
+              "width": 1600,
+              "height": 1200
+            }
+          ]
+        },
+        {
+          "after": 1,
+          "photos": [
+            {
+              "src": "images/photos/vex/05.jpg",
+              "caption": "Northern Qualification — Vietnam VEX V5 Robotics Competition 2025",
+              "width": 1600,
+              "height": 1200
+            },
+            {
+              "src": "images/photos/vex/06.jpg",
+              "caption": "Northern Qualification — Vietnam VEX V5 Robotics Competition 2025",
+              "width": 1600,
+              "height": 1200
+            },
+            {
+              "src": "images/photos/vex/07.jpg",
+              "caption": "Northern Qualification — Vietnam VEX V5 Robotics Competition 2025",
+              "width": 1600,
+              "height": 1200
+            },
+            {
+              "src": "images/photos/vex/08.jpg",
+              "caption": "Northern Qualification — Vietnam VEX V5 Robotics Competition 2025",
+              "width": 1600,
+              "height": 1066
+            }
+          ]
+        },
+        {
+          "after": 2,
+          "photos": [
+            {
+              "src": "images/photos/vex/09.jpg",
+              "caption": "National Championship 2026 — Vietnam VEX V5 Robotics Competition",
+              "width": 1600,
+              "height": 900
+            },
+            {
+              "src": "images/photos/vex/10.jpg",
+              "caption": "National Championship 2026 — Vietnam VEX V5 Robotics Competition",
+              "width": 1600,
+              "height": 1067
+            },
+            {
+              "src": "images/photos/vex/11.jpg",
+              "caption": "National Championship 2026 — Vietnam VEX V5 Robotics Competition",
+              "width": 1067,
+              "height": 1600
+            }
+          ]
+        },
+        {
+          "after": 3,
+          "photos": [
+            {
+              "src": "images/photos/vex/12.jpg",
+              "caption": "VEX Robotics World Championship 2026 — St. Louis, Missouri, USA",
+              "width": 1600,
+              "height": 900
+            },
+            {
+              "src": "images/photos/vex/13.jpg",
+              "caption": "VEX Robotics World Championship 2026 — St. Louis, Missouri, USA",
+              "width": 1600,
+              "height": 900
+            },
+            {
+              "src": "images/photos/vex/14.jpg",
+              "caption": "VEX Robotics World Championship 2026 — St. Louis, Missouri, USA",
+              "width": 1600,
+              "height": 900
+            },
+            {
+              "src": "images/photos/vex/15.jpg",
+              "caption": "VEX Robotics World Championship 2026 — St. Louis, Missouri, USA",
+              "width": 1600,
+              "height": 900
+            }
+          ]
+        },
+        {
+          "after": "end",
+          "photos": [
+            {
+              "src": "images/photos/vex/16.jpg",
+              "caption": "VEX Robotics World Championship Qualifier (Missouri, USA)",
+              "width": 1600,
+              "height": 1236
+            },
+            {
+              "src": "images/photos/vex/17.jpg",
+              "caption": "Robot Skills Champion & Innovate Award (Main Coder), Vietnam VEX V5 Robotics Competition (V5RC) — National Qualification",
+              "width": 1600,
+              "height": 1132
+            },
+            {
+              "src": "images/photos/vex/18.jpg",
+              "caption": "Create Award, New Year’s Mayhem Signature Event — Vietnam VEX V5 Robotics Competition",
+              "width": 894,
+              "height": 634
+            },
+            {
+              "src": "images/photos/vex/19.jpg",
+              "caption": "Tournament Champion & Energy Award, Vietnam VEX V5 Robotics Competition (V5RC) — Northern Qualification",
+              "width": 1600,
+              "height": 1132
+            },
+            {
+              "src": "images/photos/vex/20.jpg",
+              "caption": "First Honor, VEX Asia Open Signature Event V5RC HS",
+              "width": 750,
+              "height": 1049
+            },
+            {
+              "src": "images/photos/vex/21.jpg",
+              "caption": "Talent Award, VEX Asia Open Signature Event V5RC HS",
+              "width": 750,
+              "height": 1023
+            }
+          ]
+        }
+      ]
     },
     {
       "category": "VEX Competition & Robotics Journey",

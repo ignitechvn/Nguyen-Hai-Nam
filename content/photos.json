@@ -238,5 +238,156 @@
         "height": 1600
       }
     ]
+  },
+  "VEX Competition": {
+    "layout": "groups",
+    "cover": "images/photos/vex/cover.jpg",
+    "groups": [
+      {
+        "after": 0,
+        "photos": [
+          {
+            "src": "images/photos/vex/01.jpg",
+            "caption": "",
+            "width": 1066,
+            "height": 1600
+          },
+          {
+            "src": "images/photos/vex/03.jpg",
+            "caption": "",
+            "width": 1200,
+            "height": 1600
+          },
+          {
+            "src": "images/photos/vex/04.jpg",
+            "caption": "",
+            "width": 1600,
+            "height": 1200
+          }
+        ]
+      },
+      {
+        "after": 1,
+        "photos": [
+          {
+            "src": "images/photos/vex/05.jpg",
+            "caption": "Northern Qualification — Vietnam VEX V5 Robotics Competition 2025",
+            "width": 1600,
+            "height": 1200
+          },
+          {
+            "src": "images/photos/vex/06.jpg",
+            "caption": "Northern Qualification — Vietnam VEX V5 Robotics Competition 2025",
+            "width": 1600,
+            "height": 1200
+          },
+          {
+            "src": "images/photos/vex/07.jpg",
+            "caption": "Northern Qualification — Vietnam VEX V5 Robotics Competition 2025",
+            "width": 1600,
+            "height": 1200
+          },
+          {
+            "src": "images/photos/vex/08.jpg",
+            "caption": "Northern Qualification — Vietnam VEX V5 Robotics Competition 2025",
+            "width": 1600,
+            "height": 1066
+          }
+        ]
+      },
+      {
+        "after": 2,
+        "photos": [
+          {
+            "src": "images/photos/vex/09.jpg",
+            "caption": "National Championship 2026 — Vietnam VEX V5 Robotics Competition",
+            "width": 1600,
+            "height": 900
+          },
+          {
+            "src": "images/photos/vex/10.jpg",
+            "caption": "National Championship 2026 — Vietnam VEX V5 Robotics Competition",
+            "width": 1600,
+            "height": 1067
+          },
+          {
+            "src": "images/photos/vex/11.jpg",
+            "caption": "National Championship 2026 — Vietnam VEX V5 Robotics Competition",
+            "width": 1067,
+            "height": 1600
+          }
+        ]
+      },
+      {
+        "after": 3,
+        "photos": [
+          {
+            "src": "images/photos/vex/12.jpg",
+            "caption": "VEX Robotics World Championship 2026 — St. Louis, Missouri, USA",
+            "width": 1600,
+            "height": 900
+          },
+          {
+            "src": "images/photos/vex/13.jpg",
+            "caption": "VEX Robotics World Championship 2026 — St. Louis, Missouri, USA",
+            "width": 1600,
+            "height": 900
+          },
+          {
+            "src": "images/photos/vex/14.jpg",
+            "caption": "VEX Robotics World Championship 2026 — St. Louis, Missouri, USA",
+            "width": 1600,
+            "height": 900
+          },
+          {
+            "src": "images/photos/vex/15.jpg",
+            "caption": "VEX Robotics World Championship 2026 — St. Louis, Missouri, USA",
+            "width": 1600,
+            "height": 900
+          }
+        ]
+      },
+      {
+        "after": "end",
+        "photos": [
+          {
+            "src": "images/photos/vex/16.jpg",
+            "caption": "VEX Robotics World Championship Qualifier (Missouri, USA)",
+            "width": 1600,
+            "height": 1236
+          },
+          {
+            "src": "images/photos/vex/17.jpg",
+            "caption": "Robot Skills Champion & Innovate Award (Main Coder), Vietnam VEX V5 Robotics Competition (V5RC) — National Qualification",
+            "width": 1600,
+            "height": 1132
+          },
+          {
+            "src": "images/photos/vex/18.jpg",
+            "caption": "Create Award, New Year’s Mayhem Signature Event — Vietnam VEX V5 Robotics Competition",
+            "width": 894,
+            "height": 634
+          },
+          {
+            "src": "images/photos/vex/19.jpg",
+            "caption": "Tournament Champion & Energy Award, Vietnam VEX V5 Robotics Competition (V5RC) — Northern Qualification",
+            "width": 1600,
+            "height": 1132
+          },
+          {
+            "src": "images/photos/vex/20.jpg",
+            "caption": "First Honor, VEX Asia Open Signature Event V5RC HS",
+            "width": 750,
+            "height": 1049
+          },
+          {
+            "src": "images/photos/vex/21.jpg",
+            "caption": "Talent Award, VEX Asia Open Signature Event V5RC HS",
+            "width": 750,
+            "height": 1023
+          }
+        ]
+      }
+    ]
   }
 }
