@@ -34,7 +34,9 @@ const LABELS = {
 // The first item of the spreadsheet is placed at the front of the crate
 const data = content.records.slice().reverse().map((record, i) => Object.assign({}, record, {
   artist: record.role || record.category,
-  cover: record.image,
+  cover: '',
+  coverPath: record.cover || '',
+  photos: record.photos || [],
   hasSleeve: false,
   index: content.records.length - 1 - i,
 }));
@@ -105,6 +107,42 @@ function bindEvents() {
   });
 }
 
+function renderPhotos(photos) {
+  if (!photos.length) {
+    return '';
+  }
+
+  const columns = photos.length === 1 ? 1 : photos.length % 3 === 0 ? 3 : 2;
+
+  return `<div class="photo-group photo-group-${columns}">` + photos.map((photo) =>
+    `<figure>
+      <a href="${escapeHtml(photo.src)}" target="_blank" rel="noopener">
+        <img src="${escapeHtml(photo.src)}" width="${photo.width}" height="${photo.height}" loading="lazy" alt="${escapeHtml(photo.caption)}">
+      </a>
+      ${photo.caption ? `<figcaption>${escapeHtml(photo.caption)}</figcaption>` : ''}
+    </figure>`
+  ).join('') + '</div>';
+}
+
+// Photos are spread between paragraphs ("xen kẽ"), or all placed after the text
+function renderBody(paragraphs, photos, layout) {
+  const html = paragraphs.map((p) => `<p>${formatParagraph(p)}</p>`);
+
+  if (layout === 'end' || paragraphs.length < 2) {
+    return html.join('') + renderPhotos(photos);
+  }
+
+  const groups = paragraphs.length;
+  let start = 0;
+
+  return html.map((p, i) => {
+    const end = Math.round(photos.length * (i + 1) / groups);
+    const group = photos.slice(start, end);
+    start = end;
+    return p + renderPhotos(group);
+  }).join('');
+}
+
 function fillInfoPanel(record) {
   const item = record.data;
   const labels = LABELS[lang];
@@ -118,13 +156,7 @@ function fillInfoPanel(record) {
     `<a href="${escapeHtml(link.url)}" target="_blank" rel="noopener">${labels[link.type] || link.type} &#8599;</a>`
   ).join('');
 
-  const cover = el('cratedigger-record-cover');
-  cover.style.display = item.image ? '' : 'none';
-  cover.style.backgroundImage = item.image ? 'url("' + item.image + '")' : 'none';
-
-  el('cratedigger-record-content').innerHTML = item[lang]
-    .map((p) => `<p>${formatParagraph(p)}</p>`)
-    .join('');
+  el('cratedigger-record-content').innerHTML = renderBody(item[lang], item.photos, item.layout);
 
   el('cratedigger-record-contact').innerHTML = item.index === 0 ?
     `<h2>${labels.contact}</h2>
@@ -158,8 +190,46 @@ function wrapText(ctx, text, maxWidth) {
 }
 
 // Sleeve design generated from the spreadsheet (shown until / instead of a photo)
+function drawPhotoCover(ctx, size, item, colors) {
+  const pad = 24;
+  const band = size * 0.4;
+  const title = (item.title || '').replace(/^The Research:\s*/, '');
+  let fontSize = 30;
+  let lines;
+
+  ctx.drawImage(item.coverImage, 0, 0, size, size);
+  ctx.fillStyle = colors[0];
+  ctx.fillRect(0, size - band, size, band);
+
+  ctx.textBaseline = 'top';
+  ctx.fillStyle = colors[1];
+  ctx.font = '700 12px Montserrat, sans-serif';
+  ctx.fillText((item.category || '').toUpperCase(), pad, size - band + 18);
+
+  do {
+    ctx.font = '700 ' + fontSize + 'px Montserrat, sans-serif';
+    lines = wrapText(ctx, title.toUpperCase(), size - pad * 2);
+    fontSize -= 2;
+  } while (lines.length > 2 && fontSize > 14);
+
+  ctx.fillStyle = '#fefefe';
+  lines.slice(0, 2).forEach((line, i) => {
+    ctx.fillText(line, pad, size - band + 42 + i * (fontSize + 2) * 1.15);
+  });
+
+  ctx.fillStyle = colors[1];
+  ctx.font = '400 15px Montserrat, sans-serif';
+  ctx.fillText(item.role || profile.name, pad, size - pad - 15);
+}
+
 function drawPlaceholderCover(ctx, size, item) {
   const colors = CATEGORY_COLORS[item.category] || ['#222222', '#fefefe'];
+
+  if (item.coverImage) {
+    drawPhotoCover(ctx, size, item, colors);
+    return;
+  }
+
   const pad = 28;
   const title = (item.title || '').replace(/^The Research:\s*/, '');
   let fontSize = 40;
@@ -290,7 +360,22 @@ cratedigger.init({
 // Wait for the web font so that the generated sleeves use it
 const fontsReady = document.fonts ? document.fonts.load('700 40px Montserrat').catch(() => {}) : Promise.resolve();
 
-fontsReady.then(() => {
+function loadImage(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+}
+
+const coversReady = Promise.all(data.filter((item) => item.coverPath).map((item) =>
+  loadImage(item.coverPath).then((img) => {
+    item.coverImage = img;
+  })
+));
+
+Promise.all([fontsReady, coversReady]).then(() => {
   cratedigger.loadRecords(data, false, () => {
     bindEvents();
   });

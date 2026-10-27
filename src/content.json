@@ -18,8 +18,17 @@
       "vi": [
         "Tôi luôn tin rằng công nghệ không chỉ là những dòng mã hay thuật toán phức tạp, mà còn là cầu nối biến sự tò mò thành khám phá và ý tưởng thành giá trị thực tiễn. Từ lập trình robot, nghiên cứu trí tuệ nhân tạo đến khám phá khoa học âm thanh, tôi không ngừng tìm kiếm những khả năng mới của công nghệ. Nhưng chính những trải nghiệm cùng cộng đồng vùng cao đã giúp tôi nhận ra rằng: Công nghệ chỉ thực sự vĩ đại khi những tiến bộ của nó trở thành cơ hội cho tất cả mọi người."
       ],
-      "image": "https://lh3.googleusercontent.com/d/1Pt2FuQk4o9BzoP_ev36Bchss5PwuOs-C=w800",
-      "links": []
+      "links": [],
+      "layout": "interleave",
+      "cover": "images/photos/personal-statement/cover.jpg",
+      "photos": [
+        {
+          "src": "images/photos/personal-statement/01.jpg",
+          "caption": "",
+          "width": 1066,
+          "height": 1600
+        }
+      ]
     },
     {
       "category": "Personal Background",
@@ -38,7 +47,6 @@
         "Bên cạnh mong muốn tạo ra những tác động tích cực cho xã hội, công nghệ còn mở ra cho tôi một thế giới khám phá rất riêng. Tôi vẫn nhớ những buổi miệt mài lắp ráp robot trong phòng lab, nơi tiếng động cơ hòa cùng những giai điệu phát ra từ chiếc máy hát đĩa than. Trải nghiệm vừa chế tạo robot vừa lắng nghe âm nhạc ấy đã để lại trong tôi ấn tượng đặc biệt, khơi dậy sự tò mò về cách những rãnh đĩa nhỏ bé có thể lưu giữ và tái tạo âm thanh. Từ đó, tôi bắt đầu khám phá sự giao thoa giữa vật lý, xử lý tín hiệu và khoa học máy tính, tìm thấy một cách hoàn toàn mới để thấu hiểu âm nhạc bằng tư duy kỹ thuật.",
         "Nhìn lại hành trình ấy, từ những bài học đầu tiên cùng bố, những cuộc gặp gỡ nơi vùng cao đến những giai điệu trong phòng lab, tôi nhận ra rằng chính sự tò mò, lòng đồng cảm và niềm đam mê khám phá đã từng bước định hình con người mình hôm nay."
       ],
-      "image": "",
       "links": []
     },
     {
@@ -65,7 +73,6 @@
         "Năm 2026, những nỗ lực bền bỉ được đền đáp bằng Robot Skills Champion và Innovate Award, Top 1 toàn quốc, cùng tấm vé tham dự VEX Robotics World Championship tại Missouri, Hoa Kỳ.",
         "Nhìn lại chặng đường ấy, tôi nhận ra điều quý giá nhất không chỉ là những chiếc cúp, mà là những người đồng đội, những lần cùng nhau vượt qua thất bại và khoảnh khắc chứng kiến nỗ lực trở thành hiện thực. Từ một lời mời giản dị đến giấc mơ vươn ra thế giới, VEX đã trở thành một phần thanh xuân mà tôi sẽ luôn trân trọng."
       ],
-      "image": "",
       "links": []
     },
     {
@@ -79,7 +86,6 @@
       "vi": [
         "Hành trình cùng VEX Robotics tiếp thêm cho tôi sự tự tin để thử sức tại những sân chơi công nghệ quốc tế tại Hongkong. Tham gia MECKUP Quest International AI & Robotics Competition, tôi có cơ hội mở rộng kiến thức về AI, lập trình và Robotics, đồng thời gặp gỡ, trao đổi ý tưởng với những người bạn chung đam mê. Những trải nghiệm ấy giúp tôi trân trọng hơn tinh thần hợp tác và học hỏi"
       ],
-      "image": "",
       "links": []
     },
     {
@@ -93,7 +99,6 @@
       "vi": [
         "Từ những trải nghiệm Robotics, tôi tiếp tục khám phá khả năng ứng dụng AI vào các vấn đề thực tiễn tại AI & Generative Content Competition 2026 ở Singapore. Với dự án “AI–IoT Integrated System for Smart Safety and Greenhouse Gas Monitoring”, tôi có cơ hội kết hợp kiến thức lập trình, trí tuệ nhân tạo và IoT để hướng đến giải pháp giám sát môi trường"
       ],
-      "image": "",
       "links": []
     },
     {
@@ -109,8 +114,41 @@
         "Từ một học sinh từng được các thầy cô và đồng đội dìu dắt trên hành trình Robotics, tôi có cơ hội trở thành người hướng dẫn, chia sẻ những kiến thức và kinh nghiệm mình tích lũy được với thế hệ tiếp theo tại Kid Engineer. Được đào tạo chuyên sâu về thuật toán điều khiển, cảm biến và lập trình robot, tôi cùng các huấn luyện viên xây dựng lộ trình gần 100 giờ đào tạo, đồng hành cùng học sinh từ những ý tưởng đầu tiên đến quá trình thiết kế, lập trình, kiểm thử và hoàn thiện sản phẩm.",
         "Trong mùa giải World Robot Olympiad (WRO) 2026, tôi trực tiếp hướng dẫn ba đội thi khám phá chủ đề Robot Meets Culture, đưa nghệ thuật múa lân, múa rối nước và lịch sử trận Bạch Đằng vào các mô hình robot sáng tạo. Cả ba đội đều đạt thành tích nổi bật, với thứ hạng Top 7, Top 6 và Top 2. Điều đáng nhớ nhất với tôi là được chứng kiến các em kiên trì sửa từng lỗi lập trình, cùng nhau vượt qua những lần thử nghiệm thất bại và tự hào giới thiệu sản phẩm của mình. Trải nghiệm này giúp tôi nhận ra rằng niềm vui của Robotics không chỉ nằm ở việc tạo ra những cỗ máy thông minh, mà còn ở khả năng truyền cảm hứng để người khác tự tin sáng tạo và khám phá công nghệ."
       ],
-      "image": "",
-      "links": []
+      "links": [],
+      "layout": "interleave",
+      "cover": "images/photos/kid-engineer/cover.jpg",
+      "photos": [
+        {
+          "src": "images/photos/kid-engineer/01.jpg",
+          "caption": "",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "images/photos/kid-engineer/02.jpg",
+          "caption": "",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "images/photos/kid-engineer/03.jpg",
+          "caption": "",
+          "width": 1280,
+          "height": 960
+        },
+        {
+          "src": "images/photos/kid-engineer/04.jpg",
+          "caption": "",
+          "width": 900,
+          "height": 1600
+        },
+        {
+          "src": "images/photos/kid-engineer/05.jpg",
+          "caption": "",
+          "width": 1600,
+          "height": 900
+        }
+      ]
     },
     {
       "category": "Rural Education & Digital Inclusion",
@@ -127,11 +165,38 @@
         "Bắt đầu với thách thức về nguồn dữ liệu tiếng Tày khan hiếm, tôi từng bước xây dựng kho ngôn ngữ gồm 14.179 cặp câu song ngữ và 26.436 mục từ, ứng dụng các kỹ thuật xử lý ngôn ngữ tự nhiên (NLP), word alignment và thuật toán Viterbi để cải thiện khả năng dịch theo ngữ cảnh. Sau hơn 500 câu kiểm thử, điểm chrF tăng từ 0,104 lên 0,441. Tôi cũng phát triển khả năng hoạt động ngoại tuyến để ứng dụng không bị giới hạn bởi kết nối Internet.",
         "Điều ý nghĩa nhất đến từ lần thử nghiệm cùng một người bạn dân tộc Tày, khi ứng dụng đạt 95% độ chính xác trong phạm vi đánh giá thực tế. Kết quả ấy không chỉ tiếp thêm động lực để tôi hoàn thiện sản phẩm, mà còn giúp tôi nhận ra rằng đôi khi, một giải pháp công nghệ nhỏ cũng có thể góp phần phá bỏ những rào cản lớn trên hành trình tiếp cận tri thức."
       ],
-      "image": "",
       "links": [
         {
           "type": "platform",
           "url": "https://taytranslator-production.up.railway.app/"
+        }
+      ],
+      "layout": "end",
+      "cover": "images/photos/taytranslator/cover.jpg",
+      "photos": [
+        {
+          "src": "images/photos/taytranslator/01.jpg",
+          "caption": "1. Tay - Vietnamese",
+          "width": 1600,
+          "height": 870
+        },
+        {
+          "src": "images/photos/taytranslator/02.jpg",
+          "caption": "2. Vietnamese - Tay",
+          "width": 1600,
+          "height": 870
+        },
+        {
+          "src": "images/photos/taytranslator/03.jpg",
+          "caption": "3. English - Tay",
+          "width": 1600,
+          "height": 870
+        },
+        {
+          "src": "images/photos/taytranslator/04.jpg",
+          "caption": "4. Tay - English",
+          "width": 1600,
+          "height": 870
         }
       ]
     },
@@ -148,7 +213,6 @@
         "Tôi luôn tin rằng kiến thức sẽ trở nên ý nghĩa hơn khi được chia sẻ. Từ niềm đam mê lập trình và mong muốn mở rộng cơ hội giáo dục, tôi sáng lập The CodingBuddy, nền tảng học lập trình dành cho học sinh 10–15 tuổi, với 100% lợi nhuận dành cho cộng đồng dân tộc thiểu số. Phối hợp cùng các chuyên gia công nghệ và 5+ giảng viên trẻ, tôi phát triển nền tảng học tập trực tuyến với 20+ video và 30+ bài học thực hành về Python, thuật toán, SQL và AI/ML. Trực tiếp giảng dạy 200+ học sinh, tôi có cơ hội chứng kiến các em từng bước tự viết chương trình, hoàn thiện sản phẩm và tự tin tham gia các cuộc thi lập trình, trong đó 80+ học sinh đạt giải thưởng hoặc chứng nhận.",
         "Sau 6 tháng, dự án tạo ra 30 triệu VNĐ doanh thu, tái đầu tư toàn bộ lợi nhuận vào giáo dục, trao tặng 10+ thiết bị công nghệ và tổ chức 10+ lớp học kỹ năng số cho 150+ học sinh dân tộc thiểu số tại miền núi phía Bắc. Với tôi, thành quả ý nghĩa nhất không chỉ nằm ở những con số, mà còn ở niềm vui khi chứng kiến kiến thức mình chia sẻ tiếp tục lan tỏa, giúp nhiều học sinh có thêm cơ hội khám phá công nghệ và tự tin xây dựng tương lai."
       ],
-      "image": "",
       "links": []
     },
     {
@@ -164,7 +228,6 @@
         "Tôi vẫn nhớ những ánh mắt háo hức của các em nhỏ vùng cao khi lần đầu được làm quen với máy tính, hay niềm vui giản dị của người dân khi tự mình sử dụng công nghệ để giải quyết những công việc thường ngày. Chính những khoảnh khắc ấy đã khiến hành trình cùng Humanitas trở nên đặc biệt với tôi. Khởi nguồn từ mong muốn thu hẹp khoảng cách số, tôi sáng lập dự án và quy tụ 50+ thành viên cùng chung khát vọng mang tri thức đến với cộng đồng dân tộc thiểu số tại Bản Liền, Lào Cai. Chúng tôi tổ chức các lớp tiếng Anh và kỹ năng số cho 80+ học viên, huy động 90 triệu VNĐ, trao tặng 20+ thiết bị công nghệ và lắp đặt hệ thống đèn năng lượng mặt trời, giúp các em có thêm điều kiện học tập ngay cả khi đêm xuống.",
         "Hành trình ấy còn mở rộng đến những buổi hướng dẫn 40+ người dân ứng dụng công nghệ vào kinh doanh du lịch, chương trình chăm sóc sức khỏe miễn phí cho 100+ người và chiến dịch truyền thông lan tỏa câu chuyện Bản Liền đến hàng nghìn người. Nhưng hơn cả những con số, điều đọng lại trong tôi là những cuộc gặp gỡ, những nụ cười và sự gắn kết giữa những con người đến từ các hoàn cảnh khác nhau. Humanitas giúp tôi hiểu rằng đôi khi, một thay đổi lớn có thể bắt đầu từ điều rất nhỏ: một chiếc máy tính, một bài học đầu tiên hay một cơ hội được trao đúng lúc."
       ],
-      "image": "",
       "links": []
     },
     {
@@ -182,7 +245,6 @@
         "Chúng tôi đánh giá 6 phương án hạ tầng, kết hợp dữ liệu NASA POWER để đề xuất mô hình TV White Space và điện mặt trời độc lập, dự kiến duy trì 5/6 giờ học mỗi ngày với chi phí 4.730 USD/trường trong 5 năm, tiết kiệm tới 40% so với phương án LEO kết hợp điện mặt trời.",
         "Nghiên cứu được công bố trên International Journal of Computer Applications, giúp tôi hiểu sâu hơn cách kỹ thuật và công nghệ có thể tạo ra những cơ hội giáo dục bền vững cho cộng đồng vùng cao."
       ],
-      "image": "",
       "links": [
         {
           "type": "research",
@@ -204,7 +266,6 @@
         "Giữa những buổi miệt mài lắp ráp robot trong phòng lab, tôi tình cờ tìm thấy một niềm đam mê khác qua những giai điệu phát ra từ chiếc máy hát đĩa than. Trong thời đại mà âm nhạc có thể được phát chỉ bằng một cú chạm, tôi lại bị cuốn hút bởi sự kỳ diệu của những rãnh đĩa nhỏ bé, nơi âm thanh được lưu giữ bằng những chuyển động vật lý. Sự tò mò về khoa học phía sau âm nhạc analog dần đưa tôi đến với Revinyl Project, một dự án cộng đồng nhằm khơi dậy văn hóa thưởng thức vinyl trong giới trẻ.",
         "Tôi bắt đầu chia sẻ những câu chuyện về lịch sử đĩa than, nguyên lý tái tạo âm thanh và nghệ thuật lắng nghe, đồng thời xây dựng Vinyl Digital Library, nơi lưu trữ thông tin album cùng những ký ức âm nhạc được đóng góp bởi cộng đồng. Qua các buổi Vinyl Healing Circle và Listening Party, tôi có cơ hội lắng nghe cách mỗi bản nhạc gợi lại một con người, một kỷ niệm hay một giai đoạn cuộc đời. Với tôi, Revinyl không chỉ là hành trình khám phá âm nhạc, mà còn là cách kết nối những giá trị analog với thế giới số, để những câu chuyện phía sau mỗi giai điệu tiếp tục được lưu giữ và sẻ chia."
       ],
-      "image": "",
       "links": []
     },
     {
@@ -221,11 +282,32 @@
         "Nếu Revinyl Project giúp tôi khám phá vẻ đẹp của văn hóa nghe nhạc đĩa than, thì Vinyl Heritage Vietnam là bước tiếp theo trong hành trình ấy: sử dụng công nghệ để gìn giữ và tái hiện những giá trị của âm nhạc Việt Nam. Tôi đặc biệt bị cuốn hút bởi cách mỗi ca khúc phản ánh một giai đoạn lịch sử, một nét văn hóa và những cảm xúc của con người qua từng thế hệ. Từ đó, tôi phát triển một kho lưu trữ âm nhạc số, kết nối các bản thu với câu chuyện về nghệ sĩ, lời ca, nhạc cụ và bối cảnh ra đời, đồng thời xây dựng dòng thời gian từ thập niên 1980 đến 2010 để người nghe khám phá sự chuyển mình của âm nhạc Việt.",
         "Điểm thú vị nhất với tôi là quá trình kết hợp xử lý tín hiệu âm thanh (Digital Signal Processing) với trải nghiệm thưởng thức vinyl. Tôi thiết kế hai chế độ nghe, Digital và Vinylized, cho phép người dùng cảm nhận sự khác biệt giữa bản thu kỹ thuật số nguyên gốc và âm thanh được xử lý theo đặc trưng đĩa than. Bên cạnh đó, nền tảng mở ra không gian để cộng đồng đóng góp tư liệu, bản thu và ký ức âm nhạc. Qua dự án, tôi mong muốn công nghệ không chỉ lưu giữ những giai điệu cũ, mà còn giúp thế hệ trẻ tìm thấy sự kết nối với di sản âm nhạc Việt Nam."
       ],
-      "image": "",
       "links": [
         {
           "type": "platform",
           "url": "https://re-vinyl-iota.vercel.app/en"
+        }
+      ],
+      "layout": "interleave",
+      "cover": "images/photos/vinyl-vietnam-heritage/cover.jpg",
+      "photos": [
+        {
+          "src": "images/photos/vinyl-vietnam-heritage/01.jpg",
+          "caption": "",
+          "width": 1600,
+          "height": 870
+        },
+        {
+          "src": "images/photos/vinyl-vietnam-heritage/02.jpg",
+          "caption": "",
+          "width": 1600,
+          "height": 870
+        },
+        {
+          "src": "images/photos/vinyl-vietnam-heritage/03.jpg",
+          "caption": "",
+          "width": 1600,
+          "height": 870
         }
       ]
     },
@@ -243,7 +325,6 @@
         "Điều gì thực sự tạo nên chất âm đặc trưng của đĩa than? Càng tìm hiểu về âm nhạc analog, tôi càng nhận ra rằng những âm thanh tưởng chừng rất nhỏ, từ tiếng kim chạm rãnh đĩa đến sự biến đổi nhẹ trong tốc độ quay, đều bắt nguồn từ những nguyên lý vật lý phức tạp. Thay vì chỉ sử dụng các bộ lọc âm thanh để tái tạo hiệu ứng vinyl, tôi muốn tìm hiểu và mô phỏng chính những cơ chế đã tạo ra chúng. Đó là lý do tôi phát triển Vinylize, nền tảng biến các tệp MP3/WAV thành những chiếc đĩa than ảo có thể quan sát và tương tác.",
         "Tôi xây dựng quy trình mô phỏng vật lý gồm 10 giai đoạn, tái hiện quá trình ghi và phát âm thanh thông qua RIAA equalization, mã hóa stereo 45/45, chuyển động đầu kim và các biến dạng đặc trưng của rãnh đĩa. Với React, TypeScript và three.js, tôi trực quan hóa cấu trúc rãnh đĩa dưới dạng mô hình 3D, cho phép người dùng phóng đại, khám phá và so sánh âm thanh mô phỏng với bản gốc. Quá trình phát triển còn đòi hỏi tôi kiểm chứng các mô hình bằng Python và hệ thống kiểm thử tự động. Vinylize trở thành một thử nghiệm đầy hứng thú, nơi tôi có thể kết hợp lập trình, toán học và vật lý để biến những hiện tượng âm thanh vô hình thành trải nghiệm trực quan, có thể khám phá bằng chính đôi tai và đôi mắt."
       ],
-      "image": "",
       "links": []
     },
     {
@@ -261,7 +342,6 @@
         "Tôi cùng nhóm nghiên cứu phân tích hơn 20 công trình khoa học, so sánh các kiến trúc Transformer, Distilled Transformer và CNN + CBAM về hiệu quả tính toán, khả năng nhận diện và bảo mật dữ liệu. Từ đó, chúng tôi đề xuất Silent-Observer Framework, hướng tới xử lý thông tin trực tiếp trên thiết bị và cho phép người dùng kiểm soát dữ liệu cá nhân.",
         "Nghiên cứu giúp tôi khám phá cách kết hợp AI, khoa học máy tính và âm nhạc để phát triển những trải nghiệm công nghệ thấu hiểu cảm xúc nhưng vẫn tôn trọng con người."
       ],
-      "image": "",
       "links": [
         {
           "type": "research",
@@ -283,7 +363,6 @@
         "Kỳ thực tập tại VBEE AITALK mang đến cho tôi cơ hội áp dụng kiến thức lập trình vào quá trình phát triển sản phẩm thực tế. Tôi tham gia xây dựng SelectSpeak, tiện ích Chrome kết hợp AI và công nghệ chuyển văn bản thành giọng nói, giúp người dùng tiếp cận nội dung báo chí tiếng Việt thuận tiện hơn.",
         "Tôi phụ trách phát triển hệ thống trích xuất bài viết bằng Mozilla Readability, loại bỏ quảng cáo và nội dung gây nhiễu, đồng thời xây dựng backend Node.js/Express để tối ưu quá trình xử lý, rút ngắn thời gian chờ phát âm thanh từ khoảng một phút xuống vài giây. Thông qua việc kiểm thử trên nhiều trang báo và phối hợp khắc phục lỗi cùng đội ngũ kỹ thuật, tôi tích lũy kinh nghiệm về tối ưu hiệu suất, giải quyết vấn đề và phát triển phần mềm hướng đến trải nghiệm người dùng."
       ],
-      "image": "",
       "links": [
         {
           "type": "company",
@@ -304,7 +383,6 @@
         "Tại Trường THPT Chuyên Hà Nội – Amsterdam, STEAMS là nơi tôi có cơ hội chia sẻ niềm yêu thích khoa học và công nghệ với những người bạn cùng đam mê. Trên cương vị Trưởng ban Chuyên môn, tôi dẫn dắt đội ngũ hơn 10 thành viên xây dựng tài liệu học thuật, phát triển nội dung về STEM và thiết kế các hoạt động giúp kiến thức khoa học trở nên gần gũi, thú vị hơn với học sinh.",
         "Tôi cùng câu lạc bộ tổ chức các workshop, triển lãm khoa học và chuỗi học tập trực tuyến, tạo không gian để hàng trăm học sinh khám phá những ý tưởng mới, trao đổi kiến thức và thử sức với các dự án sáng tạo. Bên cạnh việc định hướng chuyên môn, tôi còn tìm kiếm cơ hội từ các cuộc thi và sự kiện STEM để khuyến khích thành viên phát triển năng lực. STEAMS giúp tôi nhận ra rằng niềm đam mê khoa học có thể lan tỏa mạnh mẽ khi mỗi người được truyền cảm hứng để đặt câu hỏi, thử nghiệm và tự mình khám phá."
       ],
-      "image": "",
       "links": [
         {
           "type": "fanpage",
@@ -326,7 +404,6 @@
         "Mong muốn mở rộng trải nghiệm Robotics và thử sức trong một môi trường thi đấu mới đã đưa tôi đến với Newton Robotics Club, nơi tôi có cơ hội kết nối với những người bạn cùng đam mê đến từ một ngôi trường khác. Đảm nhận vai trò Main Coder của đội tuyển VEX, tôi cùng các đồng đội dành nhiều thời gian nghiên cứu chiến thuật, tối ưu thuật toán điều khiển và hoàn thiện robot qua từng vòng thi, để rồi cùng nhau giành quyền tham dự VEX Robotics World Championship tại Mỹ. Hành trình ấy không chỉ giúp tôi trưởng thành về chuyên môn mà còn mở rộng những mối quan hệ và trải nghiệm đáng nhớ ngoài môi trường học tập quen thuộc.",
         "Sau mùa giải, tôi tiếp tục đồng hành với câu lạc bộ trong vai trò Mentor lập trình, hỗ trợ các thành viên khóa sau phát triển kỹ năng và chuẩn bị cho những thử thách mới. Được các bạn tín nhiệm trở thành Phó Chủ tịch, tôi cùng ban điều hành dẫn dắt 34 thành viên, tổ chức cuộc thi Robotics for Good và tham gia các hoạt động trải nghiệm công nghệ tại sự kiện khoa học. Newton Robotics Club trở thành một phần quan trọng trong hành trình tôi mở rộng cộng đồng Robotics của mình, từ một người trực tiếp thi đấu đến người kết nối, dẫn dắt và truyền cảm hứng cho những thế hệ tiếp theo."
       ],
-      "image": "",
       "links": [
         {
           "type": "fanpage",
@@ -346,8 +423,41 @@
       "vi": [
         "Chương trình Business and Innovation with Digitalisation tại HKU và NTU Singapore giúp tôi khám phá sự giao thoa giữa công nghệ, AI và chiến lược kinh doanh. Tôi dẫn dắt nhóm 4 sinh viên quốc tế phát triển AI Partnership Intelligence cho Heytea, ứng dụng SWOT, PEST, Porter’s Five Forces và Design Thinking để phân tích thương hiệu. Sử dụng Tencent CodeBuddy, chúng tôi xây dựng dashboard đánh giá đối tác theo 5 tiêu chí, đạt Top 3/10 nhóm. Trải nghiệm giúp tôi hiểu cách biến kiến thức lập trình thành giải pháp kinh doanh thực tiễn."
       ],
-      "image": "",
-      "links": []
+      "links": [],
+      "layout": "end",
+      "cover": "images/photos/ntu-singapore/cover.jpg",
+      "photos": [
+        {
+          "src": "images/photos/ntu-singapore/01.jpg",
+          "caption": "",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "images/photos/ntu-singapore/02.jpg",
+          "caption": "",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "images/photos/ntu-singapore/03.jpg",
+          "caption": "",
+          "width": 1600,
+          "height": 900
+        },
+        {
+          "src": "images/photos/ntu-singapore/04.jpg",
+          "caption": "Certificate — Business, Innovation and Digitalization, NTU Singapore",
+          "width": 1600,
+          "height": 1128
+        },
+        {
+          "src": "images/photos/ntu-singapore/05.jpg",
+          "caption": "The Bridge Builder Award — HKU Academy for the Talented",
+          "width": 1600,
+          "height": 1127
+        }
+      ]
     },
     {
       "category": "Miles & Milestones",
@@ -363,8 +473,71 @@
         "Tôi nhận ra rằng chạy bộ và lập trình có nhiều điểm tương đồng hơn mình từng nghĩ. Một cuộc đua đường dài cũng giống như hành trình phát triển một sản phẩm công nghệ: không phải lúc nào mọi thứ cũng diễn ra như kế hoạch, và thành công đòi hỏi sự kiên trì, khả năng thích nghi cùng quyết tâm vượt qua những giới hạn của bản thân. Suốt hơn năm năm gắn bó với chạy bộ, tôi dần rèn luyện những phẩm chất ấy qua từng buổi tập và mỗi kilomet trên đường chạy.",
         "Tôi đã hoàn thành ba giải Half Marathon 21 km, bao gồm Pocari Sweat Run, Standard Chartered Hanoi Marathon Heritage Race và Tây Hồ Half Marathon, đồng thời tham gia Ecopark City Trail và giải chạy thiện nguyện Empower Run hỗ trợ bệnh nhân ung thư. Những trải nghiệm ấy dạy tôi cách phân bổ sức lực, giữ vững mục tiêu và không bỏ cuộc khi đối mặt với khó khăn. Đó cũng chính là tinh thần tôi mang vào những đêm miệt mài lập trình, sửa lỗi và hoàn thiện robot: kiên nhẫn với từng bước tiến nhỏ, bởi những thành quả lớn luôn được xây dựng từ sự bền bỉ mỗi ngày."
       ],
-      "image": "",
-      "links": []
+      "links": [],
+      "layout": "interleave",
+      "cover": "images/photos/miles-and-milestones/cover.jpg",
+      "photos": [
+        {
+          "src": "images/photos/miles-and-milestones/01.jpg",
+          "caption": "Standard Chartered Hanoi Marathon Heritage Race 2025 — 21 km",
+          "width": 1600,
+          "height": 1066
+        },
+        {
+          "src": "images/photos/miles-and-milestones/02.jpg",
+          "caption": "Standard Chartered Hanoi Marathon Heritage Race 2025 — 21 km",
+          "width": 628,
+          "height": 867
+        },
+        {
+          "src": "images/photos/miles-and-milestones/03.jpg",
+          "caption": "Half Marathon Finisher, Standard Chartered Hanoi Marathon Heritage Race 2025",
+          "width": 854,
+          "height": 613
+        },
+        {
+          "src": "images/photos/miles-and-milestones/04.jpg",
+          "caption": "Tây Hồ Half Marathon 2025 — 21 km",
+          "width": 1280,
+          "height": 853
+        },
+        {
+          "src": "images/photos/miles-and-milestones/05.jpg",
+          "caption": "Tây Hồ Half Marathon 2025 — 21 km",
+          "width": 1079,
+          "height": 1178
+        },
+        {
+          "src": "images/photos/miles-and-milestones/06.jpg",
+          "caption": "21KM Half Marathon Finisher, Tay Ho Half Marathon 2025",
+          "width": 1179,
+          "height": 835
+        },
+        {
+          "src": "images/photos/miles-and-milestones/07.jpg",
+          "caption": "Ecopark City Trail 2025 — 11 km",
+          "width": 1600,
+          "height": 1066
+        },
+        {
+          "src": "images/photos/miles-and-milestones/08.jpg",
+          "caption": "11KM Road Race Finisher, Ecopark City Trail 2025",
+          "width": 1179,
+          "height": 884
+        },
+        {
+          "src": "images/photos/miles-and-milestones/09.jpg",
+          "caption": "Empower Run 2025 — charity run supporting cancer patients",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "images/photos/miles-and-milestones/10.jpg",
+          "caption": "Empower Run 2025 — charity run supporting cancer patients",
+          "width": 1600,
+          "height": 1200
+        }
+      ]
     }
   ]
 }

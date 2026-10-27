@@ -29,7 +29,7 @@ Cập nhật nội dung:
 * Tiêu đề lấy từ cột Breakdown (`Vai trò | Tên dự án`, dòng sau là mô tả ngắn), chuyên mục lấy từ các dòng `... Page: ...`.
 * Các dòng ghi chú cho người thiết kế như `[Insert ảnh ...]` được tự động bỏ qua.
 * Link trong cột "Yêu cầu hình ảnh" (nền tảng, bài nghiên cứu, fanpage, công ty) thành nút bấm cạnh tiêu đề.
-* Ảnh: chỉ link **file** Google Drive (không phải thư mục) được dùng làm ảnh, và file phải chia sẻ công khai. Bìa đĩa được tạo tự động theo màu chuyên mục.
+* Ảnh: lưu trong `src/images/photos/<mục>/` và khai báo trong `content/photos.json` (khoá = phần đầu tiêu đề mục, `layout`: `interleave` xếp xen kẽ với đoạn văn / `end` đặt sau nội dung, `caption` là chú thích). Nén ảnh trước khi thêm: `python3 tools/optimize_photo.py anh-goc.jpg src/images/photos/<mục>/06.jpg` (thêm `--cover` để tạo `cover.jpg` vuông cho bìa đĩa). Mục không có ảnh dùng bìa tự tạo theo màu chuyên mục.
 
 Chạy & build
 -----------

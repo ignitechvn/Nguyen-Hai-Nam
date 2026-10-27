@@ -2,6 +2,8 @@
 
 Usage: python3 tools/xlsx_to_json.py [content/Website_Layout_Hai_Nam.xlsx] [src/content.json]
 Requires: pip install openpyxl
+
+Photos are listed in content/photos.json, keyed by the start of a record title.
 """
 import json
 import re
@@ -11,6 +13,7 @@ import openpyxl
 
 SRC = sys.argv[1] if len(sys.argv) > 1 else 'content/Website_Layout_Hai_Nam.xlsx'
 DEST = sys.argv[2] if len(sys.argv) > 2 else 'src/content.json'
+PHOTOS = 'content/photos.json'
 
 # Columns: A No | B Categories | C Breakdown | D Content [VIET] | E Content [ENG] | F Image/Video | G Notes
 VI_CHARS = re.compile(r'[ăâđêôơưàảãáạằẳẵắặầẩẫấậèẻẽéẹềểễếệìỉĩíịòỏõóọồổỗốộờởỡớợùủũúụừửữứựỳỷỹýỵ]', re.I)
@@ -65,11 +68,6 @@ def link_label(note):
 
 def hyperlink(cell):
     return cell.hyperlink.target if cell.hyperlink else ''
-
-
-def drive_image(url):
-    m = re.search(r'drive\.google\.com/file/d/([\w-]+)', url or '')
-    return f'https://lh3.googleusercontent.com/d/{m.group(1)}=w800' if m else ''
 
 
 def main():
@@ -141,10 +139,18 @@ def main():
             'subtitle': subtitle,
             'en': en or vi,
             'vi': vi or en,
-            'image': drive_image(hyperlink(f)),
             'links': links,
         })
         pending_title = ''
+
+    with open(PHOTOS, encoding='utf-8') as fp:
+        photos = json.load(fp)
+    for key, entry in photos.items():
+        matches = [r for r in records if r['title'].startswith(key)]
+        if not matches:
+            print(f'warning: no record for photos "{key}"')
+        for record in matches:
+            record.update(entry)
 
     with open(DEST, 'w', encoding='utf-8') as fp:
         json.dump({'profile': profile, 'records': records}, fp, ensure_ascii=False, indent=2)

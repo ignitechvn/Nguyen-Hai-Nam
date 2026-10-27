@@ -1,0 +1,206 @@
+{
+  "Personal Statement": {
+    "layout": "interleave",
+    "cover": "images/photos/personal-statement/cover.jpg",
+    "photos": [
+      {
+        "src": "images/photos/personal-statement/01.jpg",
+        "caption": "",
+        "width": 1066,
+        "height": 1600
+      }
+    ]
+  },
+  "Kid Engineer": {
+    "layout": "interleave",
+    "cover": "images/photos/kid-engineer/cover.jpg",
+    "photos": [
+      {
+        "src": "images/photos/kid-engineer/01.jpg",
+        "caption": "",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "images/photos/kid-engineer/02.jpg",
+        "caption": "",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "images/photos/kid-engineer/03.jpg",
+        "caption": "",
+        "width": 1280,
+        "height": 960
+      },
+      {
+        "src": "images/photos/kid-engineer/04.jpg",
+        "caption": "",
+        "width": 900,
+        "height": 1600
+      },
+      {
+        "src": "images/photos/kid-engineer/05.jpg",
+        "caption": "",
+        "width": 1600,
+        "height": 900
+      }
+    ]
+  },
+  "TayTranslator": {
+    "layout": "end",
+    "cover": "images/photos/taytranslator/cover.jpg",
+    "photos": [
+      {
+        "src": "images/photos/taytranslator/01.jpg",
+        "caption": "1. Tay - Vietnamese",
+        "width": 1600,
+        "height": 870
+      },
+      {
+        "src": "images/photos/taytranslator/02.jpg",
+        "caption": "2. Vietnamese - Tay",
+        "width": 1600,
+        "height": 870
+      },
+      {
+        "src": "images/photos/taytranslator/03.jpg",
+        "caption": "3. English - Tay",
+        "width": 1600,
+        "height": 870
+      },
+      {
+        "src": "images/photos/taytranslator/04.jpg",
+        "caption": "4. Tay - English",
+        "width": 1600,
+        "height": 870
+      }
+    ]
+  },
+  "Vinyl Vietnam Heritage": {
+    "layout": "interleave",
+    "cover": "images/photos/vinyl-vietnam-heritage/cover.jpg",
+    "photos": [
+      {
+        "src": "images/photos/vinyl-vietnam-heritage/01.jpg",
+        "caption": "",
+        "width": 1600,
+        "height": 870
+      },
+      {
+        "src": "images/photos/vinyl-vietnam-heritage/02.jpg",
+        "caption": "",
+        "width": 1600,
+        "height": 870
+      },
+      {
+        "src": "images/photos/vinyl-vietnam-heritage/03.jpg",
+        "caption": "",
+        "width": 1600,
+        "height": 870
+      }
+    ]
+  },
+  "Business and Innovation": {
+    "layout": "end",
+    "cover": "images/photos/ntu-singapore/cover.jpg",
+    "photos": [
+      {
+        "src": "images/photos/ntu-singapore/01.jpg",
+        "caption": "",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "images/photos/ntu-singapore/02.jpg",
+        "caption": "",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "images/photos/ntu-singapore/03.jpg",
+        "caption": "",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "src": "images/photos/ntu-singapore/04.jpg",
+        "caption": "Certificate — Business, Innovation and Digitalization, NTU Singapore",
+        "width": 1600,
+        "height": 1128
+      },
+      {
+        "src": "images/photos/ntu-singapore/05.jpg",
+        "caption": "The Bridge Builder Award — HKU Academy for the Talented",
+        "width": 1600,
+        "height": 1127
+      }
+    ]
+  },
+  "Miles & Milestones": {
+    "layout": "interleave",
+    "cover": "images/photos/miles-and-milestones/cover.jpg",
+    "photos": [
+      {
+        "src": "images/photos/miles-and-milestones/01.jpg",
+        "caption": "Standard Chartered Hanoi Marathon Heritage Race 2025 — 21 km",
+        "width": 1600,
+        "height": 1066
+      },
+      {
+        "src": "images/photos/miles-and-milestones/02.jpg",
+        "caption": "Standard Chartered Hanoi Marathon Heritage Race 2025 — 21 km",
+        "width": 628,
+        "height": 867
+      },
+      {
+        "src": "images/photos/miles-and-milestones/03.jpg",
+        "caption": "Half Marathon Finisher, Standard Chartered Hanoi Marathon Heritage Race 2025",
+        "width": 854,
+        "height": 613
+      },
+      {
+        "src": "images/photos/miles-and-milestones/04.jpg",
+        "caption": "Tây Hồ Half Marathon 2025 — 21 km",
+        "width": 1280,
+        "height": 853
+      },
+      {
+        "src": "images/photos/miles-and-milestones/05.jpg",
+        "caption": "Tây Hồ Half Marathon 2025 — 21 km",
+        "width": 1079,
+        "height": 1178
+      },
+      {
+        "src": "images/photos/miles-and-milestones/06.jpg",
+        "caption": "21KM Half Marathon Finisher, Tay Ho Half Marathon 2025",
+        "width": 1179,
+        "height": 835
+      },
+      {
+        "src": "images/photos/miles-and-milestones/07.jpg",
+        "caption": "Ecopark City Trail 2025 — 11 km",
+        "width": 1600,
+        "height": 1066
+      },
+      {
+        "src": "images/photos/miles-and-milestones/08.jpg",
+        "caption": "11KM Road Race Finisher, Ecopark City Trail 2025",
+        "width": 1179,
+        "height": 884
+      },
+      {
+        "src": "images/photos/miles-and-milestones/09.jpg",
+        "caption": "Empower Run 2025 — charity run supporting cancer patients",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "images/photos/miles-and-milestones/10.jpg",
+        "caption": "Empower Run 2025 — charity run supporting cancer patients",
+        "width": 1600,
+        "height": 1200
+      }
+    ]
+  }
+}
