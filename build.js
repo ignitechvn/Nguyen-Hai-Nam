@@ -9,9 +9,12 @@ const dest = path.join(__dirname, 'lib');
 const watch = process.argv.includes('--watch');
 const serve = process.argv.includes('--serve');
 
+// README-only images from the original repo, not used by the page
+const SKIP = ['demo.gif', 'screenshot1.png', 'screenshot2.png', 'wood2.jpg', 'wood3.jpg', '.keep'];
+
 function copyDir(from, to) {
   fs.mkdirSync(to, { recursive: true });
-  fs.readdirSync(from).forEach((name) => {
+  fs.readdirSync(from).filter((name) => !SKIP.includes(name)).forEach((name) => {
     const s = path.join(from, name);
     const d = path.join(to, name);
     if (fs.statSync(s).isDirectory()) copyDir(s, d);
