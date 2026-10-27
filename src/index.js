@@ -43,6 +43,22 @@ content.records.forEach((record) => {
   section.entries.push(Object.assign({ photos: [], groups: [] }, record));
 });
 
+// Each sub-group of a section is a side of the record (A, B, C…), its entries are tracks (A1, B1, B2…)
+sections.forEach((section) => {
+  let side = -1;
+  let track = 0;
+  section.entries.forEach((entry, i) => {
+    if (i === 0 || entry.group !== section.entries[i - 1].group) {
+      side += 1;
+      track = 0;
+      entry.sideStart = true;
+    }
+    track += 1;
+    entry.side = String.fromCharCode(65 + side);
+    entry.track = entry.side + track;
+  });
+});
+
 // The first section is placed at the front of the crate
 const data = sections.slice().reverse().map((section) => Object.assign({}, section, {
   cover: '',
@@ -86,12 +102,53 @@ function recordId(index) {
   return sections.length - 1 - index;
 }
 
-function trackNumber(i) {
-  return String.fromCharCode(65 + Math.floor(i / 4)) + (i % 4 + 1); // A1..A4, B1..
-}
-
 function shortTitle(title) {
   return title.replace(/^The Research:\s*/, '').replace(/[“”"]/g, '');
+}
+
+// Compact name for the track lists: "TayTranslator - Vietnamese - …" -> "TayTranslator"
+function trackTitle(title) {
+  if (/^The Research:/.test(title)) {
+    return 'Research: ' + shortTitle(title);
+  }
+  return title.split(' - ')[0].split(', ')[0];
+}
+
+// Scroll only the info panel (scrollIntoView would also shift the whole page on mobile)
+function scrollToEntry(i) {
+  const entry = el('entry-' + i);
+  const toc = el('cratedigger-record-toc');
+  if (entry) {
+    const stickyBar = toc.scrollWidth > toc.clientWidth || getComputedStyle(toc).display === 'flex';
+    const offset = stickyBar ? toc.offsetHeight + 16 : 24;
+    infoContainer.scrollTo({ top: entry.offsetTop - offset, behavior: 'smooth' });
+  }
+}
+
+// Highlight the track being read in the section's track list
+function updateCurrentTrack() {
+  const toc = el('cratedigger-record-toc');
+  const entries = infoContainer.querySelectorAll('.entry');
+  const top = infoContainer.getBoundingClientRect().top + 140;
+  if (!infoContainer.clientHeight) {
+    return; // panel not shown yet
+  }
+  let current = 0;
+  entries.forEach((entry, i) => {
+    if (entry.getBoundingClientRect().top <= top) {
+      current = i;
+    }
+  });
+  if (infoContainer.scrollTop + infoContainer.clientHeight >= infoContainer.scrollHeight - 4) {
+    current = entries.length - 1; // last track is short: mark it once the bottom is reached
+  }
+  toc.querySelectorAll('button').forEach((button) => {
+    const active = Number(button.dataset.entry) === current;
+    if (active && !button.classList.contains('active') && toc.scrollWidth > toc.clientWidth) {
+      toc.scrollTo({ left: button.offsetLeft - 24, behavior: 'smooth' }); // horizontal bar on small screens
+    }
+    button.classList.toggle('active', active);
+  });
 }
 
 function bindEvents() {
@@ -124,12 +181,14 @@ function bindEvents() {
     infoContainer.addEventListener(type, (e) => e.stopPropagation(), false);
   });
 
-  el('cratedigger-record-toc').addEventListener('click', (e) => {
-    const button = e.target.closest('button');
+  infoContainer.addEventListener('click', (e) => {
+    const button = e.target.closest('button[data-entry]');
     if (button) {
-      el('entry-' + button.dataset.entry).scrollIntoView({ behavior: 'smooth' });
+      scrollToEntry(button.dataset.entry);
     }
   });
+
+  infoContainer.addEventListener('scroll', updateCurrentTrack, { passive: true });
 }
 
 function renderPhotos(photos) {
@@ -173,22 +232,47 @@ function renderBody(paragraphs, photos, layout, groups) {
   }).join('');
 }
 
+function sideLabel(entry) {
+  return 'Side ' + entry.side + (entry.group && entry.group !== entry.title ? ' · ' + entry.group : '');
+}
+
 function renderEntry(entry, i, section) {
   const labels = LABELS[lang];
+  const multi = section.entries.length > 1;
+  const sides = section.entries.some((e) => e.group);
+  const next = section.entries[i + 1];
   // An entry named like its section (e.g. "Miles & Milestones") needs no second heading
   const header = entry.title === section.title ? '' :
-    `${entry.role ? `<div class="entry-role">${escapeHtml(entry.role)}</div>` : ''}
+    `${multi ? `<div class="entry-track">${entry.track}</div>` : ''}
+     ${entry.role ? `<div class="entry-role">${escapeHtml(entry.role)}</div>` : ''}
      <h2 class="entry-title">${escapeHtml(entry.title)}</h2>
      ${entry.subtitle ? `<div class="entry-subtitle">${escapeHtml(entry.subtitle)}</div>` : ''}`;
   const links = entry.links.map((link) =>
     `<a href="${escapeHtml(link.url)}" target="_blank" rel="noopener">${labels[link.type] || link.type} &#8599;</a>`
   ).join('');
 
-  return `<section class="entry" id="entry-${i}">
+  return `${sides && entry.sideStart ? `<div class="side-label">${escapeHtml(sideLabel(entry))}</div>` : ''}
+    <section class="entry" id="entry-${i}">
     ${header}
     ${links ? `<div class="entry-links">${links}</div>` : ''}
     ${renderBody(entry[lang], entry.photos, entry.layout, entry.groups)}
+    ${next ? `<button type="button" class="next-track" data-entry="${i + 1}">
+      <span>Next track &rarr;</span> ${next.track} &nbsp;${escapeHtml(trackTitle(next.title))}</button>` : ''}
   </section>`;
+}
+
+// Track list of the section, split into sides when the sheet groups its entries
+function renderTrackList(section) {
+  if (section.entries.length < 2) {
+    return '';
+  }
+  const sides = section.entries.some((e) => e.group);
+
+  return section.entries.map((entry, i) =>
+    `${sides && entry.sideStart ? `<div class="toc-side">${escapeHtml(sideLabel(entry))}</div>` : ''}
+     <button type="button" data-entry="${i}" title="${escapeHtml(entry.title)}">` +
+    `<span>${entry.track}</span><span class="toc-title">${escapeHtml(trackTitle(entry.title))}</span></button>`
+  ).join('');
 }
 
 function fillInfoPanel(record) {
@@ -198,9 +282,8 @@ function fillInfoPanel(record) {
   el('cratedigger-record-category').textContent = 'No. ' + String(section.index + 1).padStart(2, '0');
   el('cratedigger-record-title').textContent = section.title;
 
-  el('cratedigger-record-toc').innerHTML = section.entries.length < 2 ? '' : section.entries.map((entry, i) =>
-    `<button type="button" data-entry="${i}"><span>${trackNumber(i)}</span>${escapeHtml(shortTitle(entry.title))}</button>`
-  ).join('');
+  el('cratedigger-record-toc').innerHTML = renderTrackList(section);
+  el('info-article').classList.toggle('has-tracks', section.entries.length > 1);
 
   el('cratedigger-record-content').innerHTML = section.entries
     .map((entry, i) => renderEntry(entry, i, section))
@@ -213,6 +296,7 @@ function fillInfoPanel(record) {
      <a href="https://${escapeHtml(profile.domain)}" target="_blank" rel="noopener">${escapeHtml(profile.domain)}</a>` : '';
 
   infoContainer.scrollTop = 0;
+  setTimeout(updateCurrentTrack, 400); // once the panel has faded in
 }
 
 function wrapText(ctx, text, maxWidth) {
@@ -301,10 +385,10 @@ function drawPlaceholderCover(ctx, size, section) {
     const y = top + i * lineHeight;
     ctx.fillStyle = colors[1];
     ctx.font = '700 14px Montserrat, sans-serif';
-    ctx.fillText(trackNumber(i), pad, y);
+    ctx.fillText(entry.track, pad, y);
     ctx.fillStyle = '#fefefe';
     ctx.font = '400 15px Montserrat, sans-serif';
-    ctx.fillText(ellipsize(ctx, shortTitle(entry.title), size - pad * 2 - 34), pad + 34, y);
+    ctx.fillText(ellipsize(ctx, trackTitle(entry.title), size - pad * 2 - 34), pad + 34, y);
   });
 }
 

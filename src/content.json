@@ -9,6 +9,7 @@
   "records": [
     {
       "category": "About Me",
+      "group": "",
       "title": "Personal Statement",
       "role": "",
       "subtitle": "",
@@ -31,6 +32,7 @@
     },
     {
       "category": "About Me",
+      "group": "",
       "title": "About Me",
       "role": "",
       "subtitle": "",
@@ -50,6 +52,7 @@
     },
     {
       "category": "VEX Competition & Robotics Journey",
+      "group": "VEX Competition - Road to the Final Round",
       "title": "VEX Competition - Road to the Final Round",
       "role": "",
       "subtitle": "",
@@ -219,6 +222,7 @@
     },
     {
       "category": "VEX Competition & Robotics Journey",
+      "group": "Other Robotics Experiences",
       "title": "MECKUP Quest International AI & Robotics Competition (HongKong)",
       "role": "",
       "subtitle": "",
@@ -265,6 +269,7 @@
     },
     {
       "category": "VEX Competition & Robotics Journey",
+      "group": "Other Robotics Experiences",
       "title": "AI & Generative Content Competition 2026 (Singapore)",
       "role": "",
       "subtitle": "",
@@ -278,6 +283,7 @@
     },
     {
       "category": "VEX Competition & Robotics Journey",
+      "group": "Being a Robotics Trainer",
       "title": "Kid Engineer",
       "role": "Robotics Team Mentor",
       "subtitle": "An Educational Center for Specialized Training in Robotics for Students",
@@ -326,6 +332,7 @@
     },
     {
       "category": "Rural Education & Digital Inclusion",
+      "group": "",
       "title": "TayTranslator - Vietnamese - Tay Bilingual Translation Application",
       "role": "Inventor",
       "subtitle": "Hệ thống dịch thuật tiếng Kinh - Tày, hỗ trợ tiếp cận tài nguyên học tập tiếng phổ thông cho cộng đồng dân tộc thiểu số",
@@ -375,6 +382,7 @@
     },
     {
       "category": "Rural Education & Digital Inclusion",
+      "group": "",
       "title": "Your CodingBuddy",
       "role": "Researcher & Lead Tutor",
       "subtitle": "Nền tảng giảng dạy lập trình cho học sinh từ 10 - 15 tuổi với 100% lợi nhuận quyên góp để nâng cao giáo dục cho cộng đồng dân tộc thiểu số",
@@ -390,6 +398,7 @@
     },
     {
       "category": "Rural Education & Digital Inclusion",
+      "group": "",
       "title": "Humanitas",
       "role": "Co Founder",
       "subtitle": "Dự án cộng đồng hướng tới việc nâng cao cơ hội học tập và kỹ năng số cho người dân vùng cao tập trung vào đối tượng đặc biệt bao gồm trẻ em và người già tại xã Bản Liền, tỉnh Lào Cai.",
@@ -454,6 +463,7 @@
     },
     {
       "category": "Rural Education & Digital Inclusion",
+      "group": "",
       "title": "The Research: “Engineering Analysis of Technology Accessibility and Infrastructure Enhancement Strategies for Improving Educational Access in Rural Communities”",
       "role": "Co-Author",
       "subtitle": "(Phân tích kỹ thuật về khả năng tiếp cận công nghệ và các chiến lược nâng cấp hạ tầng nhằm cải thiện khả năng tiếp cận giáo dục tại cộng đồng nông thôn",
@@ -476,6 +486,7 @@
     },
     {
       "category": "Dedication to Digitalized Sound",
+      "group": "",
       "title": "Revinyl Project",
       "role": "Founder",
       "subtitle": "Dự án cộng đồng nhằm khơi dậy và lan tỏa văn hóa nghe nhạc đĩa than (vinyl) tới học sinh và người trẻ, đồng thời giúp họ khám phá giá trị văn hóa, khoa học và cảm xúc của âm nhạc analog",
@@ -492,6 +503,7 @@
     },
     {
       "category": "Dedication to Digitalized Sound",
+      "group": "",
       "title": "Vinyl Vietnam Heritage",
       "role": "Owner & Inventor",
       "subtitle": "Dự án xây dựng kho lưu trữ âm nhạc số Việt Nam, kết hợp công nghệ xử lý âm thanh và trải nghiệm nghe lấy cảm hứng từ đĩa than (vinyl), hướng tới bảo tồn và lan tỏa di sản âm nhạc Việt Nam",
@@ -534,6 +546,7 @@
     },
     {
       "category": "Dedication to Digitalized Sound",
+      "group": "",
       "title": "Vinylize",
       "role": "Inventor",
       "subtitle": "Nền tảng mô phỏng vật lý tương tác chuyển đổi tệp MP3/WAV thành đĩa vinyl ảo, so sánh âm thanh với bản gốc và trực quan hóa rãnh đĩa dưới dạng mô hình 3D",
@@ -550,6 +563,7 @@
     },
     {
       "category": "Dedication to Digitalized Sound",
+      "group": "",
       "title": "The Research: “Real-Time Edge-Based Emotion Recognition in Vinyl Music Listening Using Attention-Based Deep Learning”",
       "role": "Co-Author",
       "subtitle": "Nhận diện cảm xúc theo thời gian thực trên thiết bị biên trong quá trình nghe nhạc vinyl bằng mô hình học sâu dựa trên cơ chế chú ý",
@@ -572,6 +586,7 @@
     },
     {
       "category": "STEM Activities & Social Impacts",
+      "group": "",
       "title": "VBEE AITALK",
       "role": "Software Engineering Intern",
       "subtitle": "Sản phẩm: Công cụ chuyển văn bản thành tiếng nói (Text-to-speech) chỉ trong vài giây, tạo ra âm thanh tự nhiên, chất lượng và giàu cảm xúc như con người, mở ra bước tiến mới trong công nghệ tổng hợp tiếng nói.",
@@ -593,6 +608,7 @@
     },
     {
       "category": "STEM Activities & Social Impacts",
+      "group": "",
       "title": "STEAMS",
       "role": "Head of Expertise",
       "subtitle": "The first robotics club at Newton Grammar School, pioneering innovation, coding, and competition",
@@ -613,6 +629,7 @@
     },
     {
       "category": "STEM Activities & Social Impacts",
+      "group": "",
       "title": "Newton Robotics Club",
       "role": "Vice President",
       "subtitle": "The first robotics club at Newton Grammar School, pioneering innovation, coding, and competition",
@@ -634,6 +651,7 @@
     },
     {
       "category": "STEM Activities & Social Impacts",
+      "group": "",
       "title": "Business and Innovation with Digitalisation, HKU Academy for the Talented (The University of Hong Kong) & Nanyang Technological University Singapore",
       "role": "Participant",
       "subtitle": "An interdisciplinary business innovation and digital transformation programme focused on strategic thinking, startup ecosystems, and technology-driven problem solving",
@@ -681,6 +699,7 @@
     },
     {
       "category": "Miles & Milestones",
+      "group": "",
       "title": "Miles & Milestones",
       "role": "",
       "subtitle": "",
@@ -760,6 +779,7 @@
     },
     {
       "category": "Honors & Awards",
+      "group": "",
       "title": "Robotics Awards",
       "role": "",
       "subtitle": "",
@@ -820,6 +840,7 @@
     },
     {
       "category": "Honors & Awards",
+      "group": "",
       "title": "Athletics & Endurance Sports Awards",
       "role": "",
       "subtitle": "",

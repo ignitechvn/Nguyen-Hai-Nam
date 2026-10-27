@@ -90,8 +90,12 @@ def main():
     with open(PHOTOS, encoding='utf-8') as fp:
         photos = json.load(fp)
 
+    # Sub-group headings span columns C:G (e.g. "OTHER ROBOTICS EXPERIENCES")
+    group_rows = {r.min_row for r in ws.merged_cells.ranges if r.min_col == 3 and r.max_col == 7}
+
     records = []
     category = ''
+    group = ''
     pending_title = ''
 
     for row in range(5, ws.max_row + 1):
@@ -100,8 +104,13 @@ def main():
         if isinstance(a.value, str) and 'Page:' in a.value:
             category = title_case(a.value.split(':', 1)[1])
             category = CATEGORY_NAMES.get(category, category)
+            group = ''
             pending_title = ''
             continue
+
+        if row in group_rows and c.value:
+            group = c.value.split('\n')[0].strip()
+            group = title_case(group) if group.isupper() else group
 
         if not c.value:
             continue
@@ -140,6 +149,7 @@ def main():
 
         records.append({
             'category': category,
+            'group': group,
             'title': title.strip(),
             'role': role.strip(),
             'subtitle': subtitle,

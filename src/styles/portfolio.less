@@ -173,6 +173,18 @@ button {
     color: @muted;
     font-size: 17px;
     line-height: 1.7;
+
+    // Sections with several entries: sticky track list beside the text
+    &.has-tracks {
+        max-width: 1020px;
+
+        #section-body {
+            display: grid;
+            grid-template-columns: 220px minmax(0, 1fr);
+            gap: 48px;
+            margin-top: 40px;
+        }
+    }
 }
 
 #cratedigger-record-category {
@@ -190,45 +202,141 @@ button {
 }
 
 // Tracklist of the section's entries
+// Track list of the open section
 #cratedigger-record-toc {
-    margin-top: 28px;
-    border-top: 1px solid rgba(254, 254, 254, 0.25);
+    position: sticky;
+    top: 24px;
+    align-self: start;
+    max-height: calc(~"100vh - 48px");
+    overflow-y: auto;
 
     &:empty {
         display: none;
     }
 
+    .toc-side {
+        margin: 20px 0 6px;
+        color: @accent;
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 1.4;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
     button {
         display: flex;
         width: 100%;
-        padding: 10px 0;
+        padding: 9px 0 9px 12px;
         background: none;
         border: 0;
-        border-bottom: 1px solid rgba(254, 254, 254, 0.25);
-        color: @ink;
-        font-size: 15px;
+        border-left: 2px solid @line;
+        color: @muted;
+        font-size: 14px;
+        line-height: 1.4;
         text-align: left;
         cursor: pointer;
+        transition: all 0.15s ease-in-out;
 
         span {
             flex: none;
-            width: 40px;
-            color: @muted;
+            width: 34px;
             font-weight: 700;
         }
 
+        .toc-title {
+            flex: 1;
+            width: auto;
+            font-weight: 400;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
         &:hover {
-            color: @muted;
+            color: @ink;
+        }
+
+        &.active {
+            border-left-color: @accent;
+            color: @ink;
+
+            span {
+                color: @accent;
+            }
         }
     }
 }
 
-.entry {
-    padding-top: 48px;
+.side-label {
+    margin: 64px 0 0;
+    padding-top: 18px;
+    border-top: 2px solid @ink;
+    color: @accent;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 
     & + .entry {
-        margin-top: 24px;
-        border-top: 1px solid rgba(254, 254, 254, 0.25);
+        margin-top: 0;
+        padding-top: 20px;
+        border-top: 0;
+    }
+}
+
+.entry {
+    margin-top: 56px;
+    padding-top: 40px;
+    border-top: 1px solid @line;
+    scroll-margin-top: 16px;
+}
+
+#cratedigger-record-content > :first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+
+    & + .entry {
+        padding-top: 20px;
+    }
+}
+
+.entry-track {
+    color: @accent;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+}
+
+.next-track {
+    display: block;
+    width: 100%;
+    margin-top: 32px;
+    padding: 16px 20px;
+    background: none;
+    border: 1px solid @line;
+    color: @ink;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: right;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+
+    span {
+        color: @muted;
+        font-weight: 400;
+        margin-right: 6px;
+    }
+
+    &:hover {
+        border-color: @ink;
     }
 }
 
@@ -335,6 +443,62 @@ button {
     a {
         display: block;
         color: @ink;
+    }
+}
+
+// Narrower screens: the track list becomes a sticky horizontal bar above the text
+@media (max-width: 1100px) {
+    #info-article.has-tracks #section-body {
+        display: block;
+        margin-top: 28px;
+    }
+
+    #cratedigger-record-toc {
+        top: 0;
+        z-index: 2;
+        display: flex;
+        max-height: none;
+        margin: 0 -24px 32px;
+        padding: 10px 76px 10px 24px; // room for the close button
+        overflow-x: auto;
+        overflow-y: hidden;
+        background: @bg;
+        border-bottom: 1px solid @line;
+        scrollbar-width: none;
+
+        .toc-side {
+            display: none;
+        }
+
+        button {
+            flex: none;
+            width: auto;
+            max-width: 240px;
+            padding: 6px 12px;
+            border-left: 0;
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            span {
+                width: auto;
+                margin-right: 8px;
+            }
+
+            .toc-title {
+                display: inline;
+                margin-right: 0;
+            }
+
+            &.active {
+                border-bottom-color: @accent;
+            }
+        }
+    }
+
+    .entry {
+        scroll-margin-top: 64px;
     }
 }
 
