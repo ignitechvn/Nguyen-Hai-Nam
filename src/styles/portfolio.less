@@ -15,38 +15,50 @@ button {
     text-transform: uppercase;
 }
 
-// Top bar: name, contact, sections, language
+@sidebar: 300px;
+@topbar: 60px;
+@line: rgba(254, 254, 254, 0.2);
+
+// Sidebar (desktop) / top bar + drawer (mobile): name, sections as a tracklist, language
 #top-bar {
     position: absolute;
-    z-index: 8;
+    z-index: 9;
     top: 0;
+    bottom: 0;
     left: 0;
-    right: 0;
-    padding: 20px 24px 0;
+    width: @sidebar;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 28px 28px;
+    background: @bg;
+    border-right: 1px solid @line;
     color: @ink;
-    pointer-events: none;
-    transition: all 0.3s ease-in-out;
+}
 
-    &.closed {
-        top: -200px;
-    }
+// The crate and its bottom bar live to the right of the sidebar
+// (cratedigger sets an inline position: relative on its root, so offset with margins)
+#cratedigger {
+    margin-left: @sidebar;
+    width: calc(~"100% - @{sidebar}");
+    height: 100%;
+}
 
-    #profile,
-    #lang-toggle,
-    #category-nav {
-        pointer-events: auto;
-    }
+#bottom-bar {
+    left: @sidebar;
+    width: calc(~"100% - @{sidebar}");
 }
 
 #profile-name {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
+    line-height: 1.2;
 }
 
 #profile-meta {
-    margin-top: 4px;
+    margin-top: 6px;
     font-size: 13px;
     color: @muted;
 
@@ -55,10 +67,55 @@ button {
     }
 }
 
+#menu-toggle {
+    display: none;
+}
+
+#category-nav {
+    flex: 1;
+    margin-top: 40px;
+    overflow-y: auto;
+    border-top: 1px solid @line;
+
+    button {
+        display: flex;
+        width: 100%;
+        padding: 14px 0;
+        background: none;
+        border: 0;
+        border-bottom: 1px solid @line;
+        color: @muted;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.4;
+        letter-spacing: 1px;
+        text-align: left;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: color 0.15s ease-in-out;
+
+        span {
+            flex: none;
+            width: 36px;
+            font-weight: 400;
+        }
+
+        &:hover,
+        &.active {
+            color: @ink;
+        }
+
+        &.active span {
+            color: @accent;
+        }
+    }
+}
+
+@accent: #e9c46a;
+
 #lang-toggle {
-    position: absolute;
-    top: 22px;
-    right: 24px;
+    align-self: flex-start;
+    margin-top: 24px;
     padding: 8px 14px;
     background: transparent;
     border: 2px solid @ink;
@@ -75,30 +132,6 @@ button {
         color: @bg;
 
         b {
-            color: @bg;
-        }
-    }
-}
-
-#category-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 16px;
-    max-width: 640px;
-
-    button {
-        padding: 6px 12px;
-        background: rgba(17, 17, 17, 0.6);
-        border: 1px solid rgba(254, 254, 254, 0.35);
-        color: @ink;
-        font-size: 12px;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: all 0.15s ease-in-out;
-
-        &:hover {
-            background: @ink;
             color: @bg;
         }
     }
@@ -160,6 +193,10 @@ button {
 #cratedigger-record-toc {
     margin-top: 28px;
     border-top: 1px solid rgba(254, 254, 254, 0.25);
+
+    &:empty {
+        display: none;
+    }
 
     button {
         display: flex;
@@ -301,29 +338,90 @@ button {
     }
 }
 
-@media (max-width: 600px) {
+// Tablet & phone: compact top bar, sections in a full-screen drawer
+@media (max-width: 800px) {
     #top-bar {
-        padding: 14px 16px 0;
+        bottom: auto;
+        width: 100%;
+        height: @topbar;
+        padding: 0 16px;
+        flex-direction: row;
+        align-items: center;
+        border-right: 0;
+        border-bottom: 1px solid @line;
+    }
+
+    #profile {
+        flex: 1;
+        min-width: 0;
     }
 
     #profile-name {
-        font-size: 18px;
+        font-size: 17px;
+    }
+
+    #profile-meta {
+        margin-top: 2px;
+        font-size: 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     #lang-toggle {
-        top: 14px;
-        right: 16px;
+        order: 2;
+        align-self: center;
+        margin: 0 0 0 10px;
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    #menu-toggle {
+        order: 3;
+        display: block;
+        width: 40px;
+        height: 34px;
+        margin-left: 8px;
+        background: transparent;
+        border: 2px solid @ink;
+        color: @ink;
+        font-size: 18px;
+        line-height: 1;
+        cursor: pointer;
     }
 
     #category-nav {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        margin-right: -16px;
-        padding-right: 16px;
+        display: none;
+        position: fixed;
+        top: @topbar;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        padding: 8px 16px 24px;
+        background: @bg;
+        border-top: 0;
 
         button {
-            flex: none;
+            padding: 18px 0;
+            font-size: 15px;
         }
+    }
+
+    #top-bar.menu-open #category-nav {
+        display: block;
+    }
+
+    #cratedigger {
+        margin-left: 0;
+        margin-top: @topbar;
+        width: 100%;
+        height: calc(~"100% - @{topbar}");
+    }
+
+    #bottom-bar {
+        left: 0;
+        width: 100%;
     }
 
     #info-article {
@@ -344,7 +442,7 @@ button {
     }
 
     #info-close {
-        top: 12px;
+        top: @topbar + 12px;
         right: 12px;
     }
 

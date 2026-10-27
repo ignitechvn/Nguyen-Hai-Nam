@@ -65,6 +65,8 @@ const infoContainer = document.getElementById('cratedigger-info');
 const closeButton = document.getElementById('info-close');
 const langToggle = document.getElementById('lang-toggle');
 const categoryNav = document.getElementById('category-nav');
+const menuToggle = document.getElementById('menu-toggle');
+let pendingSection = -1;
 
 const el = (id) => document.getElementById(id);
 
@@ -314,8 +316,39 @@ function renderChrome() {
   langToggle.innerHTML = lang === 'en' ? '<b>EN</b> / VI' : 'EN / <b>VI</b>';
 
   categoryNav.innerHTML = sections.map((section) =>
-    `<button type="button" data-index="${section.index}">${escapeHtml(section.title)}</button>`
+    `<button type="button" data-index="${section.index}">` +
+    `<span>${String(section.index + 1).padStart(2, '0')}</span>${escapeHtml(section.title)}</button>`
   ).join('');
+  highlightSelected();
+}
+
+// Highlight the menu item of the record currently pulled out of the crate
+function highlightSelected() {
+  const selected = cratedigger.getSelectedRecord();
+  const index = selected ? selected.data && selected.data.index : -1;
+  categoryNav.querySelectorAll('button').forEach((button) => {
+    button.classList.toggle('active', Number(button.dataset.index) === index);
+  });
+}
+
+function setMenuOpen(open) {
+  topBar.classList.toggle('menu-open', open);
+  menuToggle.setAttribute('aria-expanded', String(open));
+  menuToggle.innerHTML = open ? '&times;' : '&#9776;';
+}
+
+// Pull a record out of the crate, then flip it open
+let openTimeout;
+function openSection(index) {
+  const id = recordId(index);
+  clearTimeout(openTimeout);
+  cratedigger.selectRecord(id);
+  openTimeout = setTimeout(() => {
+    const selected = cratedigger.getSelectedRecord();
+    if (selected && selected.id === id) {
+      cratedigger.flipSelectedRecord();
+    }
+  }, 900);
 }
 
 function bindChromeEvents() {
@@ -332,27 +365,33 @@ function bindChromeEvents() {
     }
   });
 
-  // Menu: pull the record out of the crate, then flip it open
-  let openTimeout;
   categoryNav.addEventListener('click', (e) => {
     const button = e.target.closest('button');
-    if (button) {
-      const id = recordId(Number(button.dataset.index));
-      clearTimeout(openTimeout);
-      cratedigger.selectRecord(id);
-      openTimeout = setTimeout(() => {
-        const selected = cratedigger.getSelectedRecord();
-        if (selected && selected.id === id) {
-          cratedigger.flipSelectedRecord();
-        }
-      }, 900);
+    if (!button) {
+      return;
+    }
+    const index = Number(button.dataset.index);
+    setMenuOpen(false);
+    if (bottomBar.classList.contains('closed')) {
+      // A section is open: put it back first, then open the new one
+      pendingSection = index;
+      cratedigger.flipBackSelectedRecord();
+    } else {
+      openSection(index);
     }
   });
+
+  menuToggle.addEventListener('click', () => {
+    setMenuOpen(!topBar.classList.contains('menu-open'));
+  });
+
+  setInterval(highlightSelected, 250);
 }
 
 // Pull the camera back on portrait screens (the original scene is framed for landscape)
 function sceneForViewport() {
-  const aspect = window.innerWidth / window.innerHeight;
+  const root = document.getElementById('cratedigger');
+  const aspect = root.clientWidth / root.clientHeight;
   const k = aspect < 1 ? Math.min(1.8, 0.75 / aspect) : 1;
   const scale = (pos) => ({ x: pos.x * k, y: pos.y * k, z: pos.z * k });
 
@@ -381,13 +420,15 @@ cratedigger.init({
   },
   onInfoPanelOpened() {
     bottomBar.classList.add('closed');
-    topBar.classList.add('closed');
     fillInfoPanel(cratedigger.getSelectedRecord());
   },
 
   onInfoPanelClosed() {
     bottomBar.classList.remove('closed');
-    topBar.classList.remove('closed');
+    if (pendingSection >= 0) {
+      openSection(pendingSection);
+      pendingSection = -1;
+    }
   },
 });
 
