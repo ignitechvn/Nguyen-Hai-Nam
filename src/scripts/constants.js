@@ -15,6 +15,7 @@ export default {
   postprocessing: false,
   blurAmount: 0.4,
   updateCanvasSizeOnWindowResize: true,
+  drawPlaceholderCover: null,
   elements: {
     rootContainer: null,
     canvasContainer: null,

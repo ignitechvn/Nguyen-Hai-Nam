@@ -132,7 +132,7 @@ function loadRecords(recordsData, shuffleBeforeLoading, done) {
     for (i = 0; i < records.length && i < recordsData.length; i++) {
       records[i].data = recordsData[i];
       records[i].setActive();
-      records[i].mesh.material.materials = getRecordMaterial(recordsData[i].cover, recordsData[i].hasSleeve);
+      records[i].mesh.material.materials = getRecordMaterial(recordsData[i].cover, recordsData[i].hasSleeve, recordsData[i]);
     }
 
     // why ??
@@ -824,7 +824,7 @@ function createRecord(id, crateId, pos) {
   records.push(record);
 }
 
-function getRecordMaterial(src, hasSleeve) {
+function getRecordMaterial(src, hasSleeve, data) {
   var img = new Image();
   var imgWidth = 400;
   var imgHeight = 400;
@@ -839,6 +839,18 @@ function getRecordMaterial(src, hasSleeve) {
 
   mapCanvas.width = mapCanvas.height = 400;
   texture.minFilter = THREE.LinearFilter;
+
+  // Placeholder cover (used when the record has no image or it fails to load)
+  if (Constants.drawPlaceholderCover) {
+    var placeholderCtx = mapCanvas.getContext('2d');
+    placeholderCtx.save();
+    placeholderCtx.translate(imgWidth / 2, imgHeight / 2);
+    placeholderCtx.rotate(Math.PI / 2);
+    placeholderCtx.translate(-imgWidth / 2, -imgHeight / 2);
+    Constants.drawPlaceholderCover(placeholderCtx, imgWidth, data || {});
+    placeholderCtx.restore();
+    texture.needsUpdate = true;
+  }
 
   img.onload = function() {
     var ctx;
