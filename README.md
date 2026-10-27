@@ -82,5 +82,5 @@ Enjoy !!
 Deploy
 -----------
 
-* **GitHub Pages** (cần GitHub Actions và gói trả phí với repo private): Settings → Pages → Source: **GitHub Actions**, rồi chạy tay workflow `.github/workflows/deploy.yml` trong tab Actions.
+* **GitHub Pages**: Settings → Pages → Source: **GitHub Actions**. Mỗi lần push lên `main`, workflow `.github/workflows/deploy.yml` tự build và đăng web.
 * **Vercel / Netlify**: Import repo, cấu hình đã có sẵn trong `vercel.json` / `netlify.toml` (build `npm run build`, thư mục `lib`).
