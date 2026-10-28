@@ -438,8 +438,7 @@ function renderChrome() {
   langToggle.innerHTML = lang === 'en' ? '<b>EN</b><i>VI</i>' : '<i>EN</i><b>VI</b>';
 
   categoryNav.innerHTML = sections.map((section) =>
-    `<button type="button" data-index="${section.index}">` +
-    `<span>${String(section.index + 1).padStart(2, '0')}</span>${escapeHtml(section.title)}</button>`
+    `<button type="button" data-index="${section.index}">${escapeHtml(section.title)}</button>`
   ).join('');
   highlightSelected();
 }

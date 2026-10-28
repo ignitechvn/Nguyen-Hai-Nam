@@ -148,10 +148,9 @@ button {
         display: flex;
         align-items: baseline;
         width: 100%;
-        padding: 11px 10px 11px 0;
+        padding: 9px 24px 9px 0;
         background: none;
         border: 0;
-        border-top: 1px solid @line;
         color: @muted;
         font-size: 15px;
         font-weight: 500;
@@ -160,28 +159,12 @@ button {
         cursor: pointer;
         transition: color 0.2s ease;
 
-        &:last-child {
-            border-bottom: 1px solid @line;
-        }
-
-        span {
-            flex: none;
-            width: 34px;
-            font-family: @mono;
-            font-size: 12px;
-            font-weight: 400;
-        }
-
         &:hover {
             color: @cream;
         }
 
         &.active {
             color: @cream;
-
-            span {
-                color: @accent;
-            }
 
             // a small spinning record marks the record that is out of the crate
             &::after {
@@ -847,14 +830,10 @@ button {
         background: @bg-raised;
 
         button {
-            padding: 16px 24px 16px 0;
+            padding: 12px 24px 12px 0;
             font-family: @serif;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 600;
-
-            span {
-                width: 44px;
-            }
         }
     }
 
