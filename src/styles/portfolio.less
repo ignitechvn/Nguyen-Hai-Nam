@@ -307,37 +307,16 @@ button {
     text-transform: none;
 }
 
-#album-meta {
-    margin-top: 14px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid rgba(243, 236, 224, 0.25);
-    color: rgba(243, 236, 224, 0.7);
-    font-family: @mono;
-    font-size: 12px;
-    letter-spacing: 1px;
-}
-
 // Track list
 #cratedigger-record-toc {
-    margin-top: 20px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(243, 236, 224, 0.25);
 
     &:empty {
         display: none;
     }
 
-    .toc-side {
-        margin: 22px 0 6px;
-        color: var(--section-accent, @accent);
-        font-family: @mono;
-        font-size: 11px;
-        line-height: 1.5;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-
-        &:first-child {
-            margin-top: 0;
-        }
-    }
 
     button {
         display: flex;
@@ -361,19 +340,9 @@ button {
         &.active {
             background: @cream;
             color: @paper-ink;
-
-            .toc-number {
-                color: var(--section-color, @paper-accent);
-            }
         }
     }
 
-    .toc-number {
-        flex: none;
-        width: 34px;
-        font-family: @mono;
-        font-size: 12px;
-    }
 
     .toc-title {
         flex: 1;
@@ -665,22 +634,15 @@ button {
         font-size: 36px;
     }
 
-    #album-meta {
-        padding-bottom: 0;
-        border-bottom: 0;
-    }
 
     #cratedigger-record-toc {
         display: flex;
         gap: 6px;
-        margin: 20px -32px 0;
+        margin: 24px -32px 0;
         padding: 0 32px 4px;
+        border-top: 0;
         overflow-x: auto;
         scrollbar-width: none;
-
-        .toc-side {
-            display: none;
-        }
 
         button {
             flex: none;
@@ -697,10 +659,6 @@ button {
             }
         }
 
-        .toc-number {
-            width: auto;
-            margin-right: 8px;
-        }
 
         .toc-title {
             overflow: hidden;

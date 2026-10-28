@@ -222,25 +222,16 @@ function renderTrackNav(section, i) {
     card(section.entries[i + 1], i + 1, 'Next track &rarr;', 'next');
 }
 
-// Track list of the record, split into sides when the sheet groups its entries
+// Track list of the record
 function renderTrackList(section) {
   if (section.entries.length < 2) {
     return '';
   }
-  const sides = section.entries.some((e) => e.group);
 
   return section.entries.map((entry, i) =>
-    `${sides && entry.sideStart ? `<div class="toc-side">${escapeHtml(sideLabel(entry))}</div>` : ''}
-     <button type="button" data-entry="${i}" title="${escapeHtml(entry.title)}">` +
-    `<span class="toc-number">${entry.track}</span><span class="toc-title">${escapeHtml(trackTitle(entry.title))}</span></button>`
+    `<button type="button" data-entry="${i}" title="${escapeHtml(entry.title)}">` +
+    `<span class="toc-title">${escapeHtml(trackTitle(entry.title))}</span></button>`
   ).join('');
-}
-
-function albumMeta(section) {
-  const tracks = section.entries.length;
-  const sides = new Set(section.entries.map((e) => e.side)).size;
-  return tracks < 2 ? 'Single' :
-    tracks + ' tracks' + (sides > 1 ? ' · ' + sides + ' sides' : '');
 }
 
 // Show a single track of the open record
@@ -284,7 +275,6 @@ function fillInfoPanel(record) {
   el('detail').style.setProperty('--section-accent', colors[1]);
   el('cratedigger-record-category').textContent = 'No. ' + String(section.index + 1).padStart(2, '0');
   el('cratedigger-record-title').textContent = section.title;
-  el('album-meta').textContent = albumMeta(section);
   el('cratedigger-record-toc').innerHTML = renderTrackList(section);
 
   el('cratedigger-record-contact').innerHTML = section.index === 0 ?
