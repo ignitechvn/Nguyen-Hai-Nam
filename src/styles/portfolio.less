@@ -220,6 +220,13 @@ button {
 
 // ---------- Detail view: album back cover (left) + one track on cream paper (right) ----------
 #cratedigger-info {
+    // full screen over the main sidebar: one navigation column at a time
+    position: fixed !important;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     -webkit-user-select: text;
@@ -374,11 +381,49 @@ button {
     }
 }
 
+// Jump to the following record without going back to the crate
+#next-record {
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(243, 236, 224, 0.25);
+
+    button {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: 100%;
+        padding: 0;
+        background: none;
+        border: 0;
+        color: @cream;
+        font-family: @serif;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 1.2;
+        text-align: left;
+        cursor: pointer;
+
+        span {
+            color: var(--section-accent, @accent);
+            font-family: @mono;
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}
+
 // The selected track
 #track {
     box-sizing: border-box;
     width: 100%;
-    max-width: 820px;
+    max-width: 880px;
+    margin: 0 auto;
     padding: 72px 64px 96px;
 }
 
@@ -626,6 +671,11 @@ button {
 
 // ---------- Narrower screens: album panel on top, track list as a row of chips ----------
 @media (max-width: 1180px) {
+    // the album is a compact header here: keep it to title + tracks
+    #next-record {
+        display: none;
+    }
+
     #detail {
         display: block;
     }

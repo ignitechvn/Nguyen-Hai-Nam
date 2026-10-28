@@ -268,6 +268,12 @@ function fillInfoPanel(record) {
   el('cratedigger-record-title').textContent = section.title;
   el('cratedigger-record-toc').innerHTML = renderTrackList(section);
 
+  const next = sections[(section.index + 1) % sections.length];
+  el('next-record').innerHTML =
+    `<button type="button" data-section="${next.index}">
+      <span>Next record &rarr;</span>${escapeHtml(next.title)}
+    </button>`;
+
   showTrack(0);
   // The panel is still hidden here and keeps the previous record's scroll: reset once it fades in
   infoContainer.scrollTop = 0;
@@ -430,6 +436,16 @@ function setMenuOpen(open) {
   menuToggle.innerHTML = open ? '&times;' : '&#9776;';
 }
 
+// Open a record from anywhere: when one is already open, put it back first
+function goToSection(index) {
+  if (bottomBar.classList.contains('closed')) {
+    pendingSection = index;
+    cratedigger.flipBackSelectedRecord();
+  } else {
+    openSection(index);
+  }
+}
+
 // Pull a record out of the crate, then flip it open
 let openTimeout;
 function openSection(index) {
@@ -447,17 +463,16 @@ function openSection(index) {
 function bindChromeEvents() {
   categoryNav.addEventListener('click', (e) => {
     const button = e.target.closest('button');
-    if (!button) {
-      return;
+    if (button) {
+      setMenuOpen(false);
+      goToSection(Number(button.dataset.index));
     }
-    const index = Number(button.dataset.index);
-    setMenuOpen(false);
-    if (bottomBar.classList.contains('closed')) {
-      // A section is open: put it back first, then open the new one
-      pendingSection = index;
-      cratedigger.flipBackSelectedRecord();
-    } else {
-      openSection(index);
+  });
+
+  el('next-record').addEventListener('click', (e) => {
+    const button = e.target.closest('[data-section]');
+    if (button) {
+      goToSection(Number(button.dataset.section));
     }
   });
 
@@ -520,11 +535,13 @@ cratedigger.init({
   },
   onInfoPanelOpened() {
     bottomBar.classList.add('closed');
+    document.body.classList.add('detail-open');
     fillInfoPanel(cratedigger.getSelectedRecord());
   },
 
   onInfoPanelClosed() {
     bottomBar.classList.remove('closed');
+    document.body.classList.remove('detail-open');
     if (pendingSection >= 0) {
       openSection(pendingSection);
       pendingSection = -1;
