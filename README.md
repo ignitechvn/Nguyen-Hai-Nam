@@ -18,7 +18,7 @@ Screenshots
 Portfolio Nguyễn Hải Nam
 -----------
 
-Thùng có 7 đĩa, mỗi đĩa là một mục menu (một "Page" trong file nội dung; trang HOME hiển thị là About Me). Bìa đĩa là chữ: tên mục và danh sách các phần như tracklist; lật đĩa mở trang của cả mục. Mỗi dòng trong file nội dung `content/Website_Layout_Hai_Nam.xlsx` (không đưa lên GitHub vì có link Drive nội bộ — đặt file vào đúng đường dẫn này để cập nhật) là một phần trong trang của mục đó. Chọn đĩa (cuộn chuột, kéo, phím mũi tên, menu chuyên mục) rồi bấm SHOW / click lần nữa để lật đĩa và đọc nội dung. Nút EN / VI chuyển ngôn ngữ (cột Content [ENG] / Content [VIET]).
+Thùng có 7 đĩa, mỗi đĩa là một mục menu (một "Page" trong file nội dung; trang HOME hiển thị là About Me). Bìa đĩa là chữ: tên mục và danh sách các phần như tracklist; lật đĩa mở trang của cả mục. Mỗi dòng trong file nội dung `content/Website_Layout_Hai_Nam.xlsx` (không đưa lên GitHub vì có link Drive nội bộ — đặt file vào đúng đường dẫn này để cập nhật) là một phần trong trang của mục đó. Chọn đĩa (cuộn chuột, kéo, phím mũi tên, menu chuyên mục) rồi bấm Open record / click lần nữa để lật đĩa và đọc nội dung. Web chỉ dùng tiếng Anh (cột Content [ENG]).
 
 Cập nhật nội dung:
 

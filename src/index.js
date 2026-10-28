@@ -16,21 +16,13 @@ const CATEGORY_COLORS = {
   'Honors & Awards': ['#2b2a33', '#e8c468'],
 };
 
+// The site is English only (Content [ENG] column)
 const LABELS = {
-  en: {
-    platform: 'Visit platform',
-    research: 'Read the research',
-    fanpage: 'Fanpage',
-    company: 'Company website',
-    contact: 'Contact',
-  },
-  vi: {
-    platform: 'Xem nền tảng',
-    research: 'Đọc bài nghiên cứu',
-    fanpage: 'Fanpage',
-    company: 'Website công ty',
-    contact: 'Liên hệ',
-  },
+  platform: 'Visit platform',
+  research: 'Read the research',
+  fanpage: 'Fanpage',
+  company: 'Company website',
+  contact: 'Contact',
 };
 
 // One record per menu item (spreadsheet page), holding all of its entries
@@ -66,13 +58,6 @@ const data = sections.slice().reverse().map((section) => Object.assign({}, secti
   hasSleeve: false,
 }));
 
-let lang = 'en';
-try {
-  lang = localStorage.getItem('lang') === 'vi' ? 'vi' : 'en';
-} catch (e) {
-  // storage unavailable
-}
-
 const bottomBar = document.getElementById('bottom-bar');
 const topBar = document.getElementById('top-bar');
 const buttonPrev = document.getElementById('button-prev');
@@ -80,7 +65,6 @@ const buttonShow = document.getElementById('button-show');
 const buttonNext = document.getElementById('button-next');
 const infoContainer = document.getElementById('cratedigger-info');
 const closeButton = document.getElementById('info-close');
-const langToggle = document.getElementById('lang-toggle');
 const categoryNav = document.getElementById('category-nav');
 const menuToggle = document.getElementById('menu-toggle');
 let pendingSection = -1;
@@ -238,7 +222,7 @@ function sideLabel(entry) {
 }
 
 function renderEntry(entry, i, section) {
-  const labels = LABELS[lang];
+  const labels = LABELS;
   const multi = section.entries.length > 1;
   const sides = section.entries.some((e) => e.group);
   const next = section.entries[i + 1];
@@ -256,7 +240,7 @@ function renderEntry(entry, i, section) {
     <section class="entry" id="entry-${i}">
     ${header}
     ${links ? `<div class="entry-links">${links}</div>` : ''}
-    ${renderBody(entry[lang], entry.photos, entry.layout, entry.groups)}
+    ${renderBody(entry.en, entry.photos, entry.layout, entry.groups)}
     ${next ? `<button type="button" class="next-track" data-entry="${i + 1}">
       <span>Next track &rarr;</span> ${next.track} &nbsp;${escapeHtml(trackTitle(next.title))}</button>` : ''}
   </section>`;
@@ -279,7 +263,7 @@ function renderTrackList(section) {
 function fillInfoPanel(record) {
   const section = record.data;
   el('info-article').style.setProperty('--section-color', (CATEGORY_COLORS[section.title] || [])[0] || '');
-  const labels = LABELS[lang];
+  const labels = LABELS;
 
   el('cratedigger-record-category').textContent = 'No. ' + String(section.index + 1).padStart(2, '0');
   el('cratedigger-record-title').textContent = section.title;
@@ -431,11 +415,9 @@ function drawPlaceholderCover(ctx, size, section) {
 }
 
 function renderChrome() {
-  document.documentElement.lang = lang;
   el('profile-name').textContent = profile.name;
   el('profile-meta').innerHTML = `<span>${escapeHtml(profile.major)}</span>` +
     `<a href="https://${escapeHtml(profile.domain)}" target="_blank" rel="noopener">${escapeHtml(profile.domain)}</a>`;
-  langToggle.innerHTML = lang === 'en' ? '<b>EN</b><i>VI</i>' : '<i>EN</i><b>VI</b>';
 
   categoryNav.innerHTML = sections.map((section) =>
     `<button type="button" data-index="${section.index}">${escapeHtml(section.title)}</button>`
@@ -473,19 +455,6 @@ function openSection(index) {
 }
 
 function bindChromeEvents() {
-  langToggle.addEventListener('click', () => {
-    lang = lang === 'en' ? 'vi' : 'en';
-    try {
-      localStorage.setItem('lang', lang);
-    } catch (e) {
-      // storage unavailable
-    }
-    renderChrome();
-    if (cratedigger.getSelectedRecord() && bottomBar.classList.contains('closed')) {
-      fillInfoPanel(cratedigger.getSelectedRecord());
-    }
-  });
-
   categoryNav.addEventListener('click', (e) => {
     const button = e.target.closest('button');
     if (!button) {
