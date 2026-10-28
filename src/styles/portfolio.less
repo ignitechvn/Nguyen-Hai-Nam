@@ -1,25 +1,77 @@
-@ink: #fefefe;
-@muted: #b8b8b8;
-@bg: #111111;
+// Record-store look: warm dark crate area, cream "liner notes" paper for reading
+@bg: #16120f;
+@bg-raised: #1d1814;
+@cream: #f3ece0;
+@muted: #a2978a;
+@line: rgba(243, 236, 224, 0.14);
+@accent: #e8714b;
+
+@paper: #f3ece0;
+@paper-ink: #221c17;
+@paper-muted: #6d6257;
+@paper-line: rgba(34, 28, 23, 0.14);
+@paper-accent: #b23f22;
+
+@serif: 'Fraunces', Georgia, serif;
+@sans: 'Be Vietnam Pro', 'Helvetica Neue', Arial, sans-serif;
+@mono: 'IBM Plex Mono', Menlo, monospace;
+
+@sidebar: 300px;
+@topbar: 64px;
+
+html,
+body {
+    background: @bg;
+    font-family: @sans;
+    -webkit-font-smoothing: antialiased;
+}
 
 button {
     font-family: inherit;
 }
 
+// ---------- Loading ----------
+#cratedigger-loading {
+    background-color: @bg;
+}
+
+.loading-label {
+    display: block;
+    font-family: @serif;
+    font-size: 44px;
+    font-weight: 600;
+    line-height: 1.1;
+    text-transform: none;
+    color: @cream;
+}
+
 .loading-sublabel {
     display: block;
-    margin-top: 16px;
+    margin-top: 14px;
     color: @muted;
-    font-size: 14px;
+    font-family: @mono;
+    font-size: 12px;
     letter-spacing: 3px;
     text-transform: uppercase;
 }
 
-@sidebar: 300px;
-@topbar: 60px;
-@line: rgba(254, 254, 254, 0.2);
+.loading-disc {
+    display: inline-block;
+    width: 72px;
+    height: 72px;
+    margin-bottom: 28px;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle, @accent 0 9px, @bg 9px 11px, @accent 11px 22px, transparent 22px),
+        repeating-radial-gradient(circle, #241e19 0 2px, #0f0c0a 2px 4px);
+    animation: spin 1.6s linear infinite;
+}
 
-// Sidebar (desktop) / top bar + drawer (mobile): name, sections as a tracklist, language
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+// ---------- Sidebar (desktop) / top bar + drawer (mobile) ----------
 #top-bar {
     position: absolute;
     z-index: 9;
@@ -30,13 +82,13 @@ button {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    padding: 32px 28px 28px;
-    background: @bg;
+    padding: 36px 28px 28px;
+    background: @bg-raised;
     border-right: 1px solid @line;
-    color: @ink;
+    color: @cream;
 }
 
-// The crate and its bottom bar live to the right of the sidebar
+// The crate and its controls live to the right of the sidebar
 // (cratedigger sets an inline position: relative on its root, so offset with margins)
 #cratedigger {
     margin-left: @sidebar;
@@ -44,26 +96,30 @@ button {
     height: 100%;
 }
 
-#bottom-bar {
-    left: @sidebar;
-    width: calc(~"100% - @{sidebar}");
-}
-
 #profile-name {
-    font-size: 24px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    line-height: 1.2;
+    font-family: @serif;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.1;
 }
 
 #profile-meta {
-    margin-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 10px;
+    margin-top: 10px;
     font-size: 13px;
     color: @muted;
 
     a {
-        color: @ink;
+        white-space: nowrap;
+        color: @cream;
+        text-decoration: none;
+        border-bottom: 1px solid @line;
+
+        &:hover {
+            border-bottom-color: @accent;
+        }
     }
 }
 
@@ -73,185 +129,331 @@ button {
 
 #category-nav {
     flex: 1;
-    margin-top: 40px;
+    margin-top: 36px;
     overflow-y: auto;
-    border-top: 1px solid @line;
+
+    &::before {
+        content: 'Records';
+        display: block;
+        margin-bottom: 10px;
+        color: @muted;
+        font-family: @mono;
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+    }
 
     button {
+        position: relative;
         display: flex;
+        align-items: baseline;
         width: 100%;
-        padding: 14px 0;
+        padding: 11px 10px 11px 0;
         background: none;
         border: 0;
-        border-bottom: 1px solid @line;
+        border-top: 1px solid @line;
         color: @muted;
-        font-size: 13px;
-        font-weight: 700;
-        line-height: 1.4;
-        letter-spacing: 1px;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.35;
         text-align: left;
-        text-transform: uppercase;
         cursor: pointer;
-        transition: color 0.15s ease-in-out;
+        transition: color 0.2s ease;
+
+        &:last-child {
+            border-bottom: 1px solid @line;
+        }
 
         span {
             flex: none;
-            width: 36px;
+            width: 34px;
+            font-family: @mono;
+            font-size: 12px;
             font-weight: 400;
         }
 
-        &:hover,
-        &.active {
-            color: @ink;
+        &:hover {
+            color: @cream;
         }
 
-        &.active span {
-            color: @accent;
+        &.active {
+            color: @cream;
+
+            span {
+                color: @accent;
+            }
+
+            // a small spinning record marks the record that is out of the crate
+            &::after {
+                content: '';
+                position: absolute;
+                right: 0;
+                top: 50%;
+                width: 12px;
+                height: 12px;
+                margin-top: -6px;
+                border-radius: 50%;
+                background: radial-gradient(circle, @accent 0 2px, #0f0c0a 2px);
+                box-shadow: 0 0 0 1px @line;
+            }
         }
     }
 }
-
-@accent: #e9c46a;
 
 #lang-toggle {
     align-self: flex-start;
+    display: flex;
     margin-top: 24px;
-    padding: 8px 14px;
+    padding: 3px;
     background: transparent;
-    border: 2px solid @ink;
+    border: 1px solid @line;
+    border-radius: 999px;
     color: @muted;
-    font-size: 13px;
+    font-family: @mono;
+    font-size: 12px;
     cursor: pointer;
 
+    // rendered as "<b>EN</b> / VI": style the two halves as a segmented control
     b {
-        color: @ink;
+        padding: 5px 12px;
+        border-radius: 999px;
+        background: @cream;
+        color: @bg;
+        font-weight: 500;
     }
 
-    &:hover {
-        background: @ink;
-        color: @bg;
+    i {
+        padding: 5px 12px;
+        font-style: normal;
+    }
 
-        b {
-            color: @bg;
+    &:hover i {
+        color: @cream;
+    }
+}
+
+// ---------- Crate controls ----------
+#bottom-bar {
+    left: @sidebar;
+    right: 0;
+    bottom: 28px;
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    pointer-events: none;
+    transition: bottom 0.35s ease, opacity 0.35s ease;
+
+    &.closed {
+        bottom: -120px;
+        opacity: 0;
+    }
+
+    .crate-hint {
+        margin-bottom: 10px;
+        padding: 4px 12px;
+        background: rgba(22, 18, 15, 0.72);
+        border-radius: 999px;
+        color: @muted;
+        font-family: @mono;
+        font-size: 11px;
+        letter-spacing: 1px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+
+    .crate-controls {
+        display: flex;
+        gap: 4px;
+        padding: 5px;
+        background: rgba(22, 18, 15, 0.72);
+        border: 1px solid @line;
+        border-radius: 999px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        pointer-events: auto;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .bottom-bar-item {
+        display: block;
+        padding: 10px 20px;
+        border-radius: 999px;
+        color: @cream;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.2;
+        text-transform: none;
+        cursor: pointer;
+        transition: background 0.2s ease, color 0.2s ease;
+
+        &:hover {
+            background: rgba(243, 236, 224, 0.12);
+            color: @cream;
+        }
+    }
+
+    #button-show {
+        background: @accent;
+        color: #1a0f0a;
+
+        &:hover {
+            background: lighten(@accent, 6%);
+            color: #1a0f0a;
         }
     }
 }
 
-// Info panel: a readable article instead of the original centered title + cover
+// ---------- Info panel: cream liner-notes paper ----------
 #cratedigger-info {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     -webkit-user-select: text;
     user-select: text;
-    background-color: rgba(17, 17, 17, 0.94);
+    background-color: @paper;
+    color: @paper-ink;
 }
 
 #info-close {
     position: fixed;
     z-index: 6;
-    top: 16px;
-    right: 20px;
-    width: 48px;
-    height: 48px;
-    background: @bg;
-    border: 2px solid @ink;
-    color: @ink;
-    font-size: 30px;
+    top: 20px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: @paper;
+    border: 1px solid @paper-ink;
+    border-radius: 50%;
+    color: @paper-ink;
+    font-size: 24px;
     line-height: 40px;
     cursor: pointer;
+    transition: all 0.2s ease;
 
     &:hover {
-        background: @ink;
-        color: @bg;
+        background: @paper-ink;
+        color: @paper;
     }
 }
 
 #info-article {
-    max-width: 760px;
+    max-width: 720px;
     margin: 0 auto;
-    padding: 80px 24px 100px;
-    color: @muted;
+    padding: 72px 32px 120px;
+    color: @paper-ink;
     font-size: 17px;
-    line-height: 1.7;
+    line-height: 1.75;
 
     // Sections with several entries: sticky track list beside the text
     &.has-tracks {
-        max-width: 1020px;
+        max-width: 1040px;
 
         #section-body {
             display: grid;
-            grid-template-columns: 220px minmax(0, 1fr);
-            gap: 48px;
-            margin-top: 40px;
+            grid-template-columns: 210px minmax(0, 1fr);
+            gap: 56px;
+            margin-top: 48px;
         }
     }
 }
 
 #cratedigger-record-category {
-    color: @muted;
-    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    color: @paper-muted;
+    font-family: @mono;
+    font-size: 12px;
     letter-spacing: 3px;
     text-transform: uppercase;
-    margin-bottom: 24px;
+
+    // swatch in the section's sleeve colour
+    &::before {
+        content: '';
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: radial-gradient(circle, @paper 0 3px, var(--section-color, @paper-ink) 3px 9px, #1a1512 9px);
+    }
 }
 
-#cratedigger-record-title {
+#info-article #cratedigger-record-title {
     margin: 0;
-    font-size: 40px;
-    line-height: 1.15;
+    padding-bottom: 28px;
+    border-bottom: 1px solid @paper-ink;
+    color: @paper-ink;
+    font-family: @serif;
+    font-size: 54px;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.5px;
+    text-transform: none;
 }
 
-// Tracklist of the section's entries
 // Track list of the open section
 #cratedigger-record-toc {
     position: sticky;
-    top: 24px;
+    top: 32px;
     align-self: start;
-    max-height: calc(~"100vh - 48px");
+    max-height: calc(~"100vh - 64px");
     overflow-y: auto;
 
     &:empty {
         display: none;
     }
 
-    .toc-side {
-        margin: 20px 0 6px;
-        color: @accent;
+    &::before {
+        content: 'Tracklist';
+        display: block;
+        margin-bottom: 14px;
+        color: @paper-muted;
+        font-family: @mono;
         font-size: 11px;
-        font-weight: 700;
-        line-height: 1.4;
-        letter-spacing: 2px;
+        letter-spacing: 3px;
         text-transform: uppercase;
+    }
 
-        &:first-child {
-            margin-top: 0;
-        }
+    .toc-side {
+        margin: 22px 0 6px;
+        color: @paper-accent;
+        font-family: @mono;
+        font-size: 11px;
+        line-height: 1.5;
+        letter-spacing: 1px;
+        text-transform: uppercase;
     }
 
     button {
         display: flex;
         width: 100%;
-        padding: 9px 0 9px 12px;
+        padding: 8px 0 8px 14px;
         background: none;
         border: 0;
-        border-left: 2px solid @line;
-        color: @muted;
+        border-left: 2px solid @paper-line;
+        color: @paper-muted;
         font-size: 14px;
         line-height: 1.4;
         text-align: left;
         cursor: pointer;
-        transition: all 0.15s ease-in-out;
+        transition: all 0.2s ease;
 
         span {
             flex: none;
-            width: 34px;
-            font-weight: 700;
+            width: 32px;
+            font-family: @mono;
+            font-size: 12px;
+            line-height: 1.6;
         }
 
         .toc-title {
             flex: 1;
             width: auto;
-            font-weight: 400;
+            font-family: @sans;
+            font-size: 14px;
+            line-height: 1.4;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -259,42 +461,43 @@ button {
         }
 
         &:hover {
-            color: @ink;
+            color: @paper-ink;
         }
 
         &.active {
-            border-left-color: @accent;
-            color: @ink;
+            border-left-color: @paper-accent;
+            color: @paper-ink;
+            font-weight: 600;
 
             span {
-                color: @accent;
+                color: @paper-accent;
             }
         }
     }
 }
 
 .side-label {
-    margin: 64px 0 0;
-    padding-top: 18px;
-    border-top: 2px solid @ink;
-    color: @accent;
+    margin: 72px 0 0;
+    padding-top: 16px;
+    border-top: 1px solid @paper-ink;
+    color: @paper-accent;
+    font-family: @mono;
     font-size: 12px;
-    font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
 
     & + .entry {
         margin-top: 0;
-        padding-top: 20px;
+        padding-top: 24px;
         border-top: 0;
     }
 }
 
 .entry {
-    margin-top: 56px;
-    padding-top: 40px;
-    border-top: 1px solid @line;
-    scroll-margin-top: 16px;
+    margin-top: 64px;
+    padding-top: 48px;
+    border-top: 1px solid @paper-line;
+    scroll-margin-top: 24px;
 }
 
 #cratedigger-record-content > :first-child {
@@ -303,78 +506,68 @@ button {
     border-top: 0;
 
     & + .entry {
-        padding-top: 20px;
+        padding-top: 24px;
     }
 }
 
 .entry-track {
-    color: @accent;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    margin-bottom: 6px;
-}
-
-.next-track {
-    display: block;
-    width: 100%;
-    margin-top: 32px;
-    padding: 16px 20px;
-    background: none;
-    border: 1px solid @line;
-    color: @ink;
-    font-size: 14px;
-    font-weight: 700;
-    text-align: right;
-    cursor: pointer;
-    transition: all 0.15s ease-in-out;
-
-    span {
-        color: @muted;
-        font-weight: 400;
-        margin-right: 6px;
-    }
-
-    &:hover {
-        border-color: @ink;
-    }
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 2px 9px;
+    border: 1px solid @paper-accent;
+    border-radius: 999px;
+    color: @paper-accent;
+    font-family: @mono;
+    font-size: 12px;
+    letter-spacing: 1px;
 }
 
 .entry-role {
-    color: @ink;
-    font-size: 18px;
-    margin-bottom: 4px;
+    color: @paper-muted;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
 }
 
 .entry-title {
     margin: 0;
-    color: @ink;
-    font-size: 28px;
-    line-height: 1.2;
+    color: @paper-ink;
+    font-family: @serif;
+    font-size: 34px;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.3px;
 }
 
 .entry-subtitle {
-    margin-top: 12px;
+    margin-top: 14px;
+    color: @paper-muted;
+    font-family: @serif;
+    font-size: 18px;
     font-style: italic;
+    line-height: 1.55;
 }
 
 .entry-links {
-    margin-top: 20px;
+    margin-top: 22px;
 
     a {
         display: inline-block;
-        margin: 0 10px 10px 0;
-        padding: 8px 18px;
-        border: 2px solid @ink;
-        color: @ink;
+        margin: 0 8px 8px 0;
+        padding: 8px 16px;
+        border: 1px solid @paper-ink;
+        border-radius: 999px;
+        color: @paper-ink;
         font-size: 13px;
-        font-weight: 700;
-        text-transform: uppercase;
+        font-weight: 600;
         text-decoration: none;
+        transition: all 0.2s ease;
 
         &:hover {
-            background: @ink;
-            color: @bg;
+            background: @paper-ink;
+            color: @paper;
         }
     }
 }
@@ -385,18 +578,52 @@ button {
     }
 
     p {
-        margin: 0 0 1.2em;
+        margin: 0 0 1.25em;
     }
 
     strong {
-        color: @ink;
+        font-weight: 600;
+        color: @paper-ink;
+        background: linear-gradient(transparent 62%, rgba(232, 113, 75, 0.25) 62%);
+    }
+}
+
+.next-track {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+    gap: 10px;
+    width: 100%;
+    margin-top: 40px;
+    padding: 18px 0 0;
+    background: none;
+    border: 0;
+    border-top: 1px dashed @paper-line;
+    color: @paper-ink;
+    font-family: @serif;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: right;
+    cursor: pointer;
+
+    span {
+        color: @paper-muted;
+        font-family: @mono;
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    &:hover {
+        color: @paper-accent;
     }
 }
 
 .photo-group {
     display: grid;
-    gap: 12px;
-    margin: 8px 0 32px;
+    gap: 14px;
+    margin: 12px 0 36px;
 
     &.photo-group-2 {
         grid-template-columns: 1fr 1fr;
@@ -410,18 +637,31 @@ button {
         margin: 0;
     }
 
+    a {
+        display: block;
+        overflow: hidden;
+        border-radius: 3px;
+        box-shadow: 0 1px 2px rgba(34, 28, 23, 0.12), 0 8px 24px rgba(34, 28, 23, 0.1);
+    }
+
     img {
         display: block;
         width: 100%;
         height: auto;
-        background: #1b1b1b;
+        background: #e6dccd;
+        transition: transform 0.4s ease;
+    }
+
+    a:hover img {
+        transform: scale(1.03);
     }
 
     figcaption {
-        margin-top: 6px;
+        margin-top: 8px;
+        color: @paper-muted;
         font-size: 13px;
-        line-height: 1.4;
-        color: @muted;
+        font-style: italic;
+        line-height: 1.45;
     }
 }
 
@@ -433,20 +673,32 @@ button {
 
 #cratedigger-record-contact {
     h2 {
-        color: @ink;
-        font-size: 14px;
+        margin: 56px 0 14px;
+        padding-top: 16px;
+        border-top: 1px solid @paper-ink;
+        color: @paper-muted;
+        font-family: @mono;
+        font-size: 12px;
+        font-weight: 400;
         letter-spacing: 3px;
         text-transform: uppercase;
-        margin: 40px 0 12px;
     }
 
     a {
         display: block;
-        color: @ink;
+        color: @paper-ink;
+        font-family: @serif;
+        font-size: 22px;
+        line-height: 1.6;
+        text-decoration: none;
+
+        &:hover {
+            color: @paper-accent;
+        }
     }
 }
 
-// Narrower screens: the track list becomes a sticky horizontal bar above the text
+// ---------- Narrower screens: the track list becomes a sticky bar above the text ----------
 @media (max-width: 1100px) {
     #info-article.has-tracks #section-body {
         display: block;
@@ -457,15 +709,17 @@ button {
         top: 0;
         z-index: 2;
         display: flex;
+        gap: 4px;
         max-height: none;
-        margin: 0 -24px 32px;
-        padding: 10px 76px 10px 24px; // room for the close button
+        margin: 0 -32px 36px;
+        padding: 12px 32px;
         overflow-x: auto;
         overflow-y: hidden;
-        background: @bg;
-        border-bottom: 1px solid @line;
+        background: @paper;
+        border-bottom: 1px solid @paper-line;
         scrollbar-width: none;
 
+        &::before,
         .toc-side {
             display: none;
         }
@@ -475,34 +729,53 @@ button {
             width: auto;
             max-width: 240px;
             padding: 6px 12px;
-            border-left: 0;
-            border-bottom: 2px solid transparent;
+            border: 1px solid @paper-line;
+            border-radius: 999px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
 
             span {
                 width: auto;
-                margin-right: 8px;
+                margin-right: 6px;
             }
 
             .toc-title {
                 display: inline;
-                margin-right: 0;
             }
 
             &.active {
-                border-bottom-color: @accent;
+                border-color: @paper-ink;
+                background: @paper-ink;
+                color: @paper;
+
+                span {
+                    color: @accent;
+                }
             }
         }
     }
 
     .entry {
-        scroll-margin-top: 64px;
+        scroll-margin-top: 72px;
+    }
+
+    // Close button moves out of the sticky track bar, within thumb reach
+    #info-close {
+        top: auto;
+        bottom: 24px;
+        right: 24px;
+        width: 52px;
+        height: 52px;
+        line-height: 48px;
+        background: @paper-ink;
+        border-color: @paper-ink;
+        color: @paper;
+        box-shadow: 0 8px 24px rgba(34, 28, 23, 0.3);
     }
 }
 
-// Tablet & phone: compact top bar, sections in a full-screen drawer
+// ---------- Tablet & phone: compact top bar, records in a full-screen drawer ----------
 @media (max-width: 800px) {
     #top-bar {
         bottom: auto;
@@ -521,35 +794,43 @@ button {
     }
 
     #profile-name {
-        font-size: 17px;
+        font-size: 20px;
     }
 
     #profile-meta {
+        flex-wrap: nowrap;
         margin-top: 2px;
         font-size: 12px;
         white-space: nowrap;
         overflow: hidden;
-        text-overflow: ellipsis;
+
+        span {
+            display: none; // keep the bar to one line: name + domain
+        }
     }
 
     #lang-toggle {
         order: 2;
         align-self: center;
         margin: 0 0 0 10px;
-        padding: 6px 10px;
-        font-size: 12px;
+
+        b,
+        i {
+            padding: 4px 9px;
+        }
     }
 
     #menu-toggle {
         order: 3;
         display: block;
         width: 40px;
-        height: 34px;
+        height: 40px;
         margin-left: 8px;
         background: transparent;
-        border: 2px solid @ink;
-        color: @ink;
-        font-size: 18px;
+        border: 1px solid @line;
+        border-radius: 50%;
+        color: @cream;
+        font-size: 16px;
         line-height: 1;
         cursor: pointer;
     }
@@ -562,13 +843,18 @@ button {
         right: 0;
         bottom: 0;
         margin: 0;
-        padding: 8px 16px 24px;
-        background: @bg;
-        border-top: 0;
+        padding: 24px 20px;
+        background: @bg-raised;
 
         button {
-            padding: 18px 0;
-            font-size: 15px;
+            padding: 16px 24px 16px 0;
+            font-family: @serif;
+            font-size: 22px;
+            font-weight: 600;
+
+            span {
+                width: 44px;
+            }
         }
     }
 
@@ -585,20 +871,29 @@ button {
 
     #bottom-bar {
         left: 0;
-        width: 100%;
+        bottom: 20px;
+
+        .bottom-bar-item {
+            padding: 10px 16px;
+        }
     }
 
     #info-article {
-        padding: 72px 16px 80px;
+        padding: 56px 20px 96px;
         font-size: 16px;
     }
 
-    #cratedigger-record-title {
-        font-size: 28px;
+    #info-article #cratedigger-record-title {
+        font-size: 36px;
+    }
+
+    #cratedigger-record-toc {
+        margin: 0 -20px 32px;
+        padding: 10px 20px;
     }
 
     .entry-title {
-        font-size: 22px;
+        font-size: 26px;
     }
 
     .photo-group.photo-group-3 {
@@ -606,15 +901,11 @@ button {
     }
 
     #info-close {
-        top: @topbar + 12px;
-        right: 12px;
+        bottom: 20px;
+        right: 16px;
     }
 
     .loading-label {
-        font-size: 28px;
-    }
-
-    #bottom-bar .bottom-bar-item {
-        font-size: 18px;
+        font-size: 32px;
     }
 }

@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="vendor.css" />
     <link rel="stylesheet" href="index.css" />
 
-    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700&subset=vietnamese' rel='stylesheet' type='text/css'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 </head>
 
@@ -20,8 +22,9 @@
         <div id="cratedigger-loading">
             <div class="info-container">
                 <div class="vertical-center">
+                    <span class="loading-disc"></span>
                     <span class="loading-label">Nguyễn Hải Nam</span>
-                    <span class="loading-sublabel">Loading records...</span>
+                    <span class="loading-sublabel">Digging through the crate…</span>
                 </div>
             </div>
         </div>
@@ -52,14 +55,11 @@
     </header>
 
     <div id="bottom-bar" class="noselect">
-        <div id="button-prev" class="bottom-bar-item">
-            PREVIOUS
-        </div>
-        <div id="button-show" class="bottom-bar-item">
-            SHOW
-        </div>
-        <div id="button-next" class="bottom-bar-item">
-            NEXT
+        <div class="crate-hint">Scroll, drag or click a record</div>
+        <div class="crate-controls">
+            <div id="button-prev" class="bottom-bar-item">&lsaquo;&nbsp; Prev</div>
+            <div id="button-show" class="bottom-bar-item">Open record</div>
+            <div id="button-next" class="bottom-bar-item">Next &nbsp;&rsaquo;</div>
         </div>
     </div>
 

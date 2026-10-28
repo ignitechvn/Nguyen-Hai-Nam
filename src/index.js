@@ -5,14 +5,15 @@ import content from './content.json';
 // Content source: content/Website_Layout_Hai_Nam.xlsx -> src/content.json (tools/xlsx_to_json.py)
 const { profile } = content;
 
+// Sleeve colour and label/accent colour per record
 const CATEGORY_COLORS = {
-  'About Me': ['#1d3557', '#e9c46a'],
-  'VEX Competition & Robotics Journey': ['#9b2226', '#f4f1de'],
-  'Rural Education & Digital Inclusion': ['#2d6a4f', '#f1faee'],
-  'Dedication to Digitalized Sound': ['#3c1642', '#f6bd60'],
-  'STEM Activities & Social Impacts': ['#0b6e8a', '#f8f9fa'],
-  'Miles & Milestones': ['#bc6c25', '#fefae0'],
-  'Honors & Awards': ['#2b2d42', '#ffd166'],
+  'About Me': ['#1f3a5f', '#f2c14e'],
+  'VEX Competition & Robotics Journey': ['#a3332a', '#f6c9a8'],
+  'Rural Education & Digital Inclusion': ['#2f5d4a', '#f3d9a4'],
+  'Dedication to Digitalized Sound': ['#4a2c4f', '#f0b67f'],
+  'STEM Activities & Social Impacts': ['#1e5f74', '#f6d8a8'],
+  'Miles & Milestones': ['#b8622a', '#fde8c8'],
+  'Honors & Awards': ['#2b2a33', '#e8c468'],
 };
 
 const LABELS = {
@@ -277,6 +278,7 @@ function renderTrackList(section) {
 
 function fillInfoPanel(record) {
   const section = record.data;
+  el('info-article').style.setProperty('--section-color', (CATEGORY_COLORS[section.title] || [])[0] || '');
   const labels = LABELS[lang];
 
   el('cratedigger-record-category').textContent = 'No. ' + String(section.index + 1).padStart(2, '0');
@@ -332,62 +334,98 @@ function ellipsize(ctx, text, maxWidth) {
   return cut.trim() + '…';
 }
 
+const SERIF = 'Fraunces, Georgia, serif';
+const SANS = '"Be Vietnam Pro", Arial, sans-serif';
+const MONO = '"IBM Plex Mono", Menlo, monospace';
+
+// A record sliding out of the sleeve, with a label in the sleeve's accent colour
+function drawDisc(ctx, x, y, r, labelColor) {
+  ctx.save();
+  ctx.fillStyle = '#15110e';
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.07)';
+  ctx.lineWidth = 1;
+  for (let g = r * 0.4; g < r - 3; g += 4) {
+    ctx.beginPath();
+    ctx.arc(x, y, g, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  ctx.fillStyle = labelColor;
+  ctx.beginPath();
+  ctx.arc(x, y, r * 0.34, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = '#15110e';
+  ctx.beginPath();
+  ctx.arc(x, y, 4, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
 // Text-only sleeve: catalogue number, section title and its entries as a tracklist
 function drawPlaceholderCover(ctx, size, section) {
-  const colors = CATEGORY_COLORS[section.title] || ['#222222', '#fefefe'];
+  const colors = CATEGORY_COLORS[section.title] || ['#2b2a33', '#e8c468'];
+  const cream = '#fbf6ee';
   const pad = 30;
-  let fontSize = 46;
+  const tracks = section.entries.length > 1 ? section.entries : [];
+  const lineHeight = 21;
+  const tracksTop = size - pad - tracks.length * lineHeight;
+  let fontSize = 44;
   let lines;
 
   ctx.fillStyle = colors[0];
   ctx.fillRect(0, 0, size, size);
 
-  // Vinyl grooves peeking out of the sleeve
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-  ctx.lineWidth = 2;
-  for (let r = 30; r < size * 0.5; r += 9) {
-    ctx.beginPath();
-    ctx.arc(size, 0, r, Math.PI / 2, Math.PI);
-    ctx.stroke();
-  }
+  drawDisc(ctx, size - 20, 86, 118, colors[1]);
+
+  // Thin printed frame
+  ctx.strokeStyle = colors[1];
+  ctx.globalAlpha = 0.45;
+  ctx.lineWidth = 1;
+  ctx.strokeRect(12.5, 12.5, size - 25, size - 25);
+  ctx.globalAlpha = 1;
 
   ctx.textBaseline = 'top';
   ctx.fillStyle = colors[1];
-  ctx.font = '700 14px Montserrat, sans-serif';
+  ctx.font = '500 13px ' + MONO;
   ctx.fillText('NO. ' + String(section.index + 1).padStart(2, '0'), pad, pad);
-  ctx.font = '400 14px Montserrat, sans-serif';
-  ctx.fillText(profile.name.toUpperCase(), pad, pad + 20);
+  ctx.fillStyle = cream;
+  ctx.globalAlpha = 0.75;
+  ctx.font = '400 12px ' + MONO;
+  ctx.fillText(profile.name.toUpperCase(), pad, pad + 19);
+  ctx.globalAlpha = 1;
 
   do {
-    ctx.font = '700 ' + fontSize + 'px Montserrat, sans-serif';
-    lines = wrapText(ctx, section.title.toUpperCase(), size - pad * 2);
+    ctx.font = '600 ' + fontSize + 'px ' + SERIF;
+    lines = wrapText(ctx, section.title, size - pad * 2 - 10);
     fontSize -= 2;
-  } while (lines.length * fontSize * 1.1 > size * 0.36 && fontSize > 20);
+  } while (lines.length > 3 && fontSize > 24);
 
-  ctx.fillStyle = '#fefefe';
+  const titleBottom = tracks.length ? tracksTop - 30 : size - pad;
+  const titleLine = (fontSize + 2) * 1.08;
+  ctx.fillStyle = cream;
   lines.forEach((line, i) => {
-    ctx.fillText(line, pad, pad + 70 + i * (fontSize + 2) * 1.1);
+    ctx.fillText(line, pad, titleBottom - (lines.length - i) * titleLine);
   });
 
   // Tracklist
-  const tracks = section.entries.length > 1 ? section.entries : [];
-  const lineHeight = 22;
-  const top = size - pad - tracks.length * lineHeight;
-  ctx.strokeStyle = colors[1];
-  ctx.lineWidth = 1;
   if (tracks.length) {
+    ctx.strokeStyle = colors[1];
+    ctx.globalAlpha = 0.6;
     ctx.beginPath();
-    ctx.moveTo(pad, top - 14);
-    ctx.lineTo(size - pad, top - 14);
+    ctx.moveTo(pad, tracksTop - 14);
+    ctx.lineTo(size - pad, tracksTop - 14);
     ctx.stroke();
+    ctx.globalAlpha = 1;
   }
   tracks.forEach((entry, i) => {
-    const y = top + i * lineHeight;
+    const y = tracksTop + i * lineHeight;
     ctx.fillStyle = colors[1];
-    ctx.font = '700 14px Montserrat, sans-serif';
-    ctx.fillText(entry.track, pad, y);
-    ctx.fillStyle = '#fefefe';
-    ctx.font = '400 15px Montserrat, sans-serif';
+    ctx.font = '500 13px ' + MONO;
+    ctx.fillText(entry.track, pad, y + 1);
+    ctx.fillStyle = cream;
+    ctx.font = '400 14px ' + SANS;
     ctx.fillText(ellipsize(ctx, trackTitle(entry.title), size - pad * 2 - 34), pad + 34, y);
   });
 }
@@ -395,9 +433,9 @@ function drawPlaceholderCover(ctx, size, section) {
 function renderChrome() {
   document.documentElement.lang = lang;
   el('profile-name').textContent = profile.name;
-  el('profile-meta').innerHTML = `${escapeHtml(profile.major)} &middot; ` +
+  el('profile-meta').innerHTML = `<span>${escapeHtml(profile.major)}</span>` +
     `<a href="https://${escapeHtml(profile.domain)}" target="_blank" rel="noopener">${escapeHtml(profile.domain)}</a>`;
-  langToggle.innerHTML = lang === 'en' ? '<b>EN</b> / VI' : 'EN / <b>VI</b>';
+  langToggle.innerHTML = lang === 'en' ? '<b>EN</b><i>VI</i>' : '<i>EN</i><b>VI</b>';
 
   categoryNav.innerHTML = sections.map((section) =>
     `<button type="button" data-index="${section.index}">` +
@@ -490,6 +528,7 @@ bindChromeEvents();
 
 cratedigger.init({
   debug: false,
+  backgroundColor: 0x16120f,
   nbCrates: 1,
   recordsPerCrate: data.length,
   closeInfoPanelOnClick: false,
@@ -517,7 +556,11 @@ cratedigger.init({
 });
 
 // Wait for the web font so that the generated sleeves use it
-const fontsReady = document.fonts ? document.fonts.load('700 40px Montserrat').catch(() => {}) : Promise.resolve();
+const fontsReady = document.fonts ? Promise.all([
+  '600 44px Fraunces',
+  '500 13px "IBM Plex Mono"',
+  '400 14px "Be Vietnam Pro"',
+].map((font) => document.fonts.load(font))).catch(() => {}) : Promise.resolve();
 
 fontsReady.then(() => {
   cratedigger.loadRecords(data, false, () => {
