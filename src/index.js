@@ -99,42 +99,7 @@ function trackTitle(title) {
   return title.split(' - ')[0].split(', ')[0];
 }
 
-// Scroll only the info panel (scrollIntoView would also shift the whole page on mobile)
-function scrollToEntry(i) {
-  const entry = el('entry-' + i);
-  const toc = el('cratedigger-record-toc');
-  if (entry) {
-    const stickyBar = toc.scrollWidth > toc.clientWidth || getComputedStyle(toc).display === 'flex';
-    const offset = stickyBar ? toc.offsetHeight + 16 : 24;
-    infoContainer.scrollTo({ top: entry.offsetTop - offset, behavior: 'smooth' });
-  }
-}
-
-// Highlight the track being read in the section's track list
-function updateCurrentTrack() {
-  const toc = el('cratedigger-record-toc');
-  const entries = infoContainer.querySelectorAll('.entry');
-  const top = infoContainer.getBoundingClientRect().top + 140;
-  if (!infoContainer.clientHeight) {
-    return; // panel not shown yet
-  }
-  let current = 0;
-  entries.forEach((entry, i) => {
-    if (entry.getBoundingClientRect().top <= top) {
-      current = i;
-    }
-  });
-  if (infoContainer.scrollTop + infoContainer.clientHeight >= infoContainer.scrollHeight - 4) {
-    current = entries.length - 1; // last track is short: mark it once the bottom is reached
-  }
-  toc.querySelectorAll('button').forEach((button) => {
-    const active = Number(button.dataset.entry) === current;
-    if (active && !button.classList.contains('active') && toc.scrollWidth > toc.clientWidth) {
-      toc.scrollTo({ left: button.offsetLeft - 24, behavior: 'smooth' }); // horizontal bar on small screens
-    }
-    button.classList.toggle('active', active);
-  });
-}
+let openSectionData = null;
 
 function bindEvents() {
   buttonPrev.addEventListener('click', (e) => {
@@ -166,14 +131,13 @@ function bindEvents() {
     infoContainer.addEventListener(type, (e) => e.stopPropagation(), false);
   });
 
+  // Track list & previous/next cards: show that track
   infoContainer.addEventListener('click', (e) => {
-    const button = e.target.closest('button[data-entry]');
+    const button = e.target.closest('[data-entry]');
     if (button) {
-      scrollToEntry(button.dataset.entry);
+      showTrack(Number(button.dataset.entry));
     }
   });
-
-  infoContainer.addEventListener('scroll', updateCurrentTrack, { passive: true });
 }
 
 function renderPhotos(photos) {
@@ -221,32 +185,44 @@ function sideLabel(entry) {
   return 'Side ' + entry.side + (entry.group && entry.group !== entry.title ? ' · ' + entry.group : '');
 }
 
-function renderEntry(entry, i, section) {
-  const labels = LABELS;
+// One track of the open record: header, links, text with photos
+function renderEntry(entry, section) {
   const multi = section.entries.length > 1;
   const sides = section.entries.some((e) => e.group);
-  const next = section.entries[i + 1];
   // An entry named like its section (e.g. "Miles & Milestones") needs no second heading
-  const header = entry.title === section.title ? '' :
-    `${multi ? `<div class="entry-track">${entry.track}</div>` : ''}
-     ${entry.role ? `<div class="entry-role">${escapeHtml(entry.role)}</div>` : ''}
-     <h2 class="entry-title">${escapeHtml(entry.title)}</h2>
-     ${entry.subtitle ? `<div class="entry-subtitle">${escapeHtml(entry.subtitle)}</div>` : ''}`;
+  const title = entry.title === section.title ? '' :
+    `<h2 class="entry-title">${escapeHtml(entry.title)}</h2>`;
   const links = entry.links.map((link) =>
-    `<a href="${escapeHtml(link.url)}" target="_blank" rel="noopener">${labels[link.type] || link.type} &#8599;</a>`
+    `<a href="${escapeHtml(link.url)}" target="_blank" rel="noopener">${LABELS[link.type] || link.type} &#8599;</a>`
   ).join('');
 
-  return `${sides && entry.sideStart ? `<div class="side-label">${escapeHtml(sideLabel(entry))}</div>` : ''}
-    <section class="entry" id="entry-${i}">
-    ${header}
-    ${links ? `<div class="entry-links">${links}</div>` : ''}
-    ${renderBody(entry.en, entry.photos, entry.layout, entry.groups)}
-    ${next ? `<button type="button" class="next-track" data-entry="${i + 1}">
-      <span>Next track &rarr;</span> ${next.track} &nbsp;${escapeHtml(trackTitle(next.title))}</button>` : ''}
-  </section>`;
+  const header = [
+    multi ? `<div class="entry-kicker"><span class="entry-track">${entry.track}</span>` +
+      `${sides ? escapeHtml(sideLabel(entry)) : 'Track ' + entry.track.slice(1) + ' of ' + section.entries.length}</div>` : '',
+    entry.role ? `<div class="entry-role">${escapeHtml(entry.role)}</div>` : '',
+    title,
+    entry.subtitle ? `<div class="entry-subtitle">${escapeHtml(entry.subtitle)}</div>` : '',
+    links ? `<div class="entry-links">${links}</div>` : '',
+  ].join('');
+
+  return (header ? `<header class="entry-header">${header}</header>` : '') +
+    `<div class="entry-body">${renderBody(entry.en, entry.photos, entry.layout, entry.groups)}</div>`;
 }
 
-// Track list of the section, split into sides when the sheet groups its entries
+// Previous / next track cards at the end of a track
+function renderTrackNav(section, i) {
+  const card = (entry, index, label, cls) => entry ?
+    `<button type="button" class="track-card ${cls}" data-entry="${index}">
+      <span class="track-card-label">${label}</span>
+      <span class="track-card-title"><b>${entry.track}</b>${escapeHtml(trackTitle(entry.title))}</span>
+    </button>` : '<span></span>';
+
+  return section.entries.length < 2 ? '' :
+    card(section.entries[i - 1], i - 1, '&larr; Previous track', 'prev') +
+    card(section.entries[i + 1], i + 1, 'Next track &rarr;', 'next');
+}
+
+// Track list of the record, split into sides when the sheet groups its entries
 function renderTrackList(section) {
   if (section.entries.length < 2) {
     return '';
@@ -256,33 +232,73 @@ function renderTrackList(section) {
   return section.entries.map((entry, i) =>
     `${sides && entry.sideStart ? `<div class="toc-side">${escapeHtml(sideLabel(entry))}</div>` : ''}
      <button type="button" data-entry="${i}" title="${escapeHtml(entry.title)}">` +
-    `<span>${entry.track}</span><span class="toc-title">${escapeHtml(trackTitle(entry.title))}</span></button>`
+    `<span class="toc-number">${entry.track}</span><span class="toc-title">${escapeHtml(trackTitle(entry.title))}</span></button>`
   ).join('');
+}
+
+function albumMeta(section) {
+  const tracks = section.entries.length;
+  const sides = new Set(section.entries.map((e) => e.side)).size;
+  return tracks < 2 ? 'Single' :
+    tracks + ' tracks' + (sides > 1 ? ' · ' + sides + ' sides' : '');
+}
+
+// Show a single track of the open record
+function showTrack(i) {
+  const section = openSectionData;
+  const entry = section && section.entries[i];
+  if (!entry) {
+    return;
+  }
+
+  const content = el('cratedigger-record-content');
+  content.innerHTML = renderEntry(entry, section);
+  content.classList.remove('track-enter');
+  void content.offsetWidth; // restart the fade-in
+  content.classList.add('track-enter');
+
+  el('track-nav').innerHTML = renderTrackNav(section, i);
+
+  const toc = el('cratedigger-record-toc');
+  toc.querySelectorAll('button').forEach((button) => {
+    const active = Number(button.dataset.entry) === i;
+    button.classList.toggle('active', active);
+    if (active && toc.scrollWidth > toc.clientWidth) {
+      toc.scrollTo({ left: button.offsetLeft - 20, behavior: 'smooth' }); // horizontal list on small screens
+    }
+  });
+
+  // Back to the top of the track (below the album header on small screens)
+  const track = el('track');
+  const top = el('album').offsetHeight > infoContainer.clientHeight * 0.6 || getComputedStyle(el('detail')).display === 'block' ?
+    Math.min(infoContainer.scrollTop, track.offsetTop - 8) : 0;
+  infoContainer.scrollTo({ top });
 }
 
 function fillInfoPanel(record) {
   const section = record.data;
-  el('info-article').style.setProperty('--section-color', (CATEGORY_COLORS[section.title] || [])[0] || '');
-  const labels = LABELS;
+  const colors = CATEGORY_COLORS[section.title] || ['#2b2a33', '#e8c468'];
+  openSectionData = section;
 
+  el('detail').style.setProperty('--section-color', colors[0]);
+  el('detail').style.setProperty('--section-accent', colors[1]);
   el('cratedigger-record-category').textContent = 'No. ' + String(section.index + 1).padStart(2, '0');
   el('cratedigger-record-title').textContent = section.title;
-
+  el('album-meta').textContent = albumMeta(section);
   el('cratedigger-record-toc').innerHTML = renderTrackList(section);
-  el('info-article').classList.toggle('has-tracks', section.entries.length > 1);
-
-  el('cratedigger-record-content').innerHTML = section.entries
-    .map((entry, i) => renderEntry(entry, i, section))
-    .join('');
 
   el('cratedigger-record-contact').innerHTML = section.index === 0 ?
-    `<h2>${labels.contact}</h2>
+    `<h2>${LABELS.contact}</h2>
      <a href="mailto:${escapeHtml(profile.email)}">${escapeHtml(profile.email)}</a>
      <a href="tel:${escapeHtml(profile.phone.replace(/[^\d+]/g, ''))}">${escapeHtml(profile.phone)}</a>
      <a href="https://${escapeHtml(profile.domain)}" target="_blank" rel="noopener">${escapeHtml(profile.domain)}</a>` : '';
 
+  showTrack(0);
+  // The panel is still hidden here and keeps the previous record's scroll: reset once it fades in
   infoContainer.scrollTop = 0;
-  setTimeout(updateCurrentTrack, 400); // once the panel has faded in
+  setTimeout(() => {
+    infoContainer.scrollTop = 0;
+  }, 320);
 }
 
 function wrapText(ctx, text, maxWidth) {
