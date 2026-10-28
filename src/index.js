@@ -22,7 +22,6 @@ const LABELS = {
   research: 'Read the research',
   fanpage: 'Fanpage',
   company: 'Company website',
-  contact: 'Contact',
 };
 
 // One record per menu item (spreadsheet page), holding all of its entries
@@ -269,12 +268,6 @@ function fillInfoPanel(record) {
   el('cratedigger-record-title').textContent = section.title;
   el('cratedigger-record-toc').innerHTML = renderTrackList(section);
 
-  el('cratedigger-record-contact').innerHTML = section.index === 0 ?
-    `<h2>${LABELS.contact}</h2>
-     <a href="mailto:${escapeHtml(profile.email)}">${escapeHtml(profile.email)}</a>
-     <a href="tel:${escapeHtml(profile.phone.replace(/[^\d+]/g, ''))}">${escapeHtml(profile.phone)}</a>
-     <a href="https://${escapeHtml(profile.domain)}" target="_blank" rel="noopener">${escapeHtml(profile.domain)}</a>` : '';
-
   showTrack(0);
   // The panel is still hidden here and keeps the previous record's scroll: reset once it fades in
   infoContainer.scrollTop = 0;
@@ -488,7 +481,26 @@ function sceneForViewport() {
   });
 }
 
+// Contact row at the bottom of every detail page
+const ICONS = {
+  mail: '<path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/>',
+  phone: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/>',
+  web: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+};
+
+function renderFooter() {
+  const item = (icon, href, text, external) =>
+    `<a href="${escapeHtml(href)}"${external ? ' target="_blank" rel="noopener"' : ''}>` +
+    `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[icon]}</svg>${escapeHtml(text)}</a>`;
+
+  el('detail-footer').innerHTML =
+    item('mail', 'mailto:' + profile.email, profile.email) +
+    item('phone', 'tel:' + profile.phone.replace(/[^\d+]/g, ''), profile.phone) +
+    item('web', 'https://' + profile.domain, profile.domain, true);
+}
+
 renderChrome();
+renderFooter();
 bindChromeEvents();
 
 cratedigger.init({

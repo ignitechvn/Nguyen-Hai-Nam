@@ -233,20 +233,42 @@ button {
     z-index: 6;
     top: 20px;
     right: 24px;
-    width: 44px;
-    height: 44px;
-    background: @paper;
-    border: 1px solid @paper-ink;
-    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 16px 0 12px;
+    background: rgba(243, 236, 224, 0.82);
+    border: 1px solid @paper-line;
+    border-radius: 999px;
     color: @paper-ink;
-    font-size: 24px;
-    line-height: 40px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 1px 2px rgba(34, 28, 23, 0.08), 0 6px 18px rgba(34, 28, 23, 0.1);
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+
+    svg {
+        width: 16px;
+        height: 16px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        transition: transform 0.25s ease;
+    }
 
     &:hover {
         background: @paper-ink;
         color: @paper;
+        box-shadow: 0 8px 24px rgba(34, 28, 23, 0.25);
+
+        svg {
+            transform: rotate(90deg);
+        }
     }
 }
 
@@ -565,34 +587,40 @@ button {
     }
 }
 
-#cratedigger-record-contact {
-    &:empty {
-        display: none;
-    }
-
-    h2 {
-        margin: 48px 0 14px;
-        padding-top: 16px;
-        border-top: 1px solid @paper-ink;
-        color: @paper-muted;
-        font-family: @mono;
-        font-size: 12px;
-        font-weight: 400;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-    }
+// Contact row shared by every detail page
+#detail-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    margin-top: 64px;
+    padding: 22px 0 4px;
+    border-top: 1px solid @paper-ink;
 
     a {
-        display: block;
-        color: @paper-ink;
-        font-family: @serif;
-        font-size: 22px;
-        line-height: 1.6;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: @paper-muted;
+        font-size: 14px;
         text-decoration: none;
+        transition: color 0.2s ease;
 
         &:hover {
             color: @paper-accent;
         }
+    }
+
+    svg {
+        flex: none;
+        width: 16px;
+        height: 16px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
     }
 }
 
@@ -657,13 +685,12 @@ button {
         top: auto;
         bottom: 24px;
         right: 24px;
-        width: 52px;
-        height: 52px;
-        line-height: 48px;
+        height: 46px;
+        padding: 0 20px 0 16px;
         background: @paper-ink;
         border-color: @paper-ink;
         color: @paper;
-        box-shadow: 0 8px 24px rgba(34, 28, 23, 0.3);
+        box-shadow: 0 10px 28px rgba(34, 28, 23, 0.35);
     }
 }
 
@@ -797,6 +824,12 @@ button {
     #info-close {
         bottom: 20px;
         right: 16px;
+    }
+
+    #detail-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-right: 120px; // clear of the floating Close button
     }
 
     .loading-label {
