@@ -497,6 +497,13 @@ button {
         margin-top: 32px;
     }
 
+    // Justified text; hyphenation keeps the word spacing even on narrow columns
+    p {
+        text-align: justify;
+        hyphens: auto;
+        -webkit-hyphens: auto;
+    }
+
     font-size: 17px;
     line-height: 1.75;
 
@@ -1116,6 +1123,9 @@ button {
 
 .ov-chapter-text p {
     margin: 0;
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
     color: @paper-ink;
     font-size: 17px;
     line-height: 1.75;
