@@ -416,8 +416,7 @@ function drawPlaceholderCover(ctx, size, section) {
 
 function renderChrome() {
   el('profile-name').textContent = profile.name;
-  el('profile-meta').innerHTML = `<span>${escapeHtml(profile.major)}</span>` +
-    `<a href="https://${escapeHtml(profile.domain)}" target="_blank" rel="noopener">${escapeHtml(profile.domain)}</a>`;
+  el('profile-meta').textContent = profile.major;
 
   categoryNav.innerHTML = sections.map((section) =>
     `<button type="button" data-index="${section.index}">${escapeHtml(section.title)}</button>`

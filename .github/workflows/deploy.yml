@@ -1,8 +1,8 @@
 name: Deploy to GitHub Pages
 
+# Manual only: deploy when asked (Actions tab → Deploy to GitHub Pages → Run workflow),
+# so small edits pushed to main don't each trigger a deploy
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
