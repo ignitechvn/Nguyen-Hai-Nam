@@ -181,14 +181,8 @@ function renderBody(paragraphs, photos, layout, groups) {
   }).join('');
 }
 
-function sideLabel(entry) {
-  return 'Side ' + entry.side + (entry.group && entry.group !== entry.title ? ' · ' + entry.group : '');
-}
-
 // One track of the open record: header, links, text with photos
 function renderEntry(entry, section) {
-  const multi = section.entries.length > 1;
-  const sides = section.entries.some((e) => e.group);
   // An entry named like its section (e.g. "Miles & Milestones") needs no second heading
   const title = entry.title === section.title ? '' :
     `<h2 class="entry-title">${escapeHtml(entry.title)}</h2>`;
@@ -197,8 +191,6 @@ function renderEntry(entry, section) {
   ).join('');
 
   const header = [
-    multi ? `<div class="entry-kicker"><span class="entry-track">${entry.track}</span>` +
-      `${sides ? escapeHtml(sideLabel(entry)) : 'Track ' + entry.track.slice(1) + ' of ' + section.entries.length}</div>` : '',
     entry.role ? `<div class="entry-role">${escapeHtml(entry.role)}</div>` : '',
     title,
     entry.subtitle ? `<div class="entry-subtitle">${escapeHtml(entry.subtitle)}</div>` : '',
