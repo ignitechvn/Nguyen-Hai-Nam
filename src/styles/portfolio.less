@@ -132,17 +132,6 @@ button {
     margin-top: 36px;
     overflow-y: auto;
 
-    &::before {
-        content: 'Records';
-        display: block;
-        margin-bottom: 10px;
-        color: @muted;
-        font-family: @mono;
-        font-size: 11px;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-    }
-
     button {
         position: relative;
         display: flex;
@@ -165,20 +154,6 @@ button {
 
         &.active {
             color: @cream;
-
-            // a small spinning record marks the record that is out of the crate
-            &::after {
-                content: '';
-                position: absolute;
-                right: 0;
-                top: 50%;
-                width: 12px;
-                height: 12px;
-                margin-top: -6px;
-                border-radius: 50%;
-                background: radial-gradient(circle, @accent 0 2px, #0f0c0a 2px);
-                box-shadow: 0 0 0 1px @line;
-            }
         }
     }
 }
