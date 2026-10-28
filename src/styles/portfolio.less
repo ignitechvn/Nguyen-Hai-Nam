@@ -926,6 +926,7 @@ button {
     color: @paper-accent;
     font-family: @mono;
     font-size: 12px;
+    font-weight: 500;
     letter-spacing: 3px;
     text-transform: uppercase;
 }
@@ -939,25 +940,9 @@ button {
 }
 
 .ov-portrait {
-    position: relative;
     margin: 0;
 
-    // record peeking out behind the photo, in the About Me sleeve colours
-    &::before {
-        content: '';
-        position: absolute;
-        top: 8%;
-        right: -14%;
-        width: 70%;
-        aspect-ratio: 1;
-        border-radius: 50%;
-        background:
-            radial-gradient(circle, @paper 0 2.5%, var(--section-accent, @accent) 2.5% 17%, transparent 17%),
-            repeating-radial-gradient(circle, #1a1512 0 2px, #0f0c0a 2px 4px);
-    }
-
     img {
-        position: relative;
         display: block;
         width: 100%;
         aspect-ratio: 4 / 5;
@@ -972,6 +957,7 @@ button {
     color: @paper-muted;
     font-family: @mono;
     font-size: 12px;
+    font-weight: 500;
     letter-spacing: 3px;
     text-transform: uppercase;
 }
