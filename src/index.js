@@ -375,11 +375,18 @@ const HIGHLIGHTS = [
 ];
 
 // Chapters of the "About Me" story (one per paragraph) and the photo shown beside each
-const STORY_CHAPTERS = [
-  { title: 'Where it began', photo: null },
-  { title: 'Beyond the lab', photo: 'images/photos/humanitas/02.jpg' },
-  { title: 'The sound of grooves', photo: 'images/photos/vex/04.jpg' },
-  { title: 'Looking back', photo: null },
+const STORY_CHAPTERS = ['Where it began', 'Beyond the lab', 'The sound of grooves', 'Looking back'];
+
+// "Moments": a mosaic of photos from across the journeys (first one is the large tile)
+const MOMENTS = [
+  { src: 'images/photos/vex/12.jpg', caption: 'VEX Robotics World Championship 2026 — St. Louis, Missouri' },
+  { src: 'images/photos/humanitas/01.jpg', caption: 'Humanitas — Bản Liền, Lào Cai' },
+  { src: 'images/photos/meckup/01.jpg', caption: 'Silver Award — MeckUP Quest, The University of Hong Kong' },
+  { src: 'images/photos/kid-engineer/05.jpg', caption: 'Mentoring young engineers at Kid Engineer' },
+  { src: 'images/photos/vex/09.jpg', caption: 'VEX V5 National Championship 2026' },
+  { src: 'images/photos/humanitas/05.jpg', caption: 'Humanitas — digital literacy classes' },
+  { src: 'images/photos/ntu-singapore/03.jpg', caption: 'Business and Innovation with Digitalisation — NTU Singapore' },
+  { src: 'images/photos/miles-and-milestones/04.jpg', caption: 'Tây Hồ Half Marathon 2025 — 21 km' },
 ];
 
 function lastSentence(text) {
@@ -428,17 +435,24 @@ function renderOverview(section) {
 
   const chapters = `<section class="ov-story">
       <div class="ov-label">My story</div>
-      ${story.en.map((p, i) => {
-        const chapter = STORY_CHAPTERS[i] || {};
-        return `<div class="ov-chapter${chapter.photo ? ' has-photo' : ''}">
+      ${story.en.map((p, i) => `<div class="ov-chapter">
           <div class="ov-chapter-head">
             <span>${String(i + 1).padStart(2, '0')}</span>
-            ${chapter.title ? `<h3>${escapeHtml(chapter.title)}</h3>` : ''}
+            ${STORY_CHAPTERS[i] ? `<h3>${escapeHtml(STORY_CHAPTERS[i])}</h3>` : ''}
           </div>
           <div class="ov-chapter-text"><p>${formatParagraph(p)}</p></div>
-          ${chapter.photo ? `<img class="ov-chapter-photo" src="${chapter.photo}" alt="" loading="lazy">` : ''}
-        </div>`;
-      }).join('')}
+        </div>`).join('')}
+    </section>`;
+
+  const moments = `<section class="ov-moments">
+      <div class="ov-label">Moments</div>
+      <div class="ov-mosaic">
+        ${MOMENTS.map((m) => `<a href="${m.src}" class="photo-link ov-tile" data-src="${m.src}"
+            data-caption="${escapeHtml(m.caption)}">
+          <img src="${m.src}" alt="${escapeHtml(m.caption)}" loading="lazy">
+          <span>${escapeHtml(m.caption)}</span>
+        </a>`).join('')}
+      </div>
     </section>`;
 
   const records = `<section class="ov-records">
@@ -458,7 +472,7 @@ function renderOverview(section) {
       </div>
     </section>`;
 
-  return hero + statementBlock + highlights + chapters + records;
+  return hero + statementBlock + highlights + chapters + moments + records;
 }
 
 function fillInfoPanel(record) {
