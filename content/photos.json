@@ -52,25 +52,29 @@
         "src": "images/photos/taytranslator/01.jpg",
         "caption": "1. Tay - Vietnamese",
         "width": 1600,
-        "height": 870
+        "height": 870,
+        "kind": "screenshot"
       },
       {
         "src": "images/photos/taytranslator/02.jpg",
         "caption": "2. Vietnamese - Tay",
         "width": 1600,
-        "height": 870
+        "height": 870,
+        "kind": "screenshot"
       },
       {
         "src": "images/photos/taytranslator/03.jpg",
         "caption": "3. English - Tay",
         "width": 1600,
-        "height": 870
+        "height": 870,
+        "kind": "screenshot"
       },
       {
         "src": "images/photos/taytranslator/04.jpg",
         "caption": "4. Tay - English",
         "width": 1600,
-        "height": 870
+        "height": 870,
+        "kind": "screenshot"
       }
     ]
   },
@@ -81,19 +85,22 @@
         "src": "images/photos/vinyl-vietnam-heritage/01.jpg",
         "caption": "",
         "width": 1600,
-        "height": 870
+        "height": 870,
+        "kind": "screenshot"
       },
       {
         "src": "images/photos/vinyl-vietnam-heritage/02.jpg",
         "caption": "",
         "width": 1600,
-        "height": 870
+        "height": 870,
+        "kind": "screenshot"
       },
       {
         "src": "images/photos/vinyl-vietnam-heritage/03.jpg",
         "caption": "",
         "width": 1600,
-        "height": 870
+        "height": 870,
+        "kind": "screenshot"
       }
     ]
   },
@@ -122,13 +129,15 @@
         "src": "images/photos/ntu-singapore/04.jpg",
         "caption": "Certificate — Business, Innovation and Digitalization, NTU Singapore",
         "width": 1600,
-        "height": 1128
+        "height": 1128,
+        "kind": "certificate"
       },
       {
         "src": "images/photos/ntu-singapore/05.jpg",
         "caption": "The Bridge Builder Award — HKU Academy for the Talented",
         "width": 1600,
-        "height": 1127
+        "height": 1127,
+        "kind": "certificate"
       }
     ]
   },
@@ -151,7 +160,8 @@
         "src": "images/photos/miles-and-milestones/03.jpg",
         "caption": "Half Marathon Finisher, Standard Chartered Hanoi Marathon Heritage Race 2025",
         "width": 854,
-        "height": 613
+        "height": 613,
+        "kind": "certificate"
       },
       {
         "src": "images/photos/miles-and-milestones/04.jpg",
@@ -169,7 +179,8 @@
         "src": "images/photos/miles-and-milestones/06.jpg",
         "caption": "21KM Half Marathon Finisher, Tay Ho Half Marathon 2025",
         "width": 1179,
-        "height": 835
+        "height": 835,
+        "kind": "certificate"
       },
       {
         "src": "images/photos/miles-and-milestones/07.jpg",
@@ -181,7 +192,8 @@
         "src": "images/photos/miles-and-milestones/08.jpg",
         "caption": "11KM Road Race Finisher, Ecopark City Trail 2025",
         "width": 1179,
-        "height": 884
+        "height": 884,
+        "kind": "certificate"
       },
       {
         "src": "images/photos/miles-and-milestones/09.jpg",
@@ -228,7 +240,8 @@
         "src": "images/photos/meckup/05.jpg",
         "caption": "Certificate of Participation — MeckUP Quest 2025–2026",
         "width": 1084,
-        "height": 1600
+        "height": 1600,
+        "kind": "certificate"
       }
     ]
   },
@@ -346,37 +359,43 @@
             "src": "images/photos/vex/16.jpg",
             "caption": "VEX Robotics World Championship Qualifier (Missouri, USA)",
             "width": 1600,
-            "height": 1236
+            "height": 1236,
+            "kind": "certificate"
           },
           {
             "src": "images/photos/vex/17.jpg",
             "caption": "Robot Skills Champion & Innovate Award (Main Coder), Vietnam VEX V5 Robotics Competition (V5RC) — National Qualification",
             "width": 1600,
-            "height": 1132
+            "height": 1132,
+            "kind": "certificate"
           },
           {
             "src": "images/photos/vex/18.jpg",
             "caption": "Create Award, New Year’s Mayhem Signature Event — Vietnam VEX V5 Robotics Competition",
             "width": 894,
-            "height": 634
+            "height": 634,
+            "kind": "certificate"
           },
           {
             "src": "images/photos/vex/19.jpg",
             "caption": "Tournament Champion & Energy Award, Vietnam VEX V5 Robotics Competition (V5RC) — Northern Qualification",
             "width": 1600,
-            "height": 1132
+            "height": 1132,
+            "kind": "certificate"
           },
           {
             "src": "images/photos/vex/20.jpg",
             "caption": "First Honor, VEX Asia Open Signature Event V5RC HS",
             "width": 750,
-            "height": 1049
+            "height": 1049,
+            "kind": "certificate"
           },
           {
             "src": "images/photos/vex/21.jpg",
             "caption": "Talent Award, VEX Asia Open Signature Event V5RC HS",
             "width": 750,
-            "height": 1023
+            "height": 1023,
+            "kind": "certificate"
           }
         ]
       }
@@ -440,37 +459,43 @@
         "src": "images/photos/vex/16.jpg",
         "caption": "VEX Robotics World Championship Qualifier (Missouri, USA)",
         "width": 1600,
-        "height": 1236
+        "height": 1236,
+        "kind": "certificate"
       },
       {
         "src": "images/photos/vex/17.jpg",
         "caption": "Robot Skills Champion & Innovate Award (Main Coder), Vietnam VEX V5 Robotics Competition (V5RC) — National Qualification",
         "width": 1600,
-        "height": 1132
+        "height": 1132,
+        "kind": "certificate"
       },
       {
         "src": "images/photos/vex/18.jpg",
         "caption": "Create Award, New Year’s Mayhem Signature Event — Vietnam VEX V5 Robotics Competition",
         "width": 894,
-        "height": 634
+        "height": 634,
+        "kind": "certificate"
       },
       {
         "src": "images/photos/vex/19.jpg",
         "caption": "Tournament Champion & Energy Award, Vietnam VEX V5 Robotics Competition (V5RC) — Northern Qualification",
         "width": 1600,
-        "height": 1132
+        "height": 1132,
+        "kind": "certificate"
       },
       {
         "src": "images/photos/vex/20.jpg",
         "caption": "First Honor, VEX Asia Open Signature Event V5RC HS",
         "width": 750,
-        "height": 1049
+        "height": 1049,
+        "kind": "certificate"
       },
       {
         "src": "images/photos/vex/21.jpg",
         "caption": "Talent Award, VEX Asia Open Signature Event V5RC HS",
         "width": 750,
-        "height": 1023
+        "height": 1023,
+        "kind": "certificate"
       },
       {
         "src": "images/photos/meckup/01.jpg",
@@ -482,7 +507,8 @@
         "src": "images/photos/meckup/05.jpg",
         "caption": "Certificate of Participation — MeckUP Quest 2025–2026",
         "width": 1084,
-        "height": 1600
+        "height": 1600,
+        "kind": "certificate"
       }
     ]
   },
@@ -493,19 +519,22 @@
         "src": "images/photos/miles-and-milestones/03.jpg",
         "caption": "Half Marathon Finisher, Standard Chartered Hanoi Marathon Heritage Race 2025",
         "width": 854,
-        "height": 613
+        "height": 613,
+        "kind": "certificate"
       },
       {
         "src": "images/photos/miles-and-milestones/06.jpg",
         "caption": "21KM Half Marathon Finisher, Tay Ho Half Marathon 2025",
         "width": 1179,
-        "height": 835
+        "height": 835,
+        "kind": "certificate"
       },
       {
         "src": "images/photos/miles-and-milestones/08.jpg",
         "caption": "11KM Road Race Finisher, Ecopark City Trail 2025",
         "width": 1179,
-        "height": 884
+        "height": 884,
+        "kind": "certificate"
       }
     ]
   }

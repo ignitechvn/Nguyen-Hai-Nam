@@ -139,21 +139,126 @@ function bindEvents() {
   });
 }
 
+// Split n items into balanced rows of at most `max` (5 -> 3+2, 4 -> 2+2, 7 -> 3+2+2)
+function rowSizes(n, max) {
+  const rows = Math.ceil(n / max);
+  const sizes = [];
+  let left = n;
+  for (let r = rows; r > 0; r--) {
+    const size = Math.ceil(left / r);
+    sizes.push(size);
+    left -= size;
+  }
+  return sizes;
+}
+
+// Justified rows: every photo in a row gets the same height, widths follow each photo's own ratio,
+// so nothing is cropped and there are no empty bars around portrait shots
+function renderRows(photos, kind, max) {
+  const shared = photos.length > 1 && photos[0].caption &&
+    photos.every((photo) => photo.caption === photos[0].caption);
+  let index = 0;
+
+  const rows = rowSizes(photos.length, max).map((size) => {
+    const row = photos.slice(index, index + size);
+    index += size;
+    // Keep a lone portrait photo, and certificates (documents, not scenes), to a sensible height
+    const lone = row.length === 1 && row[0].height > row[0].width * 0.9;
+    const maxHeight = kind === 'certificate' ? 330 : lone ? 560 : 0;
+
+    return `<div class="photo-row${maxHeight ? ' lone' : ''}">` + row.map((photo) => {
+      const ratio = photo.width / photo.height;
+      return `<figure class="photo ${kind}" style="flex: ${ratio.toFixed(4)} 1 0%;${maxHeight ? ` max-width: ${Math.round(maxHeight * ratio)}px;` : ''}">
+        <a href="${escapeHtml(photo.src)}" class="photo-link" data-src="${escapeHtml(photo.src)}"
+          data-caption="${escapeHtml(photo.caption)}">
+          <img src="${escapeHtml(photo.src)}" width="${photo.width}" height="${photo.height}"
+            style="aspect-ratio: ${photo.width} / ${photo.height}" loading="lazy" alt="${escapeHtml(photo.caption)}">
+        </a>
+        ${photo.caption && !shared ? `<figcaption>${escapeHtml(photo.caption)}</figcaption>` : ''}
+      </figure>`;
+    }).join('') + '</div>';
+  }).join('');
+
+  return `<div class="photo-set ${kind}-set">${rows}` +
+    `${shared ? `<p class="photo-set-caption">${escapeHtml(photos[0].caption)}</p>` : ''}</div>`;
+}
+
 function renderPhotos(photos) {
   if (!photos.length) {
     return '';
   }
+  const pictures = photos.filter((photo) => !photo.kind);
+  const screenshots = photos.filter((photo) => photo.kind === 'screenshot');
+  const certificates = photos.filter((photo) => photo.kind === 'certificate');
 
-  const columns = photos.length === 1 ? 1 : photos.length % 3 === 0 ? 3 : 2;
+  return (pictures.length ? renderRows(pictures, 'picture', 3) : '') +
+    (screenshots.length ? renderRows(screenshots, 'screenshot', 2) : '') +
+    (certificates.length ? renderRows(certificates, 'certificate', 2) : '');
+}
 
-  return `<div class="photo-group photo-group-${columns}">` + photos.map((photo) =>
-    `<figure>
-      <a href="${escapeHtml(photo.src)}" target="_blank" rel="noopener">
-        <img src="${escapeHtml(photo.src)}" width="${photo.width}" height="${photo.height}" loading="lazy" alt="${escapeHtml(photo.caption)}">
-      </a>
-      ${photo.caption ? `<figcaption>${escapeHtml(photo.caption)}</figcaption>` : ''}
-    </figure>`
-  ).join('') + '</div>';
+// ---------- Lightbox: photos open full screen over the page ----------
+const lightbox = { items: [], index: 0 };
+
+function showLightboxItem(i) {
+  const count = lightbox.items.length;
+  lightbox.index = (i + count) % count;
+  const item = lightbox.items[lightbox.index];
+  el('lightbox-img').src = item.src;
+  el('lightbox-img').alt = item.caption;
+  el('lightbox-caption').textContent = item.caption;
+  el('lightbox-count').textContent = count > 1 ? (lightbox.index + 1) + ' / ' + count : '';
+  el('lightbox').classList.toggle('single', count < 2);
+}
+
+function openLightbox(link) {
+  const links = [...el('track').querySelectorAll('.photo-link')];
+  lightbox.items = links.map((a) => ({ src: a.dataset.src, caption: a.dataset.caption }));
+  showLightboxItem(links.indexOf(link));
+  el('lightbox').classList.add('open');
+}
+
+function closeLightbox() {
+  el('lightbox').classList.remove('open');
+}
+
+function bindLightbox() {
+  const box = el('lightbox');
+
+  infoContainer.addEventListener('click', (e) => {
+    const link = e.target.closest('.photo-link');
+    if (link) {
+      e.preventDefault();
+      openLightbox(link);
+    }
+  });
+
+  box.addEventListener('click', (e) => {
+    if (e.target.closest('.lightbox-prev')) {
+      showLightboxItem(lightbox.index - 1);
+    } else if (e.target.closest('.lightbox-next')) {
+      showLightboxItem(lightbox.index + 1);
+    } else if (!e.target.closest('#lightbox-img')) {
+      closeLightbox(); // backdrop or close button
+    }
+  });
+
+  // Capture phase: keys must not also reach the crate (Escape would put the record back)
+  window.addEventListener('keydown', (e) => {
+    if (!box.classList.contains('open')) {
+      return;
+    }
+    if (e.key === 'Escape') {
+      closeLightbox();
+    } else if (e.key === 'ArrowLeft') {
+      showLightboxItem(lightbox.index - 1);
+    } else if (e.key === 'ArrowRight') {
+      showLightboxItem(lightbox.index + 1);
+    } else {
+      return;
+    }
+    e.preventDefault();
+    e.stopImmediatePropagation();
+  }, true);
 }
 
 // Photos are spread between paragraphs ("xen kẽ"), placed after given paragraphs, or all after the text
@@ -632,6 +737,7 @@ function renderFooter() {
 renderChrome();
 renderFooter();
 bindChromeEvents();
+bindLightbox();
 
 cratedigger.init({
   debug: false,

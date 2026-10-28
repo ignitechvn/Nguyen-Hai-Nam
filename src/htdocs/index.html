@@ -67,6 +67,22 @@
         </div>
     </div>
 
+    <div id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+        <button type="button" class="lightbox-close" aria-label="Close">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+        <button type="button" class="lightbox-prev" aria-label="Previous photo">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <figure>
+            <img id="lightbox-img" src="" alt="">
+            <figcaption><span id="lightbox-caption"></span><span id="lightbox-count"></span></figcaption>
+        </figure>
+        <button type="button" class="lightbox-next" aria-label="Next photo">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+    </div>
+
     <script src="vendor.js"></script>
     <script src="index.js"></script>
 </body>
