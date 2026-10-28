@@ -257,10 +257,124 @@ function showTrack(i) {
   infoContainer.scrollTo({ top });
 }
 
+// ---------- About Me: overview page that introduces everything and links to the other records ----------
+
+// Key figures quoted from the sheet's content, each linking to its record
+const HIGHLIGHTS = [
+  { value: 'No. 1', label: 'Nationwide ranking, VEX V5 Robotics 2026', section: 1 },
+  { value: '2026', label: 'VEX Robotics World Championship, Missouri', section: 1 },
+  { value: '14,179', label: 'Tày–Vietnamese sentence pairs behind TayTranslator', section: 2 },
+  { value: '200+', label: 'Students taught through The CodingBuddy', section: 2 },
+  { value: '10-stage', label: 'Physics simulation pipeline in Vinylize', section: 3 },
+  { value: '3 × 21 km', label: 'Half marathons completed', section: 5 },
+];
+
+// Chapters of the "About Me" story (one per paragraph) and the photo shown beside each
+const STORY_CHAPTERS = [
+  { title: 'Where it began', photo: null },
+  { title: 'Beyond the lab', photo: 'images/photos/humanitas/02.jpg' },
+  { title: 'The sound of grooves', photo: 'images/photos/vex/04.jpg' },
+  { title: 'Looking back', photo: null },
+];
+
+function lastSentence(text) {
+  const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+  return sentences[sentences.length - 1].replace(/^[^A-Za-z]*(Yet, it was[^:]*:\s*)?/, '').trim();
+}
+
+// Shorter track names for the record cards
+function cardTrackTitle(title) {
+  return /^The Research:/.test(title) ? 'Research paper' : trackTitle(title).replace(/\s*\(.*\)$/, '');
+}
+
+function renderOverview(section) {
+  const statement = section.entries[0];
+  const story = section.entries[1];
+  const portrait = statement.photos[0];
+  const quote = lastSentence(statement.en[statement.en.length - 1]);
+  const contact = (href, text, external) =>
+    `<a href="${escapeHtml(href)}"${external ? ' target="_blank" rel="noopener"' : ''}>${escapeHtml(text)}</a>`;
+
+  const hero = `<section class="ov-hero">
+      ${portrait ? `<figure class="ov-portrait"><img src="${escapeHtml(portrait.src)}" alt="${escapeHtml(profile.name)}"></figure>` : ''}
+      <div class="ov-intro">
+        <div class="ov-eyebrow">Portfolio · ${escapeHtml(profile.major)}</div>
+        <h1 class="ov-name">${escapeHtml(profile.name)}</h1>
+        <p class="ov-quote">${escapeHtml(quote)}</p>
+        <div class="ov-contact">
+          ${contact('mailto:' + profile.email, profile.email)}
+          ${contact('https://' + profile.domain, profile.domain, true)}
+        </div>
+      </div>
+    </section>`;
+
+  const statementBlock = `<section class="ov-statement">
+      <div class="ov-label">Personal statement</div>
+      ${statement.en.map((p) => `<p>${formatParagraph(p)}</p>`).join('')}
+    </section>`;
+
+  const highlights = `<section class="ov-highlights">
+      ${HIGHLIGHTS.map((h) => `<button type="button" data-section="${h.section}"
+          style="--card-color: ${(CATEGORY_COLORS[sections[h.section].title] || [])[0]}">
+          <span class="ov-stat">${escapeHtml(h.value)}</span>
+          <span class="ov-stat-label">${escapeHtml(h.label)}</span>
+        </button>`).join('')}
+    </section>`;
+
+  const chapters = `<section class="ov-story">
+      <div class="ov-label">My story</div>
+      ${story.en.map((p, i) => {
+        const chapter = STORY_CHAPTERS[i] || {};
+        return `<div class="ov-chapter${chapter.photo ? ' has-photo' : ''}">
+          <div class="ov-chapter-head">
+            <span>${String(i + 1).padStart(2, '0')}</span>
+            ${chapter.title ? `<h3>${escapeHtml(chapter.title)}</h3>` : ''}
+          </div>
+          <div class="ov-chapter-text"><p>${formatParagraph(p)}</p></div>
+          ${chapter.photo ? `<img class="ov-chapter-photo" src="${chapter.photo}" alt="" loading="lazy">` : ''}
+        </div>`;
+      }).join('')}
+    </section>`;
+
+  const records = `<section class="ov-records">
+      <div class="ov-label">Explore the records</div>
+      <div class="ov-grid">
+        ${sections.slice(1).map((s) => {
+          const colors = CATEGORY_COLORS[s.title] || ['#2b2a33', '#e8c468'];
+          return `<button type="button" class="ov-card" data-section="${s.index}"
+              style="--card-color: ${colors[0]}; --card-accent: ${colors[1]}">
+            <span class="ov-card-no">No. ${String(s.index + 1).padStart(2, '0')}</span>
+            <span class="ov-card-title">${escapeHtml(s.title)}</span>
+            <span class="ov-card-tracks">${s.entries.length > 1 ?
+              s.entries.map((e) => escapeHtml(cardTrackTitle(e.title))).join(' · ') : 'Open record'}</span>
+            <span class="ov-card-arrow">&rarr;</span>
+          </button>`;
+        }).join('')}
+      </div>
+    </section>`;
+
+  return hero + statementBlock + highlights + chapters + records;
+}
+
 function fillInfoPanel(record) {
   const section = record.data;
   const colors = CATEGORY_COLORS[section.title] || ['#2b2a33', '#e8c468'];
   openSectionData = section;
+
+  // About Me is the overview: full-width page, no album column
+  const overview = section.index === 0;
+  el('detail').classList.toggle('overview', overview);
+  if (overview) {
+    el('detail').style.setProperty('--section-color', colors[0]);
+    el('detail').style.setProperty('--section-accent', colors[1]);
+    el('cratedigger-record-content').innerHTML = renderOverview(section);
+    el('track-nav').innerHTML = '';
+    infoContainer.scrollTop = 0;
+    setTimeout(() => {
+      infoContainer.scrollTop = 0;
+    }, 320);
+    return;
+  }
 
   el('detail').style.setProperty('--section-color', colors[0]);
   el('detail').style.setProperty('--section-accent', colors[1]);
@@ -469,7 +583,8 @@ function bindChromeEvents() {
     }
   });
 
-  el('next-record').addEventListener('click', (e) => {
+  // "Next record" in the album column, cards and figures on the About Me overview
+  infoContainer.addEventListener('click', (e) => {
     const button = e.target.closest('[data-section]');
     if (button) {
       goToSection(Number(button.dataset.section));

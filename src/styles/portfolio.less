@@ -744,6 +744,441 @@ button {
     }
 }
 
+// ---------- About Me overview ----------
+#detail.overview {
+    display: block;
+
+    #album {
+        display: none;
+    }
+
+    #track {
+        max-width: 1160px;
+        padding: 64px 64px 96px;
+    }
+}
+
+.ov-label {
+    margin-bottom: 24px;
+    color: @paper-accent;
+    font-family: @mono;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+// Hero: portrait + name + one-line credo
+.ov-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 64px;
+    align-items: center;
+}
+
+.ov-portrait {
+    position: relative;
+    margin: 0;
+
+    // record peeking out behind the photo, in the About Me sleeve colours
+    &::before {
+        content: '';
+        position: absolute;
+        top: 8%;
+        right: -14%;
+        width: 70%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background:
+            radial-gradient(circle, @paper 0 2.5%, var(--section-accent, @accent) 2.5% 17%, transparent 17%),
+            repeating-radial-gradient(circle, #1a1512 0 2px, #0f0c0a 2px 4px);
+    }
+
+    img {
+        position: relative;
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 5;
+        object-fit: cover;
+        object-position: 50% 30%;
+        border-radius: 6px;
+        box-shadow: 0 20px 50px rgba(34, 28, 23, 0.25);
+    }
+}
+
+.ov-eyebrow {
+    color: @paper-muted;
+    font-family: @mono;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.ov-name {
+    margin: 18px 0 0;
+    color: @paper-ink;
+    font-family: @serif;
+    font-size: 84px;
+    font-weight: 600;
+    line-height: 0.98;
+    letter-spacing: -1.5px;
+}
+
+.ov-quote {
+    margin: 32px 0 0;
+    padding-left: 20px;
+    border-left: 3px solid var(--section-color, @paper-accent);
+    color: @paper-ink;
+    font-family: @serif;
+    font-size: 24px;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.ov-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 32px;
+
+    a {
+        padding: 10px 18px;
+        border: 1px solid @paper-ink;
+        border-radius: 999px;
+        color: @paper-ink;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+
+        &:first-child,
+        &:hover {
+            background: @paper-ink;
+            color: @paper;
+        }
+
+        &:first-child:hover {
+            background: @paper-accent;
+            border-color: @paper-accent;
+        }
+    }
+}
+
+// Personal statement as a large lede
+.ov-statement {
+    max-width: 860px;
+    margin: 104px auto 0;
+    text-align: center;
+
+    p {
+        margin: 0;
+        color: @paper-ink;
+        font-family: @serif;
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 1.55;
+    }
+}
+
+// Key figures, each opening its record
+.ov-highlights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 96px;
+    border-top: 1px solid @paper-ink;
+    border-left: 1px solid @paper-line;
+
+    button {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 28px 28px 30px;
+        background: none;
+        border: 0;
+        border-right: 1px solid @paper-line;
+        border-bottom: 1px solid @paper-line;
+        color: @paper-ink;
+        text-align: left;
+        cursor: pointer;
+        transition: background 0.25s ease;
+
+        &:hover {
+            background: rgba(34, 28, 23, 0.04);
+
+            .ov-stat {
+                color: var(--card-color, @paper-accent);
+            }
+        }
+    }
+}
+
+.ov-stat {
+    font-family: @serif;
+    font-size: 46px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.5px;
+    transition: color 0.25s ease;
+}
+
+.ov-stat-label {
+    color: @paper-muted;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+// Story in numbered chapters
+.ov-story {
+    max-width: 960px;
+    margin: 112px auto 0;
+}
+
+.ov-chapter {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 16px 48px;
+    padding: 36px 0;
+    border-top: 1px solid @paper-line;
+
+    &.has-photo {
+        grid-template-columns: 200px minmax(0, 1fr) 240px;
+    }
+}
+
+.ov-chapter-head {
+    span {
+        display: block;
+        color: var(--section-color, @paper-accent);
+        font-family: @serif;
+        font-size: 44px;
+        font-weight: 600;
+        line-height: 1;
+    }
+
+    h3 {
+        margin: 10px 0 0;
+        color: @paper-ink;
+        font-family: @serif;
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 1.25;
+    }
+}
+
+.ov-chapter-text p {
+    margin: 0;
+    color: @paper-ink;
+    font-size: 17px;
+    line-height: 1.75;
+
+    strong {
+        color: var(--section-color, @paper-ink);
+        font-family: @serif;
+        font-size: 1.12em;
+        font-style: italic;
+        font-weight: 600;
+        background: none;
+    }
+}
+
+.ov-chapter-photo {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 10px 30px rgba(34, 28, 23, 0.18);
+}
+
+// Record cards
+.ov-records {
+    margin-top: 112px;
+}
+
+.ov-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.ov-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 240px;
+    padding: 26px 26px 24px;
+    overflow: hidden;
+    background: var(--card-color, @paper-ink);
+    border: 0;
+    border-radius: 10px;
+    color: @cream;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    // the record sliding out of the sleeve on hover
+    &::before {
+        content: '';
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        background:
+            radial-gradient(circle, rgba(0, 0, 0, 0.55) 0 4px, var(--card-accent, @accent) 4px 28px, transparent 28px),
+            repeating-radial-gradient(circle, #1a1512 0 2px, #0f0c0a 2px 4px);
+        transition: transform 0.45s ease;
+    }
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 40px rgba(34, 28, 23, 0.28);
+
+        &::before {
+            transform: translate(-18px, 18px) rotate(40deg);
+        }
+
+        .ov-card-arrow {
+            transform: translateX(4px);
+        }
+    }
+}
+
+.ov-card-no {
+    color: var(--card-accent, @accent);
+    font-family: @mono;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.ov-card-title {
+    margin-top: auto;
+    padding-top: 40px;
+    font-family: @serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.12;
+}
+
+.ov-card-tracks {
+    margin-top: 12px;
+    color: rgba(243, 236, 224, 0.72);
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.ov-card-arrow {
+    position: absolute;
+    right: 24px;
+    bottom: 22px;
+    font-size: 20px;
+    transition: transform 0.25s ease;
+}
+
+@media (max-width: 1180px) {
+    #detail.overview #track {
+        padding: 48px 32px 96px;
+    }
+
+    .ov-hero {
+        gap: 40px;
+    }
+
+    .ov-name {
+        font-size: 64px;
+    }
+
+    .ov-chapter.has-photo {
+        grid-template-columns: 160px minmax(0, 1fr);
+
+        .ov-chapter-photo {
+            grid-column: 2;
+            max-width: 320px;
+        }
+    }
+
+    .ov-chapter {
+        grid-template-columns: 160px minmax(0, 1fr);
+    }
+
+    .ov-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 800px) {
+    #detail.overview #track {
+        padding: 32px 20px 104px;
+    }
+
+    .ov-hero {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .ov-portrait {
+        max-width: 300px;
+    }
+
+    .ov-name {
+        font-size: 48px;
+    }
+
+    .ov-quote {
+        font-size: 20px;
+    }
+
+    .ov-statement {
+        margin-top: 64px;
+        text-align: left;
+
+        p {
+            font-size: 21px;
+        }
+    }
+
+    .ov-highlights {
+        grid-template-columns: repeat(2, 1fr);
+        margin-top: 64px;
+
+        button {
+            padding: 20px 16px;
+        }
+    }
+
+    .ov-stat {
+        font-size: 32px;
+    }
+
+    .ov-story {
+        margin-top: 72px;
+    }
+
+    .ov-chapter,
+    .ov-chapter.has-photo {
+        grid-template-columns: 1fr;
+
+        .ov-chapter-photo {
+            grid-column: auto;
+            max-width: none;
+            aspect-ratio: 4 / 3;
+        }
+    }
+
+    .ov-records {
+        margin-top: 72px;
+    }
+
+    .ov-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ov-card {
+        min-height: 180px;
+    }
+}
+
 // ---------- Tablet & phone: compact top bar, records in a full-screen drawer ----------
 @media (max-width: 800px) {
     #top-bar {
