@@ -35,22 +35,6 @@ content.records.forEach((record) => {
   section.entries.push(Object.assign({ photos: [], groups: [] }, record));
 });
 
-// Each sub-group of a section is a side of the record (A, B, C…), its entries are tracks (A1, B1, B2…)
-sections.forEach((section) => {
-  let side = -1;
-  let track = 0;
-  section.entries.forEach((entry, i) => {
-    if (i === 0 || entry.group !== section.entries[i - 1].group) {
-      side += 1;
-      track = 0;
-      entry.sideStart = true;
-    }
-    track += 1;
-    entry.side = String.fromCharCode(65 + side);
-    entry.track = entry.side + track;
-  });
-});
-
 // The first section is placed at the front of the crate
 const data = sections.slice().reverse().map((section) => Object.assign({}, section, {
   cover: '',
@@ -310,7 +294,7 @@ function renderTrackNav(section, i) {
   const card = (entry, index, label, cls) => entry ?
     `<button type="button" class="track-card ${cls}" data-entry="${index}">
       <span class="track-card-label">${label}</span>
-      <span class="track-card-title"><b>${entry.track}</b>${escapeHtml(trackTitle(entry.title))}</span>
+      <span class="track-card-title">${escapeHtml(trackTitle(entry.title))}</span>
     </button>` : '<span></span>';
 
   return section.entries.length < 2 ? '' :
@@ -462,7 +446,6 @@ function renderOverview(section) {
           const colors = CATEGORY_COLORS[s.title] || ['#2b2a33', '#e8c468'];
           return `<button type="button" class="ov-card" data-section="${s.index}"
               style="--card-color: ${colors[0]}; --card-accent: ${colors[1]}">
-            <span class="ov-card-no">No. ${String(s.index + 1).padStart(2, '0')}</span>
             <span class="ov-card-title">${escapeHtml(s.title)}</span>
             <span class="ov-card-tracks">${s.entries.length > 1 ?
               s.entries.map((e) => escapeHtml(cardTrackTitle(e.title))).join(' · ') : 'Open record'}</span>
@@ -497,7 +480,6 @@ function fillInfoPanel(record) {
 
   el('detail').style.setProperty('--section-color', colors[0]);
   el('detail').style.setProperty('--section-accent', colors[1]);
-  el('cratedigger-record-category').textContent = 'No. ' + String(section.index + 1).padStart(2, '0');
   el('cratedigger-record-title').textContent = section.title;
   el('cratedigger-record-toc').innerHTML = renderTrackList(section);
 
@@ -603,12 +585,7 @@ function drawPlaceholderCover(ctx, size, section) {
   ctx.textBaseline = 'top';
   ctx.fillStyle = colors[1];
   ctx.font = '500 13px ' + MONO;
-  ctx.fillText('NO. ' + String(section.index + 1).padStart(2, '0'), pad, pad);
-  ctx.fillStyle = cream;
-  ctx.globalAlpha = 0.75;
-  ctx.font = '400 12px ' + MONO;
-  ctx.fillText(profile.name.toUpperCase(), pad, pad + 19);
-  ctx.globalAlpha = 1;
+  ctx.fillText(profile.name.toUpperCase(), pad, pad);
 
   do {
     ctx.font = '600 ' + fontSize + 'px ' + SERIF;
@@ -635,12 +612,9 @@ function drawPlaceholderCover(ctx, size, section) {
   }
   tracks.forEach((entry, i) => {
     const y = tracksTop + i * lineHeight;
-    ctx.fillStyle = colors[1];
-    ctx.font = '500 13px ' + MONO;
-    ctx.fillText(entry.track, pad, y + 1);
     ctx.fillStyle = cream;
     ctx.font = '400 14px ' + SANS;
-    ctx.fillText(ellipsize(ctx, trackTitle(entry.title), size - pad * 2 - 34), pad + 34, y);
+    ctx.fillText(ellipsize(ctx, trackTitle(entry.title), size - pad * 2), pad, y);
   });
 }
 
