@@ -14,3 +14,4 @@ Desktop.ini
 npm-debug.log
 coverage
 content/*.xlsx
+/.node

@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
-# One-time setup of a DigitalOcean droplet (Ubuntu 22.04/24.04) to serve the portfolio with nginx.
+# Setup of the portfolio on a DigitalOcean droplet (Ubuntu 22.04/24.04) that may already host other sites.
 #
 #   curl -fsSL https://raw.githubusercontent.com/ignitechvn/Nguyen-Hai-Nam/main/deploy/setup-droplet.sh -o setup.sh
 #   sudo DOMAIN=hainamnguyen.com EMAIL=you@example.com bash setup.sh
 #
-# DOMAIN is optional: without it the site is served on the droplet's IP over plain HTTP.
-# With DOMAIN (its DNS A record must already point to this droplet) a free HTTPS certificate is issued.
+# It only adds its own nginx site for DOMAIN: other nginx sites, the default site and the system
+# Node.js are left untouched (the build uses a private Node.js inside /opt/portfolio).
 set -euo pipefail
 
 REPO="${REPO:-https://github.com/ignitechvn/Nguyen-Hai-Nam.git}"
 BRANCH="${BRANCH:-main}"
 APP_DIR=/opt/portfolio
 WEB_ROOT=/var/www/portfolio
+NODE_VERSION=22.11.0
 DOMAIN="${DOMAIN:-}"
 EMAIL="${EMAIL:-}"
 
@@ -20,13 +21,14 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
-echo "==> Installing nginx, git and Node.js 22"
-apt-get update -y
-apt-get install -y nginx git curl ca-certificates rsync
-if ! command -v node >/dev/null || [ "$(node -p 'process.versions.node.split(".")[0]')" -lt 18 ]; then
-  curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
-  apt-get install -y nodejs
+if [ -z "$DOMAIN" ]; then
+  echo "DOMAIN is required (e.g. DOMAIN=hainamnguyen.com), so the site only answers for its own domain." >&2
+  exit 1
 fi
+
+echo "==> Installing nginx, git, rsync (if missing)"
+apt-get update -y
+apt-get install -y nginx git curl ca-certificates rsync xz-utils
 
 echo "==> Fetching the site"
 if [ -d "$APP_DIR/.git" ]; then
@@ -36,38 +38,28 @@ else
   git clone --depth 1 --branch "$BRANCH" "$REPO" "$APP_DIR"
 fi
 
-echo "==> Building"
-cd "$APP_DIR"
-npm ci --no-audit --no-fund
-npm run build
-mkdir -p "$WEB_ROOT"
-rsync -a --delete lib/ "$WEB_ROOT/"
+echo "==> Building with a private Node.js $NODE_VERSION (system Node.js is not changed)"
+bash "$APP_DIR/deploy/build.sh"
 
-echo "==> Configuring nginx"
-SERVER_NAME="${DOMAIN:-_}"
-[ -n "$DOMAIN" ] && SERVER_NAME="$DOMAIN www.$DOMAIN"
-sed "s/__SERVER_NAME__/$SERVER_NAME/" "$APP_DIR/deploy/nginx.conf" > /etc/nginx/sites-available/portfolio
+echo "==> Adding the nginx site for $DOMAIN"
+sed "s/__SERVER_NAME__/$DOMAIN www.$DOMAIN/" "$APP_DIR/deploy/nginx.conf" > /etc/nginx/sites-available/portfolio
 ln -sf /etc/nginx/sites-available/portfolio /etc/nginx/sites-enabled/portfolio
-rm -f /etc/nginx/sites-enabled/default
-nginx -t
-systemctl enable --now nginx
+if ! nginx -t; then
+  echo "nginx config test failed: removing the portfolio site again, nothing else was changed." >&2
+  rm -f /etc/nginx/sites-enabled/portfolio
+  exit 1
+fi
 systemctl reload nginx
 
-if command -v ufw >/dev/null && ufw status | grep -q "Status: active"; then
-  ufw allow 'Nginx Full'
+if [ -n "$EMAIL" ]; then
+  CONTACT=(--email "$EMAIL")
+else
+  CONTACT=(--register-unsafely-without-email)
 fi
-
-if [ -n "$DOMAIN" ]; then
-  echo "==> Requesting an HTTPS certificate for $DOMAIN"
-  apt-get install -y certbot python3-certbot-nginx
-  if [ -n "$EMAIL" ]; then
-    CONTACT=(--email "$EMAIL")
-  else
-    CONTACT=(--register-unsafely-without-email)
-  fi
-  certbot --nginx --non-interactive --agree-tos --redirect "${CONTACT[@]}" -d "$DOMAIN" -d "www.$DOMAIN"
-fi
+echo "==> Requesting an HTTPS certificate for $DOMAIN"
+apt-get install -y certbot python3-certbot-nginx
+certbot --nginx --non-interactive --agree-tos --redirect "${CONTACT[@]}" -d "$DOMAIN" -d "www.$DOMAIN"
 
 echo
-echo "Done. Site: ${DOMAIN:+https://$DOMAIN}${DOMAIN:-http://$(curl -fsS https://api.ipify.org || hostname -I | awk '{print $1}')}"
+echo "Done: https://$DOMAIN"
 echo "Later updates: sudo bash $APP_DIR/deploy/update.sh"

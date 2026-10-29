@@ -85,5 +85,5 @@ Deploy
 * **GitHub Pages**: Settings → Pages → Source: **GitHub Actions**. Deploy chạy thủ công: tab Actions → "Deploy to GitHub Pages" → **Run workflow** (push lên `main` không tự deploy).
 * **DigitalOcean droplet** (Ubuntu, nginx): lần đầu chạy trên droplet
   `curl -fsSL https://raw.githubusercontent.com/ignitechvn/Nguyen-Hai-Nam/main/deploy/setup-droplet.sh -o setup.sh && sudo DOMAIN=hainamnguyen.com EMAIL=you@example.com bash setup.sh`
-  (bỏ `DOMAIN`/`EMAIL` để chạy bằng IP). Cập nhật sau này: `sudo bash /opt/portfolio/deploy/update.sh`.
+  (`DOMAIN` bắt buộc; script chỉ thêm site nginx cho tên miền này, không đụng site khác, site default hay Node.js của hệ thống — build dùng Node riêng trong `/opt/portfolio/.node`). Cập nhật sau này: `sudo bash /opt/portfolio/deploy/update.sh`.
 * **Vercel / Netlify**: Import repo, cấu hình đã có sẵn trong `vercel.json` / `netlify.toml` (build `npm run build`, thư mục `lib`).
